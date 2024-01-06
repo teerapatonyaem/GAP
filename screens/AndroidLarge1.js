@@ -2,6 +2,9 @@ import * as React from "react";
 import { Image, StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FormSection from "../components/FormSection";
+import Addfield from "../components/Addfield";
+import SectionFormViews from "../components/SectionFormViews";
+import SectionFormViews1 from "../components/SectionFormViews1";
 import ProfileForm from "../components/ProfileForm";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 import{ ImagesAssets } from '../assets/ImagesAssets';
@@ -17,8 +20,8 @@ const AndroidLarge1 = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={[styles.androidLarge1, styles.androidLarge1Layout]}>
-      <View style={[styles.frameParent, styles.text2Position]}>
+    <View style={[styles.androidLarge1, styles.androidLarge1Layout, styles.centeredContainer]}>
+      <View style={[styles.frameParent, styles.text2Position, styles.centeredContainer]}>
         <View style={[styles.frameGroup, styles.groupFlexBox]}>
           <View style={styles.avatarParent}>
             <View style={styles.avatar}>
@@ -59,7 +62,9 @@ const AndroidLarge1 = () => {
             />
           </View>
         </View>
-        {/* ... (your existing code) */}
+        <Addfield />
+        <SectionFormViews />
+        <SectionFormViews1 />
       </View>
       <ProfileForm showHomeIndicator={false} />
     </View>
@@ -149,6 +154,8 @@ const styles = StyleSheet.create({
     paddingVertical: Padding.p_base,
     marginTop: 8,
     alignItems: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
   frameParent: {
     top: 40,
@@ -160,6 +167,10 @@ const styles = StyleSheet.create({
     backgroundColor: Color.gray00,
     flex: 1,
     height: 800,
+  },
+  centeredContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
