@@ -44,8 +44,8 @@ const Property1Default = ({
     <View>
       <LabelAboveHintNone
         soilTypeLabel="วิธีการปลูก"
-        //dimensionLabel={require("../assets/icon-status.png")}
-        //imageLabel={require("../assets/1-system-iconshome.png")}
+        dimensionLabel={require("../assets/icon-status.png")}
+        imageLabel={require("../assets/1-system-iconshome.png")}
         placeholderText="Placeholder"
         labelAboveHintNonePosition="unset"
         labelAboveHintNoneWidth={224}

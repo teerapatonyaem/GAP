@@ -44,8 +44,8 @@ const Property1Default1 = ({
     <View>
       <LabelAboveHintNone
         soilTypeLabel="แหล่งน้ำที่ใช้"
-        //dimensionLabel={require("../assets/icon-status.png")}
-        //imageLabel={require("../assets/1-system-iconshome.png")}
+        dimensionLabel={require("../assets/icon-status.png")}
+        imageLabel={require("../assets/1-system-iconshome.png")}
         placeholderText="Placeholder"
         labelAboveHintNonePosition="unset"
         labelAboveHintNoneWidth={224}

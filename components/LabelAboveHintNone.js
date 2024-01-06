@@ -48,7 +48,7 @@ const LabelAboveHintNone = ({
         />
       </View>
       <TypeTextfield
-        //systemIconsHome={require("../assets/1-system-iconshome.png")}
+        systemIconsHome={require("../assets/1-system-iconshome.png")}
         text="Placeholder"
         typeTextfieldPosition="unset"
         typeTextfieldMarginTop={4}

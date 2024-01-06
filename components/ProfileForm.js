@@ -11,36 +11,36 @@ const ProfileForm = ({ showHomeIndicator = false }) => {
       <View style={[styles.tabs, styles.tabsLayout]}>
         <View style={styles.layout}>
           <StyleStandardActiveNo
-            //menuIcon={require("../assets/menu-icon71.png")}
+            menuIcon={require("../assets/menu-icon71.png")}
             text="รับ-จ่าย"
             styleStandardActiveNoPosition="unset"
           />
         </View>
         <View style={styles.layout}>
           <StyleStandardActiveNo
-            //menuIcon={require("../assets/menu-icon81.png")}
+            menuIcon={require("../assets/menu-icon81.png")}
             text="สถานนะ"
             styleStandardActiveNoPosition="unset"
           />
         </View>
         <View style={styles.layout}>
           <StyleSimpleActiveNo
-            //systemIconsFourSquares={require("../assets/1-system-iconsadd.png")}
-            //alertOnTabBar={require("../assets/alert-on-tabbar11.png")}
+            systemIconsFourSquares={require("../assets/1-system-iconsadd.png")}
+            alertOnTabBar={require("../assets/alert-on-tabbar11.png")}
             showAlertDot={false}
             styleSimpleActiveNoPosition="unset"
           />
         </View>
         <View style={styles.layout}>
           <StyleStandardActiveNo
-            //menuIcon={require("../assets/menu-icon91.png")}
+            menuIcon={require("../assets/menu-icon91.png")}
             text="รู้ข้าว"
             styleStandardActiveNoPosition="unset"
           />
         </View>
         <View style={styles.layout}>
           <StyleStandardActiveNo
-            //menuIcon={require("../assets/menu-icon101.png")}
+            menuIcon={require("../assets/menu-icon101.png")}
             text="โปรไฟล์"
             styleStandardActiveNoPosition="unset"
           />

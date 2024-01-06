@@ -11,7 +11,7 @@ const FormSection = () => {
           <Image
             style={styles.iconixtolinearplant2}
             resizeMode="cover"
-            //source={require("../assets/iconixtolinearplant21.png")}
+            source={require("../assets/iconixtolinearplant21.png")}
           />
           <Text style={[styles.text1, styles.textClr]}>แผนปลูก</Text>
         </View>
@@ -24,7 +24,7 @@ const FormSection = () => {
           <Image
             style={styles.iconixtolinearplant2}
             resizeMode="cover"
-            //source={require("../assets/basil-iconssolidsolidcommunicationuser.png")}
+            source={require("../assets/basil-iconssolidsolidcommunicationuser.png")}
           />
           <Text style={[styles.text1, styles.textClr]}>สมาชิก</Text>
         </View>
@@ -37,7 +37,7 @@ const FormSection = () => {
           <Image
             style={styles.iconixtolinearplant2}
             resizeMode="cover"
-            //source={require("../assets/basil-iconsoutlineoutlinefilesclipboardalt.png")}
+            source={require("../assets/basil-iconsoutlineoutlinefilesclipboardalt.png")}
           />
           <Text style={[styles.text1, styles.textClr]}>สำรวจ</Text>
         </View>
@@ -50,7 +50,7 @@ const FormSection = () => {
           <Image
             style={styles.iconixtolinearplant2}
             resizeMode="cover"
-            //source={require("../assets/basil-iconsoutlineoutlinefilesfiledownload.png")}
+            source={require("../assets/basil-iconsoutlineoutlinefilesfiledownload.png")}
           />
           <Text style={[styles.text1, styles.textClr]}>GAP</Text>
         </View>

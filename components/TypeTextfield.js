@@ -28,7 +28,7 @@ const TypeTextfield = ({
   return (
     <View style={[styles.typetextfield, typeTextfieldStyle]}>
       <StateDefault1
-        //systemIconsHome={require("../assets/1-system-iconshome.png")}
+        systemIconsHome={require("../assets/1-system-iconshome.png")}
         text="Placeholder"
         showIcon={false}
         stateDefaultPosition="unset"

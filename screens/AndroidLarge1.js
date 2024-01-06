@@ -28,7 +28,7 @@ const AndroidLarge1 = () => {
                   styles.androidLarge1Layout,
                 ]}
                 resizeMode="cover"
-                //source={require("../assets/profile.png")} // Ensure the path is correct
+                source={require("../assets/profile.png")} // Ensure the path is correct
                 //source={ImagesAssets.profile}
                 //source={profileImage}
                 //const imageUrl = 'https://img2.pic.in.th/pic/is4af015e9a46d5b12.png'
@@ -43,7 +43,7 @@ const AndroidLarge1 = () => {
             <Image
               style={styles.systemLayout}
               resizeMode="cover"
-              //source={require("../assets/iconssetting.png")} // Ensure the path is correct
+              source={require("../assets/iconssetting.png")} // Ensure the path is correct
               //source={settingsIcon}
               //source={ImagesAssets.iconssetting}
               //const imageUrl = 'https://img2.pic.in.th/pic/is4af015e9a46d5b12.png'
@@ -52,7 +52,7 @@ const AndroidLarge1 = () => {
             <Image
               style={[styles.systemIconsnotification, styles.systemLayout]}
               resizeMode="cover"
-              //source={require("../assets/iconsnotification.png")} // Ensure the path is correct
+              source={require("../assets/iconsnotification.png")} // Ensure the path is correct
               //source={notificationIcon}
               //source={ImagesAssets.iconsnotification}
               //const imageUrl = 'https://img2.pic.in.th/pic/is4af015e9a46d5b12.png'

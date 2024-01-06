@@ -11,12 +11,12 @@ const FormContainer = () => {
         <Image
           style={styles.iconStatus}
           resizeMode="cover"
-          //source={require("../assets/icon-status11.png")}
+          source={require("../assets/icon-status11.png")}
         />
       </View>
       <TypeDatepicker
         text="สถานที่แปลง"
-        //systemIconsCalendar={require("../assets/1-system-iconslocation.png")}
+        systemIconsCalendar={require("../assets/1-system-iconslocation.png")}
         typeDatepickerPosition="unset"
         typeDatepickerMarginTop={4}
       />
