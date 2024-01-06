@@ -3,185 +3,76 @@ import {
   ScrollView,
   Image,
   StyleSheet,
+  Pressable,
   Text,
   View,
-  Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Padding, Color, Border, FontFamily, FontSize } from "../GlobalStyles";
+import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 
 const Screen3 = () => {
   const navigation = useNavigation();
 
   return (
     <ScrollView
-      style={styles.scrollview}
+      style={[styles.scrollview, styles.iconLayout]}
       showsVerticalScrollIndicator={true}
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.scrollViewContent}
     >
       <View style={styles.frameParent}>
-        <View style={styles.basilIconsoutlineoutlinegeParent}>
+        <View style={styles.frameGroup}>
+          <View style={styles.iconixtolinearreturnKeyParent}>
+            <Pressable
+              style={styles.iconixtolinearreturnKeyLayout}
+              onPress={() => navigation.navigate("Screen4")}
+            >
+              <Image
+                style={styles.icon}
+                resizeMode="cover"
+                source={require("../assets/iconixtolinearreturnkey.png")}
+              />
+            </Pressable>
+            <Text style={styles.text}>องค์ความรู้เรื่องข้าว</Text>
+          </View>
           <Image
-            style={styles.systemLayout}
+            style={[styles.image16Icon, styles.iconLayout]}
             resizeMode="cover"
-            source={require("../assets/basil-iconsoutlineoutlinegeneralhome1.png")}
+            source={require("../assets/image-16.png")}
           />
-          <Text style={styles.text}>กรอกข้อมูลแปลง</Text>
         </View>
-        <View style={styles.inputParent}>
-          <View style={styles.input}>
-            <View style={styles.label}>
-              <Text style={styles.label1}>พันธุ์ข้าว</Text>
-              <Image
-                style={styles.iconStatus}
-                resizeMode="cover"
-                source={require("../assets/icon-status2.png")}
-              />
-            </View>
-            <View style={[styles.input1, styles.inputSpaceBlock]}>
-              <View style={[styles.textfield, styles.dropdownBorder]}>
-                <Image
-                  style={[styles.systemIconshome, styles.systemLayout]}
-                  resizeMode="cover"
-                  source={require("../assets/1-system-iconshome1.png")}
-                />
-                <Text style={[styles.text1, styles.textTypo]}>พันธุ์ข้าว</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.input2}>
-            <View style={styles.label}>
-              <Text style={styles.label1}>จำนวนพื้นที่</Text>
-              <Image
-                style={styles.iconStatus}
-                resizeMode="cover"
-                source={require("../assets/icon-status2.png")}
-              />
-            </View>
-            <View style={[styles.input1, styles.inputSpaceBlock]}>
-              <View style={[styles.textfield, styles.dropdownBorder]}>
-                <Image
-                  style={[styles.systemIconshome, styles.systemLayout]}
-                  resizeMode="cover"
-                  source={require("../assets/1-system-iconshome2.png")}
-                />
-                <Text style={[styles.text1, styles.textTypo]}>
-                  จำนวนพื้นที่
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.input2}>
-            <View style={styles.input}>
-              <View style={styles.label}>
-                <Text style={styles.label1}>ชนิดของดิน</Text>
-                <Image
-                  style={styles.iconStatus}
-                  resizeMode="cover"
-                  source={require("../assets/icon-status2.png")}
-                />
-              </View>
-              <View style={[styles.input1, styles.inputSpaceBlock]}>
-                <View style={[styles.dropdown, styles.dropdownBorder]}>
-                  <Text style={styles.textTypo}>ชนิดของดิน</Text>
-                  <Image
-                    style={[
-                      styles.systemIconscollapseExpand,
-                      styles.systemLayout,
-                    ]}
-                    resizeMode="cover"
-                    source={require("../assets/1-system-iconscollapseexpand.png")}
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={styles.input2}>
-            <View style={styles.input}>
-              <View style={styles.label}>
-                <Text style={styles.label1}>แหล่งน้ำที่ใช้</Text>
-                <Image
-                  style={styles.iconStatus}
-                  resizeMode="cover"
-                  source={require("../assets/icon-status2.png")}
-                />
-              </View>
-              <View style={[styles.input1, styles.inputSpaceBlock]}>
-                <View style={[styles.dropdown, styles.dropdownBorder]}>
-                  <Text style={styles.textTypo}>แหล่งน้ำที่ใช้</Text>
-                  <Image
-                    style={[
-                      styles.systemIconscollapseExpand,
-                      styles.systemLayout,
-                    ]}
-                    resizeMode="cover"
-                    source={require("../assets/1-system-iconscollapseexpand.png")}
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={styles.input2}>
-            <View style={styles.input}>
-              <View style={styles.label}>
-                <Text style={styles.label1}>วิธีการปลูก</Text>
-                <Image
-                  style={styles.iconStatus}
-                  resizeMode="cover"
-                  source={require("../assets/icon-status2.png")}
-                />
-              </View>
-              <View style={[styles.input1, styles.inputSpaceBlock]}>
-                <View style={[styles.dropdown, styles.dropdownBorder]}>
-                  <Text style={styles.textTypo}>วิธีการปลูก</Text>
-                  <Image
-                    style={[
-                      styles.systemIconscollapseExpand,
-                      styles.systemLayout,
-                    ]}
-                    resizeMode="cover"
-                    source={require("../assets/1-system-iconscollapseexpand.png")}
-                  />
-                </View>
-              </View>
-            </View>
-          </View>
-          <View style={styles.input2}>
-            <View style={styles.label}>
-              <Text style={styles.label1}>สถานที่แปลง</Text>
-              <Image
-                style={styles.iconStatus}
-                resizeMode="cover"
-                source={require("../assets/icon-status2.png")}
-              />
-            </View>
-            <View style={[styles.input11, styles.inputSpaceBlock]}>
-              <View style={[styles.datepicker, styles.dropdownBorder]}>
-                <Text style={styles.textTypo}>สถานที่แปลง</Text>
-                <Image
-                  style={[
-                    styles.systemIconscollapseExpand,
-                    styles.systemLayout,
-                  ]}
-                  resizeMode="cover"
-                  source={require("../assets/1-system-iconslocation.png")}
-                />
-              </View>
-            </View>
-          </View>
+        <View style={styles.topCommandOnPreview}>
+          <Text style={styles.text1}>Page 1 of 100</Text>
+          <Image
+            style={[styles.dividerIcon, styles.dividerIconSpaceBlock]}
+            resizeMode="cover"
+            source={require("../assets/divider1.png")}
+          />
+          <Image
+            style={[
+              styles.systemIconszoomInZoomOut,
+              styles.dividerIconSpaceBlock,
+            ]}
+            resizeMode="cover"
+            source={require("../assets/1-system-iconszoom-in-zoom-out2.png")}
+          />
+          <Image
+            style={[
+              styles.systemIconszoomInZoomOut,
+              styles.dividerIconSpaceBlock,
+            ]}
+            resizeMode="cover"
+            source={require("../assets/1-system-iconsfullscreen1.png")}
+          />
+          <Image
+            style={[
+              styles.systemIconszoomInZoomOut,
+              styles.dividerIconSpaceBlock,
+            ]}
+            resizeMode="cover"
+            source={require("../assets/1-system-iconszoom-in-zoom-out3.png")}
+          />
         </View>
-      </View>
-      <View style={styles.buttonParent}>
-        <View style={[styles.button, styles.buttonFlexBox]}>
-          <Text style={[styles.button1, styles.buttonTypo]}>ยกเลิก</Text>
-        </View>
-        <Pressable
-          style={[styles.button2, styles.buttonFlexBox]}
-          onPress={() => navigation.navigate("Screen2")}
-        >
-          <Text style={[styles.button3, styles.buttonTypo]}>สร้างแปลง</Text>
-        </Pressable>
       </View>
     </ScrollView>
   );
@@ -191,122 +82,81 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
   },
-  inputSpaceBlock: {
-    marginTop: 4,
-    alignSelf: "stretch",
+  iconLayout: {
+    maxWidth: "100%",
+    width: "100%",
   },
-  dropdownBorder: {
-    paddingVertical: Padding.p_5xs,
-    borderWidth: 1,
-    borderColor: Color.colorGainsboro_100,
-    borderStyle: "solid",
-    flexDirection: "row",
-    paddingHorizontal: Padding.p_base,
-    alignItems: "center",
-    borderRadius: Border.br_5xs,
-    backgroundColor: Color.surfaceColourWhiteSurface,
+  dividerIconSpaceBlock: {
+    marginLeft: 16,
+    overflow: "hidden",
   },
-  systemLayout: {
+  icon: {
+    height: "100%",
+    width: "100%",
+  },
+  iconixtolinearreturnKeyLayout: {
     height: 24,
     width: 24,
   },
-  textTypo: {
-    color: Color.descriptiveTextColourTextLighter400,
-    lineHeight: 24,
-    textAlign: "left",
-    fontFamily: FontFamily.inputTextFieldPlaceholderIN4Regular,
-    fontSize: FontSize.inputTextFieldPlaceholderIN4Regular_size,
-    flex: 1,
-  },
-  buttonFlexBox: {
-    paddingVertical: Padding.p_3xs,
-    paddingHorizontal: Padding.p_xl,
-    justifyContent: "center",
-    height: 44,
-    borderRadius: Border.br_8xs,
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-  },
-  buttonTypo: {
-    textTransform: "capitalize",
-    fontSize: FontSize.bodyB5Regular_size,
-    textAlign: "left",
-    fontFamily: FontFamily.bodyBH5SemiBold,
-    fontWeight: "600",
-  },
   text: {
-    fontSize: FontSize.bodyBH3SemiBold_size,
+    fontSize: FontSize.titleT4SemiBold_size,
     lineHeight: 28,
+    fontWeight: "600",
+    fontFamily: FontFamily.buttonBT5SemiBold,
     color: Color.labelColorLightPrimary,
     textAlign: "center",
-    fontFamily: FontFamily.bodyBH5SemiBold,
-    fontWeight: "600",
     flex: 1,
   },
-  basilIconsoutlineoutlinegeParent: {
+  iconixtolinearreturnKeyParent: {
+    width: 328,
     justifyContent: "space-between",
     flexDirection: "row",
-    width: 382,
+    alignItems: "center",
   },
-  label1: {
-    lineHeight: 20,
-    color: Color.descriptiveTextColourTextNormal700,
-    textAlign: "left",
-    fontFamily: FontFamily.inputTextFieldPlaceholderIN4Regular,
-    fontSize: FontSize.inputTextFieldPlaceholderIN4Regular_size,
-    flex: 1,
-  },
-  iconStatus: {
-    width: 20,
-    height: 20,
-    marginLeft: 8,
-    display: "none",
-  },
-  label: {
+  image16Icon: {
+    height: 470,
+    marginTop: 30,
     alignSelf: "stretch",
-    flexDirection: "row",
-  },
-  systemIconshome: {
-    display: "none",
     overflow: "hidden",
+    maxWidth: "100%",
+  },
+  frameGroup: {
+    alignSelf: "stretch",
   },
   text1: {
-    marginLeft: 8,
+    fontSize: FontSize.labelLB4Regular_size,
+    lineHeight: 24,
+    fontFamily: FontFamily.labelLB4Regular,
+    color: Color.descriptiveTextColourTextLight500,
+    textAlign: "left",
   },
-  textfield: {
-    flex: 1,
+  dividerIcon: {
+    maxHeight: "100%",
+    alignSelf: "stretch",
+    maxWidth: "100%",
+    width: "100%",
   },
-  input1: {
+  systemIconszoomInZoomOut: {
+    height: 24,
+    width: 24,
+  },
+  topCommandOnPreview: {
+    borderRadius: Border.br_980xl,
+    shadowColor: "rgba(59, 89, 152, 0.1)",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowRadius: 15,
+    elevation: 15,
+    shadowOpacity: 1,
+    paddingVertical: Padding.p_5xs,
+    marginTop: 8,
     flexDirection: "row",
-  },
-  input: {
-    alignSelf: "stretch",
-  },
-  input2: {
-    alignSelf: "stretch",
-    marginTop: 8,
-  },
-  systemIconscollapseExpand: {
-    marginLeft: 8,
-    overflow: "hidden",
-  },
-  dropdown: {
-    alignSelf: "stretch",
-    flex: 1,
-  },
-  datepicker: {
-    alignSelf: "stretch",
-  },
-  input11: {
-    borderRadius: Border.br_5xs,
-    marginTop: 4,
-  },
-  inputParent: {
-    marginTop: 8,
-    width: 382,
+    paddingHorizontal: Padding.p_base,
+    backgroundColor: Color.surfaceColourWhiteSurface,
   },
   frameParent: {
     width: 412,
@@ -314,31 +164,10 @@ const styles = StyleSheet.create({
     paddingBottom: Padding.p_5xs,
     paddingHorizontal: Padding.p_base,
     alignItems: "center",
-    borderRadius: Border.br_5xs,
-    backgroundColor: Color.surfaceColourWhiteSurface,
-  },
-  button1: {
-    color: Color.primary600,
-  },
-  button: {
-    backgroundColor: Color.primary100,
-  },
-  button3: {
-    color: Color.surfaceColourWhiteSurface,
-  },
-  button2: {
-    backgroundColor: Color.primary500,
-    marginLeft: 8,
-  },
-  buttonParent: {
-    marginTop: 148,
-    flexDirection: "row",
-    width: 382,
   },
   scrollview: {
-    width: "100%",
-    maxWidth: "100%",
     overflow: "hidden",
+    maxWidth: "100%",
     flex: 1,
     backgroundColor: Color.surfaceColourWhiteSurface,
   },

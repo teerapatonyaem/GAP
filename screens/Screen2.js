@@ -1,18 +1,8 @@
 import * as React from "react";
-import {
-  ScrollView,
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Padding, FontFamily, Color, Border, FontSize } from "../GlobalStyles";
+import { ScrollView, Image, StyleSheet, View, Text } from "react-native";
+import { FontFamily, Border, Padding, FontSize, Color } from "../GlobalStyles";
 
 const Screen2 = () => {
-  const navigation = useNavigation();
-
   return (
     <ScrollView
       style={[styles.scrollview, styles.scrollviewLayout]}
@@ -20,190 +10,156 @@ const Screen2 = () => {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.scrollViewContent}
     >
-      <View style={[styles.inner, styles.tabsSpaceBlock]}>
+      <View style={styles.inner}>
         <View style={styles.frameParent}>
           <View style={styles.frameGroup}>
             <View style={styles.avatarParent}>
               <View style={styles.avatar}>
                 <Image
                   style={[
-                    styles.circle40invisibleIcon,
+                    styles.circle64invisibleIcon,
                     styles.scrollviewLayout,
                   ]}
                   resizeMode="cover"
-                  source={require("../assets/circle40invisible.png")}
+                  source={require("../assets/circle64invisible.png")}
                 />
               </View>
-              <View style={styles.parent}>
-                <Text style={styles.text}>สวัสดี</Text>
-                <Text style={styles.text}>เกษตรกร</Text>
-              </View>
+              <Text style={[styles.text, styles.textTypo1]}>นายเกษตรกร</Text>
             </View>
-            <View style={styles.systemIconssettingParent}>
-              <Image
-                style={styles.systemLayout}
-                resizeMode="cover"
-                source={require("../assets/1-system-iconssetting.png")}
-              />
-              <Image
-                style={[styles.systemIconsnotification, styles.systemLayout]}
-                resizeMode="cover"
-                source={require("../assets/1-system-iconsnotification.png")}
-              />
+            <View style={[styles.wrapper, styles.wrapperFlexBox]}>
+              <Text style={[styles.text1, styles.textTypo1]}>แก้ไขโปรไฟล์</Text>
             </View>
           </View>
-          <Pressable
-            style={[styles.image31Parent, styles.parentSpaceBlock]}
-            onPress={() => navigation.navigate("Screen1")}
-          >
-            <Image
-              style={styles.image31Icon}
-              resizeMode="cover"
-              source={require("../assets/image-311.png")}
-            />
+          <View style={[styles.frameContainer, styles.frameContainerFlexBox]}>
             <View style={styles.parent}>
               <Text style={[styles.text2, styles.textTypo]}>
-                นาแปลงใหญ่กลุ่มเขียว
+                ชื่อ - นามสกุล
               </Text>
-              <View style={styles.frameContainer}>
-                <View style={[styles.wrapper, styles.frameFlexBox]}>
-                  <Text style={styles.text3}>12 ไร่ 1 งาน</Text>
-                </View>
-                <View style={[styles.container, styles.frameFlexBox]}>
-                  <Text style={styles.text3}>ปลูก 15/11/2566</Text>
-                </View>
-                <View style={[styles.frame, styles.frameFlexBox]}>
-                  <Text style={styles.text3}>เก็บ 15/11/2566</Text>
-                </View>
-              </View>
+              <Text style={[styles.text3, styles.textSpaceBlock]}>
+                นายเกษตรกร มั่งมี
+              </Text>
+              <Text style={[styles.text4, styles.textSpaceBlock]}>
+                เลขที่บัตรประจำตัวประชาชน
+              </Text>
+              <Text style={[styles.text3, styles.textSpaceBlock]}>
+                113610905008-3
+              </Text>
             </View>
-          </Pressable>
-          <View style={[styles.carousel, styles.tabsSpaceBlock]}>
-            <View style={styles.systemIconssettingParent}>
-              <Image
-                style={styles.bulletIconLayout}
-                resizeMode="cover"
-                source={require("../assets/activeon-dark-modeoff.png")}
-              />
-              <Image
-                style={[styles.bulletIcon1, styles.bulletIconLayout]}
-                resizeMode="cover"
-                source={require("../assets/activeoff-dark-modeoff.png")}
-              />
-              <Image
-                style={[styles.bulletIcon1, styles.bulletIconLayout]}
-                resizeMode="cover"
-                source={require("../assets/activeoff-dark-modeoff.png")}
-              />
-            </View>
-          </View>
-          <View style={styles.frameView}>
-            <Text style={[styles.text6, styles.textTypo]}>จัดการแปลง</Text>
-            <View style={[styles.frameParent1, styles.layout1FlexBox]}>
-              <View style={styles.parentFlexBox}>
-                <Image
-                  style={styles.systemIconsaddLayout}
-                  resizeMode="cover"
-                  source={require("../assets/iconixtolinearplant21.png")}
-                />
-                <Text style={[styles.text7, styles.text7Typo]}>แผนปลูก</Text>
+            <View style={styles.frameView}>
+              <View style={styles.parent}>
+                <Text style={[styles.text6, styles.textTypo]}>
+                  สำเนาทะเบียนบ้าน
+                </Text>
+                <View
+                  style={[
+                    styles.attachFileParent,
+                    styles.frameContainerFlexBox,
+                  ]}
+                >
+                  <Text style={[styles.attachFile, styles.textTypo]}>
+                    Attach file
+                  </Text>
+                  <View style={[styles.uploadWrapper, styles.wrapperFlexBox]}>
+                    <Text style={[styles.upload, styles.textTypo]}>Upload</Text>
+                  </View>
+                </View>
               </View>
-              <View
-                style={[
-                  styles.basilIconssolidsolidcommunParent,
-                  styles.parentFlexBox,
-                ]}
-              >
-                <Image
-                  style={styles.systemIconsaddLayout}
-                  resizeMode="cover"
-                  source={require("../assets/basil-iconssolidsolidcommunicationuser.png")}
-                />
-                <Text style={[styles.text7, styles.text7Typo]}>สมาชิก</Text>
+              <View style={styles.textSpaceBlock}>
+                <Text style={[styles.text6, styles.textTypo]}>
+                  สำเนาบัตรประชาชน
+                </Text>
+                <View
+                  style={[
+                    styles.attachFileParent,
+                    styles.frameContainerFlexBox,
+                  ]}
+                >
+                  <Text style={[styles.attachFile, styles.textTypo]}>
+                    Attach file
+                  </Text>
+                  <View style={[styles.uploadWrapper, styles.wrapperFlexBox]}>
+                    <Text style={[styles.upload, styles.textTypo]}>Upload</Text>
+                  </View>
+                </View>
               </View>
-            </View>
-            <View style={[styles.frameParent1, styles.layout1FlexBox]}>
-              <View style={styles.parentFlexBox}>
-                <Image
-                  style={styles.systemIconsaddLayout}
-                  resizeMode="cover"
-                  source={require("../assets/basil-iconsoutlineoutlinefilesclipboardalt.png")}
-                />
-                <Text style={[styles.text7, styles.text7Typo]}>สำรวจ</Text>
-              </View>
-              <View
-                style={[
-                  styles.basilIconssolidsolidcommunParent,
-                  styles.parentFlexBox,
-                ]}
-              >
-                <Image
-                  style={styles.systemIconsaddLayout}
-                  resizeMode="cover"
-                  source={require("../assets/basil-iconsoutlineoutlinefilesfiledownload.png")}
-                />
-                <Text style={[styles.text7, styles.text7Typo]}>GAP</Text>
+              <View style={styles.textSpaceBlock}>
+                <Text style={[styles.text8, styles.textTypo]}>
+                  การจดทะเบียนนิติบุคคล
+                </Text>
+                <View
+                  style={[
+                    styles.attachFileParent,
+                    styles.frameContainerFlexBox,
+                  ]}
+                >
+                  <Text style={[styles.attachFile, styles.textTypo]}>
+                    Attach file
+                  </Text>
+                  <View style={[styles.uploadWrapper, styles.wrapperFlexBox]}>
+                    <Text style={[styles.upload, styles.textTypo]}>Upload</Text>
+                  </View>
+                </View>
               </View>
             </View>
           </View>
         </View>
       </View>
-      <View style={[styles.tabbar, styles.tabsSpaceBlock]}>
-        <View style={[styles.tabs, styles.tabsSpaceBlock]}>
-          <View style={[styles.layout1, styles.layout1FlexBox]}>
+      <View style={styles.tabbar}>
+        <View style={styles.tabs}>
+          <View style={styles.layout}>
             <View style={styles.tabbarTab}>
               <Image
                 style={styles.menuIcon}
                 resizeMode="cover"
                 source={require("../assets/menu-icon7.png")}
               />
-              <Text style={[styles.label, styles.text7Typo]}>รับ-จ่าย</Text>
+              <Text style={styles.label}>รับ-จ่าย</Text>
             </View>
           </View>
-          <View style={[styles.layout1, styles.layout1FlexBox]}>
+          <View style={styles.layout}>
             <View style={styles.tabbarTab}>
               <Image
                 style={styles.menuIcon}
                 resizeMode="cover"
                 source={require("../assets/menu-icon8.png")}
               />
-              <Text style={[styles.label, styles.text7Typo]}>สถานนะ</Text>
+              <Text style={styles.label}>สถานนะ</Text>
             </View>
           </View>
-          <View style={[styles.layout1, styles.layout1FlexBox]}>
+          <View style={styles.layout}>
             <View style={styles.tabbarTab2}>
               <View style={styles.menuIcon2}>
                 <Image
-                  style={[styles.systemIconsadd, styles.systemIconsaddLayout]}
+                  style={styles.systemIconsadd}
                   resizeMode="cover"
                   source={require("../assets/1-system-iconsadd.png")}
                 />
                 <Image
-                  style={[styles.alertOnTabbarIcon, styles.bulletIconLayout]}
+                  style={styles.alertOnTabbarIcon}
                   resizeMode="cover"
                   source={require("../assets/alert-on-tabbar1.png")}
                 />
               </View>
             </View>
           </View>
-          <View style={[styles.layout1, styles.layout1FlexBox]}>
+          <View style={styles.layout}>
             <View style={styles.tabbarTab}>
               <Image
                 style={styles.menuIcon}
                 resizeMode="cover"
                 source={require("../assets/menu-icon9.png")}
               />
-              <Text style={[styles.label, styles.text7Typo]}>รู้ข้าว</Text>
+              <Text style={styles.label}>รู้ข้าว</Text>
             </View>
           </View>
-          <View style={[styles.layout1, styles.layout1FlexBox]}>
+          <View style={styles.layout}>
             <View style={styles.tabbarTab}>
               <Image
                 style={styles.menuIcon}
                 resizeMode="cover"
                 source={require("../assets/menu-icon10.png")}
               />
-              <Text style={[styles.label, styles.text7Typo]}>โปรไฟล์</Text>
+              <Text style={styles.label}>โปรไฟล์</Text>
             </View>
           </View>
         </View>
@@ -228,63 +184,33 @@ const styles = StyleSheet.create({
     width: "100%",
     overflow: "hidden",
   },
-  tabsSpaceBlock: {
-    paddingHorizontal: Padding.p_base,
+  textTypo1: {
+    textAlign: "left",
+    fontFamily: FontFamily.buttonBT5SemiBold,
+    fontWeight: "600",
+  },
+  wrapperFlexBox: {
+    borderRadius: Border.br_5xs,
+    flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
   },
-  systemLayout: {
-    height: 24,
-    width: 24,
-    overflow: "hidden",
-  },
-  parentSpaceBlock: {
-    paddingHorizontal: 0,
-    marginTop: 8,
-    paddingVertical: Padding.p_5xs,
+  frameContainerFlexBox: {
+    padding: Padding.p_5xs,
+    borderRadius: Border.br_5xs,
+    alignSelf: "stretch",
+    alignItems: "center",
   },
   textTypo: {
-    fontFamily: FontFamily.bodyBH5SemiBold,
-    fontWeight: "600",
+    fontSize: FontSize.labelLB4Regular_size,
     textAlign: "left",
     color: Color.labelColorLightPrimary,
+  },
+  textSpaceBlock: {
+    marginTop: 8,
     alignSelf: "stretch",
   },
-  frameFlexBox: {
-    paddingVertical: Padding.p_8xs,
-    paddingHorizontal: Padding.p_sm,
-    justifyContent: "center",
-    borderRadius: Border.br_5xs,
-    flexDirection: "row",
-    alignItems: "center",
-    overflow: "hidden",
-  },
-  bulletIconLayout: {
-    height: 8,
-    width: 8,
-  },
-  layout1FlexBox: {
-    justifyContent: "center",
-    flexDirection: "row",
-    alignSelf: "stretch",
-  },
-  text7Typo: {
-    marginTop: 4,
-    textAlign: "center",
-    fontSize: FontSize.bodyB6Regular_size,
-    fontFamily: FontFamily.inputTextFieldPlaceholderIN4Regular,
-  },
-  parentFlexBox: {
-    padding: Padding.p_5xs,
-    backgroundColor: Color.success50,
-    borderRadius: Border.br_5xs,
-    alignItems: "center",
-    flex: 1,
-  },
-  systemIconsaddLayout: {
-    height: 32,
-    width: 32,
-  },
-  circle40invisibleIcon: {
+  circle64invisibleIcon: {
     height: "100%",
     top: "0%",
     right: "0%",
@@ -295,146 +221,153 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   avatar: {
-    width: 40,
-    height: 40,
+    width: 64,
+    height: 64,
   },
   text: {
-    fontSize: FontSize.size_smi,
-    textAlign: "left",
-    fontFamily: FontFamily.inputTextFieldPlaceholderIN4Regular,
+    fontSize: FontSize.titleT4SemiBold_size,
+    marginLeft: 9,
     color: Color.labelColorLightPrimary,
-  },
-  parent: {
-    marginLeft: 8,
+    textAlign: "left",
+    lineHeight: 28,
   },
   avatarParent: {
     flexDirection: "row",
     alignItems: "center",
+    flex: 1,
   },
-  systemIconsnotification: {
-    marginLeft: 8,
-  },
-  systemIconssettingParent: {
-    flexDirection: "row",
-  },
-  frameGroup: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignSelf: "stretch",
-    alignItems: "center",
-  },
-  image31Icon: {
-    borderRadius: Border.br_base,
-    width: 88,
-    height: 58,
-  },
-  text2: {
-    fontSize: FontSize.bodyBH3SemiBold_size,
-    lineHeight: 26,
-  },
-  text3: {
-    lineHeight: 18,
-    fontSize: FontSize.bodyB6Regular_size,
-    textAlign: "left",
-    color: Color.labelColorLightPrimary,
-    fontFamily: FontFamily.inputTextFieldPlaceholderIN4Regular,
+  text1: {
+    fontSize: FontSize.buttonBT5SemiBold_size,
+    textTransform: "capitalize",
+    color: Color.surfaceColourWhiteSurface,
   },
   wrapper: {
-    backgroundColor: Color.primaryColourPrimaryCont,
-  },
-  container: {
-    backgroundColor: Color.secondaryColourSecondaryCont,
-    marginLeft: 8,
-  },
-  frame: {
-    backgroundColor: Color.warningColourWarningContainer100,
-    marginLeft: 8,
-  },
-  frameContainer: {
-    flexWrap: "wrap",
-    marginTop: 7,
-    flexDirection: "row",
-    alignSelf: "stretch",
-  },
-  image31Parent: {
-    shadowColor: "rgba(181, 201, 235, 0.15)",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowRadius: 6,
-    elevation: 6,
-    shadowOpacity: 1,
-    marginTop: 8,
+    backgroundColor: Color.primary500,
+    marginLeft: 28,
     paddingVertical: Padding.p_5xs,
-    borderRadius: Border.br_5xs,
-    paddingHorizontal: 0,
+    paddingHorizontal: Padding.p_base,
+  },
+  frameGroup: {
     flexDirection: "row",
     alignSelf: "stretch",
     alignItems: "center",
-    backgroundColor: Color.surfaceColourWhiteSurface,
   },
-  bulletIcon1: {
-    marginLeft: 6,
+  text2: {
+    fontFamily: FontFamily.buttonBT5SemiBold,
+    fontWeight: "600",
+    fontSize: FontSize.labelLB4Regular_size,
+    lineHeight: 28,
+    alignSelf: "stretch",
   },
-  carousel: {
-    marginTop: 8,
-    paddingVertical: Padding.p_5xs,
+  text3: {
+    fontFamily: FontFamily.labelLB4Regular,
+    fontSize: FontSize.labelLB4Regular_size,
+    textAlign: "left",
+    color: Color.labelColorLightPrimary,
+    lineHeight: 28,
+  },
+  text4: {
+    fontSize: FontSize.labelLB4Regular_size,
+    textAlign: "left",
+    color: Color.labelColorLightPrimary,
+    fontFamily: FontFamily.buttonBT5SemiBold,
+    fontWeight: "600",
+    lineHeight: 28,
+  },
+  parent: {
     alignSelf: "stretch",
   },
   text6: {
-    fontSize: FontSize.inputTextFieldPlaceholderIN4Regular_size,
+    fontFamily: FontFamily.buttonBT5SemiBold,
+    fontWeight: "600",
+    fontSize: FontSize.labelLB4Regular_size,
+    lineHeight: 28,
   },
-  text7: {
-    color: Color.labelColorLightPrimary,
-    marginTop: 4,
-    textAlign: "center",
-    alignSelf: "stretch",
+  attachFile: {
+    fontFamily: FontFamily.labelLB4Regular,
+    lineHeight: 28,
   },
-  basilIconssolidsolidcommunParent: {
-    marginLeft: 16,
+  upload: {
+    fontWeight: "500",
+    fontFamily: FontFamily.iBMPlexSansThaiMedium,
+    lineHeight: 28,
   },
-  frameParent1: {
-    marginTop: 8,
-    paddingVertical: Padding.p_5xs,
-    paddingHorizontal: 0,
+  uploadWrapper: {
+    paddingHorizontal: Padding.p_5xs,
+    paddingVertical: Padding.p_9xs,
+    backgroundColor: Color.surfaceColourWhiteSurface,
+  },
+  attachFileParent: {
+    backgroundColor: Color.gray50,
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
+  text8: {
+    lineHeight: 24,
+    fontFamily: FontFamily.buttonBT5SemiBold,
+    fontWeight: "600",
+    fontSize: FontSize.labelLB4Regular_size,
   },
   frameView: {
-    marginTop: 8,
+    marginTop: 24,
+    justifyContent: "center",
     alignSelf: "stretch",
+    alignItems: "center",
+  },
+  frameContainer: {
+    backgroundColor: Color.secondary50,
+    opacity: 0.8,
+    marginTop: 32,
+    justifyContent: "center",
   },
   frameParent: {
+    paddingHorizontal: 0,
+    paddingVertical: Padding.p_5xs,
+    justifyContent: "center",
     alignSelf: "stretch",
+    alignItems: "center",
   },
   inner: {
     width: 412,
     paddingTop: Padding.p_5xl,
     paddingBottom: Padding.p_5xs,
+    paddingHorizontal: Padding.p_base,
+    alignItems: "center",
   },
   menuIcon: {
     width: 28,
     height: 28,
   },
   label: {
+    fontSize: FontSize.bodyB6Regular_size,
     lineHeight: 14,
     color: Color.descriptiveTextColourTextLighter400,
+    textAlign: "center",
+    marginTop: 4,
+    fontFamily: FontFamily.labelLB4Regular,
   },
   tabbarTab: {
     alignItems: "center",
   },
-  layout1: {
+  layout: {
     alignItems: "flex-end",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "stretch",
     flex: 1,
   },
   systemIconsadd: {
+    width: 32,
+    height: 32,
     zIndex: 0,
     overflow: "hidden",
-    width: 32,
   },
   alertOnTabbarIcon: {
     top: -4,
     right: -4,
     borderRadius: Border.br_31xl,
+    width: 8,
+    height: 8,
     zIndex: 1,
     display: "none",
     position: "absolute",
@@ -451,6 +384,8 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     flexDirection: "row",
     alignSelf: "stretch",
+    paddingHorizontal: Padding.p_base,
+    alignItems: "center",
   },
   homeIndicator: {
     marginLeft: -67,
@@ -474,8 +409,10 @@ const styles = StyleSheet.create({
   },
   tabbar: {
     width: 414,
-    marginTop: 187,
+    marginTop: 68,
     paddingVertical: Padding.p_5xs,
+    paddingHorizontal: Padding.p_base,
+    alignItems: "center",
     backgroundColor: Color.surfaceColourWhiteSurface,
   },
   scrollview: {
