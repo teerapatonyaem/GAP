@@ -1,8 +1,11 @@
 import * as React from "react";
-import { View, Image, StyleSheet, Text } from "react-native";
+import { View, Image, StyleSheet, Text,Pressable  } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 
 const Addfield = () => {
+  const navigation = useNavigation();
+  
   return (
     <View style={styles.systemIconsaddCircleParent}>
       <View style={styles.systemIconsaddCircle}>
@@ -12,7 +15,9 @@ const Addfield = () => {
           source={require("../assets/vector5.png")}
         />
       </View>
+      <Pressable onPress={() => navigation.navigate("AndroidLarge2")}>
       <Text style={styles.text}>เพิ่มแปลง</Text>
+      </Pressable>
     </View>
   );
 };
