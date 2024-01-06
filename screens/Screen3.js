@@ -1,28 +1,35 @@
 import * as React from "react";
-import { Image, StyleSheet, Pressable, Text, View } from "react-native";
+import {
+  ScrollView,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Color, Padding, Border, FontFamily, FontSize } from "../GlobalStyles";
+import { Padding, Color, Border, FontFamily, FontSize } from "../GlobalStyles";
 
-const Fieldform = () => {
+const Screen3 = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.frameParent}>
-      <View style={styles.frameGroup}>
+    <ScrollView
+      style={styles.scrollview}
+      showsVerticalScrollIndicator={true}
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={styles.scrollViewContent}
+    >
+      <View style={styles.frameParent}>
         <View style={styles.basilIconsoutlineoutlinegeParent}>
-          <Pressable
-            style={styles.basilIconsoutlineoutlinege}
-            onPress={() => navigation.navigate("AndroidLarge6")}
-          >
-            <Image
-              style={styles.icon}
-              resizeMode="cover"
-              source={require("../assets/basil-iconsoutlineoutlinegeneralhome.png")}
-            />
-          </Pressable>
+          <Image
+            style={styles.systemLayout}
+            resizeMode="cover"
+            source={require("../assets/basil-iconsoutlineoutlinegeneralhome1.png")}
+          />
           <Text style={styles.text}>กรอกข้อมูลแปลง</Text>
         </View>
-        <View style={styles.parentSpaceBlock}>
+        <View style={styles.inputParent}>
           <View style={styles.input}>
             <View style={styles.label}>
               <Text style={styles.label1}>พันธุ์ข้าว</Text>
@@ -43,7 +50,7 @@ const Fieldform = () => {
               </View>
             </View>
           </View>
-          <View style={styles.parentSpaceBlock}>
+          <View style={styles.input2}>
             <View style={styles.label}>
               <Text style={styles.label1}>จำนวนพื้นที่</Text>
               <Image
@@ -57,7 +64,7 @@ const Fieldform = () => {
                 <Image
                   style={[styles.systemIconshome, styles.systemLayout]}
                   resizeMode="cover"
-                  source={require("../assets/1-system-iconshome1.png")}
+                  source={require("../assets/1-system-iconshome2.png")}
                 />
                 <Text style={[styles.text1, styles.textTypo]}>
                   จำนวนพื้นที่
@@ -65,7 +72,7 @@ const Fieldform = () => {
               </View>
             </View>
           </View>
-          <View style={styles.parentSpaceBlock}>
+          <View style={styles.input2}>
             <View style={styles.input}>
               <View style={styles.label}>
                 <Text style={styles.label1}>ชนิดของดิน</Text>
@@ -90,7 +97,7 @@ const Fieldform = () => {
               </View>
             </View>
           </View>
-          <View style={styles.parentSpaceBlock}>
+          <View style={styles.input2}>
             <View style={styles.input}>
               <View style={styles.label}>
                 <Text style={styles.label1}>แหล่งน้ำที่ใช้</Text>
@@ -115,7 +122,7 @@ const Fieldform = () => {
               </View>
             </View>
           </View>
-          <View style={styles.parentSpaceBlock}>
+          <View style={styles.input2}>
             <View style={styles.input}>
               <View style={styles.label}>
                 <Text style={styles.label1}>วิธีการปลูก</Text>
@@ -140,7 +147,7 @@ const Fieldform = () => {
               </View>
             </View>
           </View>
-          <View style={styles.parentSpaceBlock}>
+          <View style={styles.input2}>
             <View style={styles.label}>
               <Text style={styles.label1}>สถานที่แปลง</Text>
               <Image
@@ -165,39 +172,43 @@ const Fieldform = () => {
           </View>
         </View>
       </View>
-      <View style={[styles.buttonParent, styles.parentSpaceBlock]}>
+      <View style={styles.buttonParent}>
         <View style={[styles.button, styles.buttonFlexBox]}>
           <Text style={[styles.button1, styles.buttonTypo]}>ยกเลิก</Text>
         </View>
         <Pressable
           style={[styles.button2, styles.buttonFlexBox]}
-          onPress={() => navigation.navigate("AndroidLarge3")}
+          onPress={() => navigation.navigate("Screen2")}
         >
           <Text style={[styles.button3, styles.buttonTypo]}>สร้างแปลง</Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
   inputSpaceBlock: {
     marginTop: 4,
     alignSelf: "stretch",
   },
   dropdownBorder: {
+    paddingVertical: Padding.p_5xs,
     borderWidth: 1,
     borderColor: Color.colorGainsboro_100,
     borderStyle: "solid",
     flexDirection: "row",
-    paddingVertical: Padding.p_5xs,
-    alignItems: "center",
-    backgroundColor: Color.surfaceColourWhiteSurface,
-    borderRadius: Border.br_5xs,
     paddingHorizontal: Padding.p_base,
+    alignItems: "center",
+    borderRadius: Border.br_5xs,
+    backgroundColor: Color.surfaceColourWhiteSurface,
   },
   systemLayout: {
-    overflow: "hidden",
     height: 24,
     width: 24,
   },
@@ -209,19 +220,15 @@ const styles = StyleSheet.create({
     fontSize: FontSize.inputTextFieldPlaceholderIN4Regular_size,
     flex: 1,
   },
-  parentSpaceBlock: {
-    marginTop: 8,
-    alignSelf: "stretch",
-  },
   buttonFlexBox: {
     paddingVertical: Padding.p_3xs,
     paddingHorizontal: Padding.p_xl,
     justifyContent: "center",
     height: 44,
     borderRadius: Border.br_8xs,
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    flex: 1,
   },
   buttonTypo: {
     textTransform: "capitalize",
@@ -230,16 +237,8 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.bodyBH5SemiBold,
     fontWeight: "600",
   },
-  icon: {
-    width: "100%",
-    height: "100%",
-  },
-  basilIconsoutlineoutlinege: {
-    height: 24,
-    width: 24,
-  },
   text: {
-    fontSize: FontSize.headerH6SemiBold_size,
+    fontSize: FontSize.bodyBH3SemiBold_size,
     lineHeight: 28,
     color: Color.labelColorLightPrimary,
     textAlign: "center",
@@ -250,7 +249,7 @@ const styles = StyleSheet.create({
   basilIconsoutlineoutlinegeParent: {
     justifyContent: "space-between",
     flexDirection: "row",
-    alignSelf: "stretch",
+    width: 382,
   },
   label1: {
     lineHeight: 20,
@@ -267,19 +266,18 @@ const styles = StyleSheet.create({
     display: "none",
   },
   label: {
-    flexDirection: "row",
     alignSelf: "stretch",
+    flexDirection: "row",
   },
   systemIconshome: {
     display: "none",
+    overflow: "hidden",
   },
   text1: {
     marginLeft: 8,
   },
   textfield: {
     flex: 1,
-    borderColor: Color.colorGainsboro_100,
-    borderStyle: "solid",
   },
   input1: {
     flexDirection: "row",
@@ -287,14 +285,17 @@ const styles = StyleSheet.create({
   input: {
     alignSelf: "stretch",
   },
+  input2: {
+    alignSelf: "stretch",
+    marginTop: 8,
+  },
   systemIconscollapseExpand: {
     marginLeft: 8,
+    overflow: "hidden",
   },
   dropdown: {
-    flex: 1,
-    borderColor: Color.colorGainsboro_100,
-    borderStyle: "solid",
     alignSelf: "stretch",
+    flex: 1,
   },
   datepicker: {
     alignSelf: "stretch",
@@ -303,14 +304,18 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_5xs,
     marginTop: 4,
   },
-  frameGroup: {
-    height: 670,
-    paddingHorizontal: 0,
-    paddingVertical: Padding.p_5xs,
+  inputParent: {
+    marginTop: 8,
+    width: 382,
+  },
+  frameParent: {
+    width: 412,
+    paddingTop: Padding.p_5xl,
+    paddingBottom: Padding.p_5xs,
+    paddingHorizontal: Padding.p_base,
     alignItems: "center",
-    backgroundColor: Color.surfaceColourWhiteSurface,
     borderRadius: Border.br_5xs,
-    alignSelf: "stretch",
+    backgroundColor: Color.surfaceColourWhiteSurface,
   },
   button1: {
     color: Color.primary600,
@@ -326,14 +331,17 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   buttonParent: {
+    marginTop: 148,
     flexDirection: "row",
+    width: 382,
   },
-  frameParent: {
-    width: 360,
-    height: 523,
-    paddingVertical: 0,
-    paddingHorizontal: Padding.p_base,
+  scrollview: {
+    width: "100%",
+    maxWidth: "100%",
+    overflow: "hidden",
+    flex: 1,
+    backgroundColor: Color.surfaceColourWhiteSurface,
   },
 });
 
-export default Fieldform;
+export default Screen3;
