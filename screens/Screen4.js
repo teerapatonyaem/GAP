@@ -3,267 +3,108 @@ import {
   ScrollView,
   Image,
   StyleSheet,
-  Pressable,
   Text,
   View,
+  Pressable,
 } from "react-native";
+import Expenses from "../components/Expenses";
 import { useNavigation } from "@react-navigation/native";
-import { Padding, FontFamily, Color, FontSize, Border } from "../GlobalStyles";
+import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 
 const Screen4 = () => {
   const navigation = useNavigation();
 
   return (
     <ScrollView
-      style={[styles.scrollview, styles.scrollviewLayout]}
+      style={styles.scrollview}
       showsVerticalScrollIndicator={true}
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.scrollViewContent}
     >
-      <View style={[styles.frameParent, styles.searchSpaceBlock]}>
-        <View
-          style={[
-            styles.basilIconsoutlineoutlinegeParent,
-            styles.parentFlexBox,
-          ]}
-        >
+      <Expenses />
+      <View style={[styles.tabbar, styles.tabbarPosition]}>
+        <View style={[styles.tabs, styles.tabsLayout]}>
           <Pressable
-            style={styles.systemIconssearchLayout}
-            onPress={() => navigation.navigate("Screen11")}
+            style={styles.layout}
+            onPress={() => navigation.navigate("Screen4")}
           >
-            <Image
-              style={styles.icon}
-              resizeMode="cover"
-              source={require("../assets/basil-iconsoutlineoutlinegeneralhome.png")}
-            />
+            <View style={styles.tabbarTab}>
+              <Image
+                style={styles.iconLayout}
+                resizeMode="cover"
+                source={require("../assets/menu-icon4.png")}
+              />
+              <Text style={styles.label}>รับ-จ่าย</Text>
+            </View>
           </Pressable>
-          <Text style={[styles.text, styles.textTypo1]}>
-            องค์ความรู้เรื่องข้าว
-          </Text>
+          <Pressable
+            style={styles.layout}
+            onPress={() => navigation.navigate("Frame")}
+          >
+            <View style={styles.tabbarTab}>
+              <Image
+                style={styles.iconLayout}
+                resizeMode="cover"
+                source={require("../assets/menu-icon1.png")}
+              />
+              <Text style={styles.label}>สถานนะ</Text>
+            </View>
+          </Pressable>
+          <View style={styles.layout}>
+            <View style={styles.tabbarTab2}>
+              <View style={styles.menuIcon2}>
+                <Image
+                  style={styles.systemIconsadd}
+                  resizeMode="cover"
+                  source={require("../assets/1-system-iconsadd.png")}
+                />
+                <Image
+                  style={[styles.alertOnTabbarIcon, styles.tabbarPosition]}
+                  resizeMode="cover"
+                  source={require("../assets/alert-on-tabbar.png")}
+                />
+              </View>
+            </View>
+          </View>
+          <Pressable
+            style={styles.layout}
+            onPress={() => navigation.navigate("Screen5")}
+          >
+            <View style={styles.tabbarTab}>
+              <Image
+                style={styles.iconLayout}
+                resizeMode="cover"
+                source={require("../assets/menu-icon3.png")}
+              />
+              <Text style={styles.label}>รู้ข้าว</Text>
+            </View>
+          </Pressable>
+          <Pressable
+            style={styles.layout}
+            onPress={() => navigation.navigate("Screen7")}
+          >
+            <View style={styles.tabbarTab}>
+              <View style={styles.menuIcon2}>
+                <Image
+                  style={[styles.farmerIcon, styles.iconLayout]}
+                  resizeMode="cover"
+                  source={require("../assets/farmer.png")}
+                />
+                <Image
+                  style={[styles.alertOnTabbarIcon, styles.tabbarPosition]}
+                  resizeMode="cover"
+                  source={require("../assets/alert-on-tabbar1.png")}
+                />
+              </View>
+              <Text style={styles.label}>โปรไฟล์</Text>
+            </View>
+          </Pressable>
         </View>
-        <View style={[styles.input, styles.inputSpaceBlock]}>
-          <View style={styles.input1}>
-            <View style={[styles.search, styles.searchFlexBox]}>
-              <Image
-                style={[
-                  styles.systemIconssearch,
-                  styles.systemIconssearchLayout,
-                ]}
-                resizeMode="cover"
-                source={require("../assets/1-system-iconssearch.png")}
-              />
-              <Text style={[styles.text1, styles.text1SpaceBlock]}>ค้นหา</Text>
-            </View>
+        <View style={[styles.ioshomeindicator, styles.tabsLayout]}>
+          <View style={styles.iosHomeindicatorTheme}>
+            <View style={styles.homeIndicator} />
           </View>
         </View>
-        <Pressable
-          style={styles.inputSpaceBlock}
-          onPress={() => navigation.navigate("Screen3")}
-        >
-          <View style={styles.parentFlexBox}>
-            <Text style={[styles.text2, styles.textTypo1]}>ข้าวเจ้า</Text>
-            <Text style={[styles.text3, styles.textTypo]}>อื่นๆ</Text>
-          </View>
-          <View style={[styles.frameContainer, styles.searchFlexBox]}>
-            <View style={styles.flatIconbookParent}>
-              <Image
-                style={[styles.flatIconbook, styles.scrollviewLayout]}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>กข18</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>ปทุมธานี 60</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>พัทลุง 60</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>ดอกมะลิ</Text>
-              </View>
-            </View>
-          </View>
-        </Pressable>
-        <Pressable
-          style={styles.inputSpaceBlock}
-          onPress={() => navigation.navigate("Screen3")}
-        >
-          <View style={styles.parentFlexBox}>
-            <Text style={[styles.text2, styles.textTypo1]}>ข้าวเหนียว</Text>
-            <Text style={[styles.text3, styles.textTypo]}>อื่นๆ</Text>
-          </View>
-          <View style={[styles.frameContainer, styles.searchFlexBox]}>
-            <View style={styles.flatIconbookParent}>
-              <Image
-                style={[styles.flatIconbook, styles.scrollviewLayout]}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>อุบล 1</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>ดำหมอ 37</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>สันปาตอง</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>ดำช่อไม้</Text>
-              </View>
-            </View>
-          </View>
-        </Pressable>
-        <Pressable
-          style={styles.inputSpaceBlock}
-          onPress={() => navigation.navigate("Screen3")}
-        >
-          <View style={styles.parentFlexBox}>
-            <Text style={[styles.text2, styles.textTypo1]}>ข้าวน้ำลึก</Text>
-            <Text style={[styles.text3, styles.textTypo]}>อื่นๆ</Text>
-          </View>
-          <View style={[styles.frameContainer, styles.searchFlexBox]}>
-            <View style={styles.flatIconbookParent}>
-              <Image
-                style={[styles.flatIconbook, styles.scrollviewLayout]}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>
-                  ตะเภาแก้ว 161
-                </Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>นางฉลอง</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>เล็ปมือนาง</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>บ้านนา432</Text>
-              </View>
-            </View>
-          </View>
-        </Pressable>
-        <Pressable
-          style={styles.inputSpaceBlock}
-          onPress={() => navigation.navigate("Screen3")}
-        >
-          <View style={styles.parentFlexBox}>
-            <Text style={[styles.text2, styles.textTypo1]}>ข้าวขึ้นน้ำ</Text>
-            <Text style={[styles.text3, styles.textTypo]}>อื่นๆ</Text>
-          </View>
-          <View style={[styles.frameContainer, styles.searchFlexBox]}>
-            <View style={styles.flatIconbookParent}>
-              <Image
-                style={[styles.flatIconbook, styles.scrollviewLayout]}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>
-                  เหนียวอุบล 1
-                </Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>ดำหมอ 37</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>สันปาตอง</Text>
-              </View>
-            </View>
-            <View style={[styles.flatIconbookGroup, styles.text1SpaceBlock]}>
-              <Image
-                style={styles.flatIconbook1}
-                resizeMode="cover"
-                source={require("../assets/flaticonbook1.png")}
-              />
-              <View style={styles.wrapper}>
-                <Text style={[styles.text3, styles.textTypo]}>ดำช่อไม้</Text>
-              </View>
-            </View>
-          </View>
-        </Pressable>
       </View>
     </ScrollView>
   );
@@ -272,132 +113,112 @@ const Screen4 = () => {
 const styles = StyleSheet.create({
   scrollViewContent: {
     flexDirection: "column",
+    paddingTop: 28,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
-  scrollviewLayout: {
-    maxWidth: "100%",
-    overflow: "hidden",
-    width: "100%",
+  tabbarPosition: {
+    zIndex: 1,
+    position: "absolute",
   },
-  searchSpaceBlock: {
-    paddingHorizontal: Padding.p_base,
+  tabsLayout: {
+    width: 375,
     alignItems: "center",
   },
-  parentFlexBox: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignSelf: "stretch",
+  iconLayout: {
+    height: 28,
+    width: 28,
   },
-  textTypo1: {
-    fontFamily: FontFamily.buttonBT5SemiBold,
-    fontWeight: "600",
-    color: Color.labelColorLightPrimary,
-  },
-  inputSpaceBlock: {
-    marginTop: 8,
-    alignSelf: "stretch",
-  },
-  searchFlexBox: {
-    flexDirection: "row",
-    alignSelf: "stretch",
-  },
-  systemIconssearchLayout: {
-    height: 24,
-    width: 24,
-  },
-  text1SpaceBlock: {
-    marginLeft: 8,
-    flex: 1,
-  },
-  textTypo: {
-    fontFamily: FontFamily.labelLB4Regular,
-    textAlign: "left",
-  },
-  icon: {
-    height: "100%",
-    width: "100%",
-  },
-  text: {
-    fontSize: FontSize.titleT4SemiBold_size,
-    lineHeight: 28,
+  label: {
+    fontSize: FontSize.selectorS6SemiBold_size,
+    lineHeight: 14,
+    fontFamily: FontFamily.bodyB5Regular,
+    color: Color.walledGarden1000,
     textAlign: "center",
-    color: Color.labelColorLightPrimary,
-    flex: 1,
+    marginTop: 4,
   },
-  basilIconsoutlineoutlinegeParent: {
+  tabbarTab: {
     alignItems: "center",
   },
-  systemIconssearch: {
+  layout: {
+    alignSelf: "stretch",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    flexDirection: "row",
+    flex: 1,
+  },
+  systemIconsadd: {
+    width: 32,
+    height: 32,
+    zIndex: 0,
     overflow: "hidden",
   },
-  text1: {
-    fontSize: FontSize.labelLB4Regular_size,
-    lineHeight: 24,
-    color: Color.descriptiveTextColourTextLighter400,
-    textAlign: "left",
-    fontFamily: FontFamily.labelLB4Regular,
+  alertOnTabbarIcon: {
+    top: -4,
+    right: -4,
+    borderRadius: Border.br_31xl,
+    width: 8,
+    height: 8,
+    display: "none",
   },
-  search: {
-    borderStyle: "solid",
-    borderColor: Color.disableDefaultDisableDefault,
-    borderWidth: 1,
+  menuIcon2: {
+    flexDirection: "row",
+  },
+  tabbarTab2: {
+    padding: Padding.p_3xs,
+    flexDirection: "row",
+  },
+  farmerIcon: {
+    zIndex: 0,
+  },
+  tabs: {
+    height: 56,
+    paddingVertical: 0,
+    flexDirection: "row",
+    paddingHorizontal: Padding.p_base,
+  },
+  homeIndicator: {
+    marginLeft: -67,
+    bottom: 8,
+    left: "50%",
+    borderRadius: Border.br_81xl,
+    backgroundColor: Color.labelColorLightPrimary,
+    width: 134,
+    height: 5,
+    position: "absolute",
+  },
+  iosHomeindicatorTheme: {
+    width: 390,
+    height: 34,
+  },
+  ioshomeindicator: {
+    height: 34,
+    display: "none",
+  },
+  tabbar: {
+    bottom: 0,
+    left: 0,
+    borderRadius: Border.br_base,
+    shadowColor: "rgba(15, 172, 31, 0.24)",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowRadius: 8,
+    elevation: 8,
+    shadowOpacity: 1,
+    width: 412,
     paddingVertical: Padding.p_5xs,
-    borderRadius: Border.br_5xs,
     paddingHorizontal: Padding.p_base,
     alignItems: "center",
-    backgroundColor: Color.surfaceColourWhiteSurface,
-  },
-  input1: {
-    borderRadius: Border.br_5xs,
-    alignSelf: "stretch",
-  },
-  input: {
-    borderRadius: Border.br_5xs,
-  },
-  text2: {
-    fontSize: FontSize.buttonBT5SemiBold_size,
-    lineHeight: 22,
-    textAlign: "left",
-    color: Color.labelColorLightPrimary,
-  },
-  text3: {
-    fontSize: FontSize.bodyB6Regular_size,
-    lineHeight: 18,
-    textAlign: "left",
-    color: Color.labelColorLightPrimary,
-  },
-  flatIconbook: {
-    height: 80,
-    alignSelf: "stretch",
-  },
-  wrapper: {
-    marginTop: 5,
-  },
-  flatIconbookParent: {
-    alignItems: "center",
-    flex: 1,
-  },
-  flatIconbook1: {
-    width: 80,
-    height: 80,
-  },
-  flatIconbookGroup: {
-    alignItems: "center",
-  },
-  frameContainer: {
-    justifyContent: "center",
-    marginTop: 6,
-    overflow: "hidden",
-  },
-  frameParent: {
-    width: 412,
-    paddingTop: Padding.p_5xl,
-    paddingBottom: Padding.p_5xs,
+    backgroundColor: Color.baseColourWhite,
   },
   scrollview: {
+    width: "100%",
+    maxWidth: "100%",
+    overflow: "hidden",
     flex: 1,
-    backgroundColor: Color.surfaceColourWhiteSurface,
+    backgroundColor: Color.baseColourWhite,
   },
 });
 

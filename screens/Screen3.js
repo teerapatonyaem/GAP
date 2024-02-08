@@ -1,78 +1,32 @@
 import * as React from "react";
-import {
-  ScrollView,
-  Image,
-  StyleSheet,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, View, Text, Pressable } from "react-native";
+import GAPGuarantee from "../components/GAPGuarantee";
 import { useNavigation } from "@react-navigation/native";
-import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
+import { Padding, Border, FontFamily, FontSize, Color } from "../GlobalStyles";
 
 const Screen3 = () => {
   const navigation = useNavigation();
 
   return (
     <ScrollView
-      style={[styles.scrollview, styles.iconLayout]}
+      style={styles.scrollview}
       showsVerticalScrollIndicator={true}
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.scrollViewContent}
     >
-      <View style={styles.frameParent}>
-        <View style={styles.frameGroup}>
-          <View style={styles.iconixtolinearreturnKeyParent}>
-            <Pressable
-              style={styles.iconixtolinearreturnKeyLayout}
-              onPress={() => navigation.navigate("Screen4")}
-            >
-              <Image
-                style={styles.icon}
-                resizeMode="cover"
-                source={require("../assets/iconixtolinearreturnkey.png")}
-              />
-            </Pressable>
-            <Text style={styles.text}>องค์ความรู้เรื่องข้าว</Text>
-          </View>
-          <Image
-            style={[styles.image16Icon, styles.iconLayout]}
-            resizeMode="cover"
-            source={require("../assets/image-16.png")}
-          />
+      <View style={styles.inner}>
+        <GAPGuarantee />
+      </View>
+      <View style={styles.buttonParent}>
+        <View style={[styles.button, styles.buttonLayout]}>
+          <Text style={[styles.button1, styles.buttonTypo]}>ยกเลิก</Text>
         </View>
-        <View style={styles.topCommandOnPreview}>
-          <Text style={styles.text1}>Page 1 of 100</Text>
-          <Image
-            style={[styles.dividerIcon, styles.dividerIconSpaceBlock]}
-            resizeMode="cover"
-            source={require("../assets/divider1.png")}
-          />
-          <Image
-            style={[
-              styles.systemIconszoomInZoomOut,
-              styles.dividerIconSpaceBlock,
-            ]}
-            resizeMode="cover"
-            source={require("../assets/1-system-iconszoom-in-zoom-out2.png")}
-          />
-          <Image
-            style={[
-              styles.systemIconszoomInZoomOut,
-              styles.dividerIconSpaceBlock,
-            ]}
-            resizeMode="cover"
-            source={require("../assets/1-system-iconsfullscreen1.png")}
-          />
-          <Image
-            style={[
-              styles.systemIconszoomInZoomOut,
-              styles.dividerIconSpaceBlock,
-            ]}
-            resizeMode="cover"
-            source={require("../assets/1-system-iconszoom-in-zoom-out3.png")}
-          />
-        </View>
+        <Pressable
+          style={[styles.button2, styles.buttonLayout]}
+          onPress={() => navigation.navigate("Frame")}
+        >
+          <Text style={[styles.button3, styles.buttonTypo]}>ยื่น GAP</Text>
+        </Pressable>
       </View>
     </ScrollView>
   );
@@ -84,92 +38,56 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  iconLayout: {
-    maxWidth: "100%",
-    width: "100%",
-  },
-  dividerIconSpaceBlock: {
-    marginLeft: 16,
-    overflow: "hidden",
-  },
-  icon: {
-    height: "100%",
-    width: "100%",
-  },
-  iconixtolinearreturnKeyLayout: {
-    height: 24,
-    width: 24,
-  },
-  text: {
-    fontSize: FontSize.titleT4SemiBold_size,
-    lineHeight: 28,
-    fontWeight: "600",
-    fontFamily: FontFamily.buttonBT5SemiBold,
-    color: Color.labelColorLightPrimary,
-    textAlign: "center",
-    flex: 1,
-  },
-  iconixtolinearreturnKeyParent: {
-    width: 328,
-    justifyContent: "space-between",
-    flexDirection: "row",
+  buttonLayout: {
+    paddingVertical: Padding.p_3xs,
+    paddingHorizontal: Padding.p_21xl,
+    height: 44,
+    width: 182,
+    borderRadius: Border.br_13xl,
+    justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
   },
-  image16Icon: {
-    height: 470,
-    marginTop: 30,
-    alignSelf: "stretch",
-    overflow: "hidden",
-    maxWidth: "100%",
-  },
-  frameGroup: {
-    alignSelf: "stretch",
-  },
-  text1: {
-    fontSize: FontSize.labelLB4Regular_size,
-    lineHeight: 24,
-    fontFamily: FontFamily.labelLB4Regular,
-    color: Color.descriptiveTextColourTextLight500,
+  buttonTypo: {
     textAlign: "left",
+    fontFamily: FontFamily.buttonSmall,
+    fontWeight: "500",
+    textTransform: "capitalize",
+    fontSize: FontSize.buttonRegular_size,
   },
-  dividerIcon: {
-    maxHeight: "100%",
-    alignSelf: "stretch",
-    maxWidth: "100%",
-    width: "100%",
+  inner: {
+    paddingHorizontal: 0,
+    paddingVertical: Padding.p_9xl,
   },
-  systemIconszoomInZoomOut: {
-    height: 24,
-    width: 24,
+  button1: {
+    color: Color.brightLightGreen900,
   },
-  topCommandOnPreview: {
-    borderRadius: Border.br_980xl,
-    shadowColor: "rgba(59, 89, 152, 0.1)",
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowRadius: 15,
-    elevation: 15,
-    shadowOpacity: 1,
-    paddingVertical: Padding.p_5xs,
-    marginTop: 8,
-    flexDirection: "row",
-    paddingHorizontal: Padding.p_base,
-    backgroundColor: Color.surfaceColourWhiteSurface,
+  button: {
+    borderStyle: "solid",
+    borderColor: Color.colorDarkslategray_100,
+    borderWidth: 1.5,
   },
-  frameParent: {
+  button3: {
+    color: Color.baseColourWhite,
+  },
+  button2: {
+    backgroundColor: Color.walledGarden1000,
+    marginLeft: 16,
+  },
+  buttonParent: {
     width: 412,
-    paddingTop: Padding.p_5xl,
-    paddingBottom: Padding.p_5xs,
     paddingHorizontal: Padding.p_base,
+    paddingVertical: Padding.p_5xs,
+    marginTop: 21,
+    justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
   },
   scrollview: {
-    overflow: "hidden",
-    maxWidth: "100%",
+    backgroundColor: Color.baseColourWhite,
     flex: 1,
-    backgroundColor: Color.surfaceColourWhiteSurface,
+    width: "100%",
+    maxWidth: "100%",
   },
 });
 
