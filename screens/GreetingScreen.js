@@ -1,19 +1,9 @@
 import * as React from "react";
-import {
-  ImageBackground,
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  Image,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import SmallSizeTrueStyleSolid1 from "../components/SmallSizeTrueStyleSolid1";
+import { ImageBackground, StyleSheet, View, Text } from "react-native";
+import Greetingbutton from "../components/Greetingbutton";
 import { FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
 
 const GreetingScreen = () => {
-  const navigation = useNavigation();
-
   return (
     <View style={styles.greetingscreen}>
       <View style={[styles.groupParent, styles.groupParentPosition]}>
@@ -36,18 +26,7 @@ const GreetingScreen = () => {
           <Text style={styles.goodAgriculturalPractices1}>{`ยินดีต้อนรับเข้าสู่ 
 Good Agricultural Practices
  ขอให้ท่าสนุกกับการทำฟาร์ม `}</Text>
- 
- <Pressable
-      style={styles.button}
-      onPress={() => navigation.navigate("Login")}
-    >
-      <Text style={styles.button1}>Get started</Text>
-      <Image
-        style={styles.icons}
-        resizeMode="cover"
-        source={require("../assets/icons.png")}
-      />
-    </Pressable>
+          <Greetingbutton />
         </View>
       </View>
     </View>
@@ -104,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   greetingscreen: {
-    backgroundColor: Color.surfaceColourWhiteSurface,
+    backgroundColor: Color.gray00,
     flex: 1,
     width: "100%",
     height: 712,

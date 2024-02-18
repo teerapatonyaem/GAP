@@ -115,7 +115,8 @@ const LoginComponent = () => {
         style={[styles.button, styles.buttonSpaceBlock]}
         onPress={() => navigation.navigate("Home")}
       >
-        <Text style={[styles.button1, styles.text2Typo]}>Login</Text>
+        <Text style={[styles.button1, styles.text2Typo, { color: Color.baseColourWhite }]}>Login</Text>
+
       </Pressable>
       <Pressable
         style={styles.pressable}

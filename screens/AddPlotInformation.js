@@ -1,13 +1,13 @@
 import * as React from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import PlantSection from "../components/PlantSection";
-import CancelSection from "../components/CancelSection";
+import Otherplant from "../components/Otherplant";
+import Weed from "../components/Weed";
+import Plantdisease from "../components/Plantdisease";
+import Insect from "../components/Insect";
+import Addplotinformationbutton from "../components/Addplotinformationbutton";
 import { FontSize, FontFamily, Padding, Color } from "../GlobalStyles";
 
 const AddPlotInformation = () => {
-  const navigation = useNavigation();
-
   return (
     <ScrollView
       style={styles.addplotinformation}
@@ -16,36 +16,18 @@ const AddPlotInformation = () => {
       contentContainerStyle={styles.addPlotInformationScrollViewContent}
     >
       <View style={styles.frameParent}>
-        <PlantSection
-          plantTypeOrDisease="พืชชนิดอื่น"
-          otherPlantTypeOrDisease="พืชชนิดอื่น"
-        />
+        <Otherplant />
         <View style={styles.textSpaceBlock}>
-          <PlantSection
-            plantTypeOrDisease="วัชพืช"
-            otherPlantTypeOrDisease="วัชพืช"
-            inputMarginTop="unset"
-          />
-          <PlantSection
-            plantTypeOrDisease="โรคพืช"
-            otherPlantTypeOrDisease="โรคพืช"
-            inputMarginTop={8}
-          />
-          <PlantSection
-            plantTypeOrDisease="แมลง"
-            otherPlantTypeOrDisease="แมลง"
-            inputMarginTop={8}
-          />
+          <Weed />
+          <Plantdisease />
+          <Insect />
         </View>
         <Text style={[styles.text, styles.textSpaceBlock]}>{`หมายเหตุ
 ปริมาณน้อย = 1 ใน 4 / ไร่
 ปริมาณปานกลาง = 2 ใน 4 / ไร่
 ปริมาณมาก = 3 ใน 4 ขึ้นไป / ไร่`}</Text>
       </View>
-      <CancelSection
-        actionButtonText="เสร็จสิ้น"
-        onButtonPress={() => navigation.navigate("PlotSurvey")}
-      />
+      <Addplotinformationbutton />
     </ScrollView>
   );
 };
@@ -61,9 +43,9 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   text: {
-    fontSize: FontSize.selectorS6SemiBold_size,
+    fontSize: FontSize.bodyB6Regular_size,
     lineHeight: 14,
-    fontFamily: FontFamily.bodyB4Regular,
+    fontFamily: FontFamily.labelLB4Regular,
     color: "#ff0606",
     textAlign: "left",
   },
@@ -75,7 +57,7 @@ const styles = StyleSheet.create({
     paddingBottom: Padding.p_5xs,
   },
   addplotinformation: {
-    backgroundColor: Color.surfaceColourWhiteSurface,
+    backgroundColor: Color.primaryColourOnPrimary,
     flex: 1,
     width: "100%",
     overflow: "hidden",

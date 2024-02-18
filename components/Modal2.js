@@ -41,10 +41,11 @@ const Modal2 = ({ onClose }) => {
             onValueChange={(itemValue, itemIndex) => setSelectedValue1(itemValue)}
           >
             <Picker.Item label="พันธ์ุข้าว" value="" />
-            <Picker.Item label="0" value="0" />
-            <Picker.Item label="1" value="1" />
-            <Picker.Item label="2" value="2" />
-            <Picker.Item label="3" value="3" />
+            <Picker.Item label="กข 45" value="กข 45" />
+            <Picker.Item label="พลายงาม" value="พลายงาม" />
+            <Picker.Item label="เหลืองใหญ่ 48" value="เหลืองใหญ่ 48" />
+            <Picker.Item label="ปราจีนบุรี 1" value="ปราจีนบุรี 1" />
+            <Picker.Item label="ปราจีนบุรี 2" value="ปราจีนบุรี 2" />
           </Picker>
 
           <Text>จำนวนพื้นที่:</Text>
@@ -62,10 +63,10 @@ const Modal2 = ({ onClose }) => {
             onValueChange={(itemValue, itemIndex) => setSelectedValue2(itemValue)}
           >
             <Picker.Item label="ชนิดของดิน" value="" />
-            <Picker.Item label="0" value="0" />
-            <Picker.Item label="1" value="1" />
-            <Picker.Item label="2" value="2" />
-            <Picker.Item label="3" value="3" />
+            <Picker.Item label="ดินร่วน" value="ดินร่วน" />
+            <Picker.Item label="ดินร่วนปนทราย" value="ดินร่วนปนทราย" />
+            <Picker.Item label="ดินทราย" value="ดินทราย" />
+            <Picker.Item label="ดินเหนียว" value="ดินเหนียว" />
           </Picker>
 
           <Picker
@@ -74,10 +75,10 @@ const Modal2 = ({ onClose }) => {
             onValueChange={(itemValue, itemIndex) => setSelectedValue3(itemValue)}
           >
             <Picker.Item label="แหล่งน้ำที่ใช้" value="" />
-            <Picker.Item label="0" value="0" />
-            <Picker.Item label="1" value="1" />
-            <Picker.Item label="2" value="2" />
-            <Picker.Item label="3" value="3" />
+            <Picker.Item label="ชลประทาน" value="ชลประทาน" />
+            <Picker.Item label="ธรรมชาติ" value="ธรรมชาติ" />
+            <Picker.Item label="สระขุด" value="สระขุด" />
+            <Picker.Item label="เขื่อน" value="เขื่อน" />
           </Picker>
 
           <Picker
@@ -86,10 +87,10 @@ const Modal2 = ({ onClose }) => {
             onValueChange={(itemValue, itemIndex) => setSelectedValue4(itemValue)}
           >
             <Picker.Item label="วิธีการปลูก" value="" />
-            <Picker.Item label="0" value="0" />
-            <Picker.Item label="1" value="1" />
-            <Picker.Item label="2" value="2" />
-            <Picker.Item label="3" value="3" />
+            <Picker.Item label="หว่านน้ำตม" value="หว่านน้ำตม" />
+            <Picker.Item label="หว่านแห้ง" value="หว่านแห้ง" />
+            <Picker.Item label="ปักดำ" value="ปักดำ" />
+            <Picker.Item label="โยนกล้า" value="โยนกล้า" />
           </Picker>
 
           <TextInput

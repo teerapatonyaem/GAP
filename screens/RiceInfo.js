@@ -38,7 +38,7 @@ const RiceInfo = () => {
           </Pressable>
           <Text style={styles.text}>องค์ความรู้เรื่องข้าว</Text>
         </View>
-        <LabelNoneHintNone
+        {/* <LabelNoneHintNone
           systemIconsHome={require("../assets/1-system-iconssearch.png")}
           text="ค้นหา"
           systemIconsHome1
@@ -47,7 +47,7 @@ const RiceInfo = () => {
           labelNoneHintNoneMarginTop={8}
           inputFlexDirection="column"
           inputBorderRadius={8}
-        />
+        /> */}
         <ProvinceCard />
         <SectionCardFormFilter />
         <SectionForm />

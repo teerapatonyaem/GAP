@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import GreetingSection from "../components/GreetingSection";
 import GreenCardForm from "../components/GreenCardForm";
 import FormSection from "../components/FormSection";
-import ProfileForm from "../components/ProfileForm";
+import ProfileForm1 from "../components/ProfileForm1";
 import { Border, Color } from "../GlobalStyles";
 
 const HomeDetail = () => {
@@ -29,7 +29,7 @@ const HomeDetail = () => {
           source={require("../assets/gap1.png")}
         />
       </View>
-      <ProfileForm2
+      <ProfileForm1
         imageAltText={require("../assets/menu-icon.png")}
         menuIcon1={require("../assets/menu-icon2.png")}
         showHomeIndicator={false}

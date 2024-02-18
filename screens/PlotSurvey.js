@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Image, StyleSheet, Pressable, Text, View } from "react-native";
+import { Image, Button, StyleSheet, Pressable, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SectionCard1 from "../components/SectionCard1";
 import SmallSizeTrueStyleOutline from "../components/SmallSizeTrueStyleOutline";
@@ -9,9 +9,9 @@ const PlotSurvey = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.plotsurvey}>
-      <View style={styles.frameParent}>
-        <View style={styles.basilIconsoutlineoutlinegeParent}>
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <View style={styles.topSection}>
           <Pressable
             style={styles.basilIconsoutlineoutlinege}
             onPress={() => navigation.navigate("HomeDetail")}
@@ -27,36 +27,34 @@ const PlotSurvey = () => {
         <SectionCard1 stepNumber="ครั้งที่  1" />
         <SectionCard1 stepNumber="ครั้งที่  2" />
       </View>
-      <SmallSizeTrueStyleOutline
-        button="เริ่มการสำรวจแปลง"
-        showText
-        smallSizeTrueStyleOutlinePosition="absolute"
-        smallSizeTrueStyleOutlineBorderRadius={32}
-        smallSizeTrueStyleOutlineBorderStyle="unset"
-        smallSizeTrueStyleOutlineBorderColor="unset"
-        smallSizeTrueStyleOutlinePaddingHorizontal="unset"
-        smallSizeTrueStyleOutlineAlignSelf="unset"
-        smallSizeTrueStyleOutlineBackgroundColor="#03290e"
-        smallSizeTrueStyleOutlineMarginTop="unset"
-        smallSizeTrueStyleOutlineMarginLeft={-190}
-        smallSizeTrueStyleOutlineBottom={6}
-        smallSizeTrueStyleOutlineLeft="50%"
-        smallSizeTrueStyleOutlineWidth={380}
-        buttonFontSize={17}
-        buttonFontFamily="Poppins-Medium"
-        buttonColor="#fff"
-        onButtonPress={() => navigation.navigate("AddPlotInformation")}
-      />
+      <View style={styles.bottomSection}>
+        <Button
+          title="เริ่มการสำรวจแปลง"
+          onPress={() => navigation.navigate("AddPlotInformation")}
+          color="#03290e"
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  icon: {
-    height: "100%",
-    width: "100%",
+  container: {
+    flex: 1,
+    backgroundColor: Color.surfaceColourWhiteSurface,
   },
-  basilIconsoutlineoutlinege: {
+  content: {
+    flex: 1,
+    paddingHorizontal: Padding.p_base,
+    paddingTop: Padding.p_9xl,
+    paddingBottom: Padding.p_5xs,
+  },
+  topSection: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  icon: {
     width: 24,
     height: 24,
   },
@@ -69,30 +67,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     flex: 1,
   },
-  basilIconsoutlineoutlinegeParent: {
-    alignSelf: "stretch",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+  basilIconsoutlineoutlinege: {
+    width: 24,
+    height: 24,
   },
-  frameParent: {
-    position: "absolute",
-    marginLeft: -206,
-    top: 0,
-    left: "50%",
-    width: 412,
-    height: 594,
+  bottomSection: {
     paddingHorizontal: Padding.p_base,
-    paddingTop: Padding.p_9xl,
-    paddingBottom: Padding.p_5xs,
-    alignItems: "center",
-  },
-  plotsurvey: {
-    backgroundColor: Color.surfaceColourWhiteSurface,
-    height: 732,
-    overflow: "hidden",
-    width: "100%",
-    flex: 1,
+    paddingBottom: Padding.p_base,
   },
 });
 
