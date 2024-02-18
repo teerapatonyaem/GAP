@@ -1,14 +1,15 @@
 import * as React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import IconixtolinearcheckboxCheck from "../components/IconixtolinearcheckboxCheck";
 import { FontSize, FontFamily, Color } from "../GlobalStyles";
 
 const Modal3 = () => {
   return (
     <View style={styles.modal}>
-      <Image
-        style={styles.iconixtolinearcheckboxCheck}
-        resizeMode="cover"
-        source={require("../assets/iconixtolinearcheckboxchecked.png")}
+      <IconixtolinearcheckboxCheck
+        iconixtolinearcheckboxChe={require("../assets/iconixtolinearcheckboxchecked1.png")}
+        iconixtolinearcheckboxCheWidth={160}
+        iconixtolinearcheckboxCheHeight={160}
       />
       <Text style={styles.text}>สำเร็จ</Text>
     </View>
@@ -16,10 +17,6 @@ const Modal3 = () => {
 };
 
 const styles = StyleSheet.create({
-  iconixtolinearcheckboxCheck: {
-    width: 160,
-    height: 160,
-  },
   text: {
     fontSize: FontSize.size_29xl,
     letterSpacing: -0.6,
@@ -30,7 +27,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modal: {
-    backgroundColor: Color.baseColourWhite,
+    backgroundColor: Color.surfaceColourWhiteSurface,
     flex: 1,
     width: "100%",
     height: 712,

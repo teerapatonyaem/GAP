@@ -2,140 +2,222 @@ const Stack = createNativeStackNavigator();
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
-import L from "./screens/L";
+import GreetingScreen from "./screens/GreetingScreen";
 import Home from "./screens/Home";
-import Screen1 from "./screens/Screen1";
-import Screen2 from "./screens/Screen2";
-import Screen3 from "./screens/Screen3";
-import Frame from "./screens/Frame";
-import Screen4 from "./screens/Screen4";
-import Screen5 from "./screens/Screen5";
-import Screen6 from "./screens/Screen6";
-import Screen7 from "./screens/Screen7";
+import Text1 from "./components/Text1";
+import AddPlotInformation from "./screens/AddPlotInformation";
+import GAPCertify from "./screens/GAPCertify";
+import Status1 from "./screens/Status1";
+import Expense from "./screens/Expense";
+import RiceInfo from "./screens/RiceInfo";
+import RiceInfoDetail from "./screens/RiceInfoDetail";
+import Proofile from "./screens/Proofile";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import Plot from "./screens/Plot";
-import Frame1 from "./components/Frame1";
+import PlotSurvey from "./screens/PlotSurvey";
 import Modal1 from "./components/Modal1";
 import IconixtolineararrowLeft from "./components/IconixtolineararrowLeft";
-import L1 from "./screens/L1";
 import Modal2 from "./components/Modal2";
+import TypeTextArea from "./components/TypeTextArea";
+import StateDefault from "./components/StateDefault";
+import IconixtolinearcheckboxCheck from "./components/IconixtolinearcheckboxCheck";
+import StateDisable from "./components/StateDisable";
 import Modal3 from "./screens/Modal3";
-import Modal4 from "./components/Modal4";
-import Modal5 from "./screens/Modal5";
-import Frame2 from "./screens/Frame2";
-import Modal6 from "./components/Modal6";
-import Screen8 from "./screens/Screen8";
+import Modal4 from "./screens/Modal4";
+import Member from "./screens/Member";
+import Modal5 from "./components/Modal5";
+import HomeDetail from "./screens/HomeDetail";
+import Revenue from "./screens/Revenue";
+import CertifyDetail from "./screens/CertifyDetail";
+import LabelAboveHintNone from "./components/LabelAboveHintNone";
+import TypeTextfield from "./components/TypeTextfield";
+import StateDefault1 from "./components/StateDefault1";
+import Property1Frame from "./components/Property1Frame";
+import SelectionControl from "./components/SelectionControl";
+import TypeCheckbox from "./components/TypeCheckbox";
+import TypeUncheckedStateDefault from "./components/TypeUncheckedStateDefault";
+import Erroroff from "./components/Erroroff";
+import TypeUnselectStateDefault from "./components/TypeUnselectStateDefault";
+import Erroroff1 from "./components/Erroroff1";
+import CardSwapComponent from "./components/CardSwapComponent";
+import SwapItem from "./components/SwapItem";
+import SmallSizeTrueStyleOutline from "./components/SmallSizeTrueStyleOutline";
+import LabelAboveHintNone1 from "./components/LabelAboveHintNone1";
+import LabelDefault from "./components/LabelDefault";
+import TypeTextfield1 from "./components/TypeTextfield1";
+import StyleStandardActiveNo from "./components/StyleStandardActiveNo";
+import DarkModeFalse from "./components/DarkModeFalse";
+import StyleSimpleActiveNo from "./components/StyleSimpleActiveNo";
+import LabelNoneHintNone from "./components/LabelNoneHintNone";
+import StateDefaultShowListOff from "./components/StateDefaultShowListOff";
+import OnContainerOnImage from "./components/OnContainerOnImage";
+import PageNumberYes from "./components/PageNumberYes";
+import SmallSizeTrueStyleSolid1 from "./components/SmallSizeTrueStyleSolid1";
+import TypePassword from "./components/TypePassword";
+import StateDefaultShowPasswordO from "./components/StateDefaultShowPasswordO";
+import Property1Frame1 from "./components/Property1Frame1";
+import Property1Default from "./components/Property1Default";
+import StateDefaultOptionListOff from "./components/StateDefaultOptionListOff";
+import Property1Frame2 from "./components/Property1Frame2";
+import StatusActiveLargeFalse from "./components/StatusActiveLargeFalse";
+import Property1Default1 from "./components/Property1Default1";
+import Property1Default2 from "./components/Property1Default2";
+import Property1Default3 from "./components/Property1Default3";
+import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 
 const App = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
 
+  function MaterialIcon({ name, style }) {
+    const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style);
+    return (
+      <MIcon name={name} size={height} color={tintColor} style={iconStyle} />
+    );
+  }
+
+  const IconProvider = (name) => ({
+    toReactElement: (props) => MaterialIcon({ name, ...props }),
+  });
+
+  function createIconsMap() {
+    return new Proxy(
+      {},
+      {
+        get(target, name) {
+          return IconProvider(name);
+        },
+      }
+    );
+  }
+  const MaterialIconsPack = {
+    name: "material",
+    icons: createIconsMap(),
+  };
+
   return (
     <>
-      <NavigationContainer>
-        {hideSplashScreen ? (
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen
-              name="L"
-              component={L}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Screen1"
-              component={Screen1}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Screen2"
-              component={Screen2}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Screen3"
-              component={Screen3}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Frame"
-              component={Frame}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Screen4"
-              component={Screen4}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Screen5"
-              component={Screen5}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Screen6"
-              component={Screen6}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Screen7"
-              component={Screen7}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={Register}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Plot"
-              component={Plot}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Frame1"
-              component={Frame1}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="L1"
-              component={L1}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Modal3"
-              component={Modal3}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Modal5"
-              component={Modal5}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Frame2"
-              component={Frame2}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Screen8"
-              component={Screen8}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        ) : null}
-      </NavigationContainer>
+      <IconRegistry icons={[MaterialIconsPack]} />
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <NavigationContainer>
+          {hideSplashScreen ? (
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen
+                name="GreetingScreen"
+                component={GreetingScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{ headerShown: false }}
+              />
+
+              <Stack.Screen
+                name="Modal2"
+                component={Modal2}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="AddPlotInformation"
+                component={AddPlotInformation}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="GAPCertify"
+                component={GAPCertify}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Status1"
+                component={Status1}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Expense"
+                component={Expense}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="RiceInfo"
+                component={RiceInfo}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="RiceInfoDetail"
+                component={RiceInfoDetail}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Proofile"
+                component={Proofile}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Register"
+                component={Register}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Plot"
+                component={Plot}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="PlotSurvey"
+                component={PlotSurvey}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Modal3"
+                component={Modal3}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Modal4"
+                component={Modal4}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Member"
+                component={Member}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="HomeDetail"
+                component={HomeDetail}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Revenue"
+                component={Revenue}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="CertifyDetail"
+                component={CertifyDetail}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          ) : null}
+        </NavigationContainer>
+      </ApplicationProvider>
     </>
   );
 };

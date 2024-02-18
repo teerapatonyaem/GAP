@@ -113,7 +113,7 @@ const LoginComponent = () => {
       <Text style={styles.text1}>ลืมรหัสผ่าน</Text>
       <Pressable
         style={[styles.button, styles.buttonSpaceBlock]}
-        onPress={() => navigation.navigate("L1")}
+        onPress={() => navigation.navigate("Home")}
       >
         <Text style={[styles.button1, styles.text2Typo]}>Login</Text>
       </Pressable>

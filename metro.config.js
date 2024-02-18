@@ -1,19 +1,17 @@
-module.exports = {
-    // assets: ['./assets/fonts/', './assets/iconssetting.png', './assets/profile.png', 
-    // './assets/iconsnotification.png','./assets/1-system-iconshome.png'],
+/**
+     * Metro configuration for React Native
+     * https://github.com/facebook/react-native
+     *
+     * @format
+     */
 
-
-      
-    resolver: {
-      assetExts: ['png', 'jpg', 'jpeg', 'gif'],
-    },
+ module.exports = {
     transformer: {
-      getTransformOptions: async () => ({
+        getTransformOptions: async () => ({
         transform: {
-          experimentalImportSupport: false,
-          inlineRequires: true,
+            experimentalImportSupport: false,
+            inlineRequires: true,
         },
-      }),
+        }),
     },
-  };
-  
+};
