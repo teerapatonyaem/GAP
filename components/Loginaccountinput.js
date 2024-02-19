@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View } from "react-native";
+import { Text, StyleSheet, Image, View,TextInput  } from "react-native";
 import { Input } from "@ui-kitten/components";
 import { FontSize, FontFamily, Color } from "../GlobalStyles";
 
@@ -14,9 +14,10 @@ const Loginaccountinput = () => {
           source={require("../assets/1-system-iconsinfo.png")}
         />
       </View>
-      <Input
-        style={[styles.input1, styles.labelFlexBox]}
+      <TextInput
+        style={styles.input}
         placeholder="ชื่อบัญชี"
+        placeholderTextColor={Color.gray400}
       />
     </View>
   );

@@ -9,6 +9,7 @@ import Property1Default2 from "./Property1Default2";
 import Property1Default3 from "./Property1Default3";
 import SmallSizeTrueStyleOutline from "./SmallSizeTrueStyleOutline";
 import { FontSize, FontFamily, Color, Padding, Border } from "../GlobalStyles";
+//import Modal3 from "./screens/Modal3";
 
 const Modal2 = ({ onClose }) => {
   const navigation = useNavigation();
@@ -101,47 +102,20 @@ const Modal2 = ({ onClose }) => {
 />
         </View>
         <View style={[styles.buttonParent, styles.parentSpaceBlock]}>
-          <SmallSizeTrueStyleOutline
-            button="ยกเลิก"
-            showText
-            smallSizeTrueStyleOutlinePosition="unset"
-            smallSizeTrueStyleOutlineBorderRadius={32}
-            smallSizeTrueStyleOutlineBorderStyle="solid"
-            smallSizeTrueStyleOutlineBorderColor="#093311"
-            smallSizeTrueStyleOutlineBorderWidth={1.5}
-            smallSizeTrueStyleOutlinePaddingHorizontal="unset"
-            smallSizeTrueStyleOutlineAlignSelf="unset"
-            smallSizeTrueStyleOutlineBackgroundColor="unset"
-            smallSizeTrueStyleOutlineMarginTop="unset"
-            smallSizeTrueStyleOutlineMarginLeft="unset"
-            smallSizeTrueStyleOutlineBottom="unset"
-            smallSizeTrueStyleOutlineLeft="unset"
-            smallSizeTrueStyleOutlineWidth={182}
-            buttonFontSize={17}
-            buttonFontFamily="Poppins-Medium"
-            buttonColor="#126622"
-            onButtonPress={() => navigation.navigate("Home")}
-          />
-          <SmallSizeTrueStyleOutline
-            button="สร้างแปลง"
-            showText
-            smallSizeTrueStyleOutlinePosition="unset"
-            smallSizeTrueStyleOutlineBorderRadius={32}
-            smallSizeTrueStyleOutlineBorderStyle="unset"
-            smallSizeTrueStyleOutlineBorderColor="unset"
-            smallSizeTrueStyleOutlinePaddingHorizontal="unset"
-            smallSizeTrueStyleOutlineAlignSelf="unset"
-            smallSizeTrueStyleOutlineBackgroundColor="#03290e"
-            smallSizeTrueStyleOutlineMarginTop="unset"
-            smallSizeTrueStyleOutlineMarginLeft={16}
-            smallSizeTrueStyleOutlineBottom="unset"
-            smallSizeTrueStyleOutlineLeft="unset"
-            smallSizeTrueStyleOutlineWidth={182}
-            buttonFontSize={17}
-            buttonFontFamily="Poppins-Medium"
-            buttonColor="#fff"
-            onButtonPress={() => navigation.navigate("Modal3")}
-          />
+        <Pressable
+      style={styles.button3}
+      onPress={() => navigation.navigate("Home")}
+    >
+      <Text style={styles.button4}>ยกเลิก</Text>
+     
+    </Pressable>
+          <Pressable
+      style={styles.button}
+      onPress={() => navigation.navigate("Modal3")}
+    >
+      <Text style={styles.button1}>สร้างแปลง</Text>
+     
+    </Pressable>
         </View>
       </View>
     </View>
@@ -153,6 +127,47 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  button: {
+    borderRadius: Border.br_13xl,
+    backgroundColor: Color.walledGarden1000,
+    height: 44,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: Padding.p_5xl,
+    paddingVertical: Padding.p_3xs,
+    marginTop: 16,
+  },
+  button1: {
+    fontSize: FontSize.buttonRegular_size,
+    textTransform: "capitalize",
+    fontWeight: "500",
+    fontFamily: FontFamily.buttonSmall1,
+    color: "white",
+    textAlign: "left",
+  },
+  button3: {
+    borderRadius: Border.br_13xl,
+    backgroundColor: 'white', 
+    borderColor: 'black', 
+    borderWidth: 1, 
+    height: 44,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: Padding.p_5xl,
+    paddingVertical: Padding.p_3xs,
+    marginTop: 16,
+}
+,
+button4: {
+  fontSize: FontSize.buttonRegular_size,
+  textTransform: "capitalize",
+  fontWeight: "500",
+  fontFamily: FontFamily.buttonSmall1,
+  color: "ิblack",
+  textAlign: "left",
+},
   parentSpaceBlock: {
     marginTop: 8,
     alignSelf: "stretch",

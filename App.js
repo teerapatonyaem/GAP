@@ -130,6 +130,11 @@ const App = () => {
                 options={{ headerShown: false }}
               />
               <Stack.Screen
+                name="Modal5"
+                component={Modal5}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
                 name="AddPlotInformation"
                 component={AddPlotInformation}
                 options={{ headerShown: false }}
@@ -192,6 +197,11 @@ const App = () => {
               <Stack.Screen
                 name="Modal4"
                 component={Modal4}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Modal1"
+                component={Modal1}
                 options={{ headerShown: false }}
               />
               <Stack.Screen

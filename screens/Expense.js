@@ -81,14 +81,14 @@ const Expense = () => {
             propFlex={1}
           />
         </View>
+        <ProfileForm1
+          onLayoutPress={() => navigation.navigate("Expense")}
+          onLayoutPress1={() => navigation.navigate("Status1")}
+          onLayoutPress2={() => navigation.navigate("Modal1")}
+          onLayoutPress3={() => navigation.navigate("RiceInfo")}
+          onLayoutPress4={() => navigation.navigate("Proofile")}
+        />
       </View>
-      <ProfileForm1
-        onLayoutPress={() => navigation.navigate("Expense")}
-        onLayoutPress1={() => navigation.navigate("Status1")}
-        onLayoutPress2={() => navigation.navigate("Modal1")}
-        onLayoutPress3={() => navigation.navigate("RiceInfo")}
-        onLayoutPress4={() => navigation.navigate("Proofile")}
-      />
     </ScrollView>
   );
 };

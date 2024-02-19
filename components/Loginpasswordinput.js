@@ -1,20 +1,35 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View } from "react-native";
-import { Input } from "@ui-kitten/components";
+import { Text, StyleSheet, Image, View, TouchableOpacity } from "react-native";
+import { Input, Icon } from "@ui-kitten/components";
 import { FontSize, FontFamily, Color } from "../GlobalStyles";
 
 const Loginpasswordinput = () => {
+  const [password, setPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const renderIcon = (props) => (
+    <TouchableOpacity
+      onPress={() => setShowPassword(!showPassword)}>
+      <Image
+        style={styles.visibilityIcon}
+        resizeMode="cover"
+        source={showPassword ? require("../assets/1-system-iconsshowhide1.png") : require("../assets/1-system-iconsshowhide2.png")}
+      />
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.input}>
       <View style={[styles.label, styles.labelFlexBox]}>
         <Text style={styles.label1}>รหัสผ่าน</Text>
-        <Image
-          style={styles.systemIconsinfo}
-          resizeMode="cover"
-          source={require("../assets/1-system-iconsinfo.png")}
-        />
       </View>
-      <Input style={[styles.input1, styles.labelFlexBox]} />
+      <Input
+        style={styles.input1}
+        secureTextEntry={!showPassword}
+        value={password}
+        onChangeText={setPassword}
+        accessoryRight={renderIcon}
+      />
     </View>
   );
 };
@@ -31,13 +46,6 @@ const styles = StyleSheet.create({
     color: Color.descriptiveTextColourTextNormal700,
     textAlign: "left",
   },
-  systemIconsinfo: {
-    width: 18,
-    height: 18,
-    overflow: "hidden",
-    display: "none",
-    marginLeft: 4,
-  },
   label: {
     alignItems: "center",
   },
@@ -48,6 +56,10 @@ const styles = StyleSheet.create({
   input: {
     marginTop: 16,
     alignSelf: "stretch",
+  },
+  visibilityIcon: {
+    width: 18,
+    height: 18,
   },
 });
 

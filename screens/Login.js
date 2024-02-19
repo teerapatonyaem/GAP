@@ -18,11 +18,11 @@ const Login = () => {
         <Text style={styles.text}>ลืมรหัสผ่าน</Text>
         <Loginbutton />
         <Pressable
-          style={styles.pressable}
-          onPress={() => navigation.navigate("Register")}
-        >
-          <Text />
-        </Pressable>
+  style={styles.pressable}
+  onPress={() => navigation.navigate("Register")}
+>
+  <Text style={styles.text}>สมัครสมาชิก</Text>
+</Pressable>
       </View>
     </View>
   );

@@ -104,12 +104,12 @@ const styles = StyleSheet.create({
   },
   text1: {
     letterSpacing: -0.2,
-    lineHeight: 32,
+    lineHeight: 25,
     fontFamily: FontFamily.athitiSemiBold,
     color: Color.advertisingGreen1000,
     display: "flex",
     textAlign: "center",
-    fontWeight: "600",
+    fontWeight: "500",
     fontSize: FontSize.titleT3SemiBold_size,
     alignSelf: "stretch",
   },
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     alignSelf: "stretch",
     flex: 1,
+    width: 400,
   },
   removebgPreview1Parent: {
     borderRadius: Border.br_base,

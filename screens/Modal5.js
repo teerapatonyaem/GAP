@@ -78,7 +78,7 @@ const Modal5 = ({ onClose }) => {
             style={[styles.button2, styles.buttonFlexBox]}
             onPress={() => navigation.navigate("Member")}
           >
-            <Text style={[styles.button3, styles.buttonTypo,{ color: "white" }]}>เพิ่มสมาชิก</Text>
+            <Text style={[styles.button3, styles.buttonTypo]}>เพิ่มสมาชิก</Text>
           </Pressable>
         </View>
       </View>
@@ -228,11 +228,11 @@ const styles = StyleSheet.create({
     width: 412,
   },
   modal: {
-    backgroundColor: "white", 
+    backgroundColor: Color.colorDarkslategray_100,
+    height: 712,
     justifyContent: "center",
     alignItems: "center",
     width: 412,
-    height: "100%", // เพิ่มคำสั่งเต็มความสูง
   },
 });
 

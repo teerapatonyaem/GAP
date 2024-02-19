@@ -1,17 +1,25 @@
 import * as React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import IconixtolinearcheckboxCheck from "../components/IconixtolinearcheckboxCheck";
 import { FontSize, FontFamily, Color } from "../GlobalStyles";
 
-const Modal3 = () => {
+const Modal3 = ({ navigation }) => { // Destructure navigation from props
+  const goToHomeDetail = () => {
+    navigation.navigate('HomeDetail');
+  };
+
   return (
     <View style={styles.modal}>
-      <IconixtolinearcheckboxCheck
-        iconixtolinearcheckboxChe={require("../assets/iconixtolinearcheckboxchecked1.png")}
-        iconixtolinearcheckboxCheWidth={160}
-        iconixtolinearcheckboxCheHeight={160}
-      />
-      <Text style={styles.text}>สำเร็จ</Text>
+      <View style={styles.contentContainer}>
+        <TouchableOpacity onPress={goToHomeDetail}>
+          <IconixtolinearcheckboxCheck
+            iconixtolinearcheckboxChe={require("../assets/iconixtolinearcheckboxchecked1.png")}
+            iconixtolinearcheckboxCheWidth={160}
+            iconixtolinearcheckboxCheHeight={160}
+          />
+        </TouchableOpacity>
+        {/* <Text style={styles.text}>สำเร็จ</Text> */}
+      </View>
     </View>
   );
 };
@@ -29,10 +37,11 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: Color.surfaceColourWhiteSurface,
     flex: 1,
-    width: "100%",
-    height: 712,
     alignItems: "center",
     justifyContent: "center",
+  },
+  contentContainer: {
+    alignItems: "center",
   },
 });
 
