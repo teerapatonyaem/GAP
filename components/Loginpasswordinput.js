@@ -25,6 +25,7 @@ const Loginpasswordinput = () => {
       </View>
       <Input
         style={styles.input1}
+        placeholder="รหัสผ่าน"
         secureTextEntry={!showPassword}
         value={password}
         onChangeText={setPassword}

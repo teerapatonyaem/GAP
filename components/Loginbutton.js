@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
       textTransform: "capitalize",
       fontWeight: "500",
       fontFamily: FontFamily.buttonSmall,
-      color: "white", // กำหนดสีของตัวอักษรเป็นสีขาว
+      color: "white", 
       textAlign: "left",
     },
   button: {
