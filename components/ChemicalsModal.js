@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-nativ
 import { useNavigation } from "@react-navigation/native";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 
-const Modal1 = ({ onClose }) => {
+const ChemicalsModal = ({ onClose }) => {
   const navigation = useNavigation();
 
   // State variables for input fields
@@ -16,13 +16,13 @@ const Modal1 = ({ onClose }) => {
   return (
     <View style={styles.modal}>
       <View style={[styles.component7, styles.parentSpaceBlock]}>
-        <View style={styles.input1FlexBox}>
-          <View style={[styles.tabs, styles.tabsFlexBox]}>
-            <Text style={[styles.active, styles.activeTypo]}>ทั่วไป</Text>
+      <View style={styles.input1FlexBox}>
+      <View style={[styles.tabs1, styles.tabsFlexBox]}>
+            <Pressable onPress={() => navigation.navigate("Modal1")}>
+              <Text style={styles.textTypo}>ทั่วไป</Text>
+            </Pressable>
           </View>
-          {/* <View style={[styles.tabs1, styles.tabsFlexBox]}>
-            <Text style={[styles.normal, styles.activeTypo]}>ปุ๋ย</Text>
-          </View> */}
+          
 
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
             <Pressable onPress={() => navigation.navigate("FertilizerModal")}>
@@ -32,9 +32,10 @@ const Modal1 = ({ onClose }) => {
           
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
             <Pressable onPress={() => navigation.navigate("ChemicalsModal")}>
-              <Text style={styles.textTypo}>สารเคมี</Text>
+            <Text style={[styles.active, styles.activeTypo]}>สารเคมี</Text>
             </Pressable>
           </View>
+
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
             <Pressable onPress={() => navigation.navigate("ExpensesModal")}>
             <Text style={[styles.activeTypo]}>ค่าใช้จ่าย</Text>
@@ -42,7 +43,7 @@ const Modal1 = ({ onClose }) => {
           </View>
         </View>
         <View style={[styles.parent, styles.parentSpaceBlock]}>
-          <Text style={styles.text}>การจัดการทั่วไปภายในแปลง</Text>
+          <Text style={styles.text}>การจัดการทั่วไปภายในแปลง (กำจัดศัตรูพืช)</Text>
           {/* งานที่ปฏิบัติ */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
@@ -65,7 +66,7 @@ const Modal1 = ({ onClose }) => {
           {/* ปริมาณ */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
-              <Text style={[styles.label1, styles.text1Typo]}>ปริมาณ</Text>
+              <Text style={[styles.label1, styles.text1Typo]}>ชนิดศัตรูพืช</Text>
               <Image
                 style={styles.iconStatus}
                 resizeMode="cover"
@@ -77,11 +78,67 @@ const Modal1 = ({ onClose }) => {
                 style={styles.textfield}
                 value={quantity}
                 onChangeText={setQuantity}
-                placeholder="ระบุปริมาณ"
+                placeholder="ระบุชนิดศัตรูพืช"
               />
             </View>
           </View>
           {/* ค่าใช้จ่าย */}
+          <View style={styles.input}>
+            <View style={styles.input1FlexBox}>
+              <Text style={[styles.label1, styles.text1Typo]}>สารเคมีที่ใช้</Text>
+              <Image
+                style={styles.iconStatus}
+                resizeMode="cover"
+                source={require("../assets/icon-status1.png")}
+              />
+            </View>
+            <View style={[styles.input1, styles.input1FlexBox]}>
+              <TextInput
+                style={styles.textfield}
+                value={cost}
+                onChangeText={setCost}
+                placeholder="ระบุสารเคมีที่ใช้"
+              />
+            </View>
+          </View>
+          {/* รายละเอียดค่าใช้จ่าย */}
+          <View style={styles.input}>
+            <View style={styles.input1FlexBox}>
+              <Text style={[styles.label1, styles.text1Typo]}>อัตราที่ใช้</Text>
+              <Image
+                style={styles.iconStatus}
+                resizeMode="cover"
+                source={require("../assets/icon-status1.png")}
+              />
+            </View>
+            <View style={[styles.input1, styles.input1FlexBox]}>
+              <TextInput
+                style={styles.textfield}
+                value={costDetails}
+                onChangeText={setCostDetails}
+                placeholder="ระบุอัตราที่ใช้"
+              />
+            </View>
+          </View>
+          <View style={styles.input}>
+            <View style={styles.input1FlexBox}>
+              <Text style={[styles.label1, styles.text1Typo]}>ปริมาณ / ไร่</Text>
+              <Image
+                style={styles.iconStatus}
+                resizeMode="cover"
+                source={require("../assets/icon-status1.png")}
+              />
+            </View>
+            <View style={[styles.input1, styles.input1FlexBox]}>
+              <TextInput
+                style={styles.textfield}
+                value={costDetails}
+                onChangeText={setCostDetails}
+                placeholder="ระบุปริมาณ"
+              />
+            </View>
+          </View>
+          {/* เพิ่มเติม */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ค่าใช้จ่าย</Text>
@@ -94,47 +151,9 @@ const Modal1 = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={cost}
-                onChangeText={setCost}
-                placeholder="ระบุค่าใช้จ่าย"
-              />
-            </View>
-          </View>
-          {/* รายละเอียดค่าใช้จ่าย */}
-          <View style={styles.input}>
-            <View style={styles.input1FlexBox}>
-              <Text style={[styles.label1, styles.text1Typo]}>รายละเอียดค่าใช้จ่าย</Text>
-              <Image
-                style={styles.iconStatus}
-                resizeMode="cover"
-                source={require("../assets/icon-status1.png")}
-              />
-            </View>
-            <View style={[styles.input1, styles.input1FlexBox]}>
-              <TextInput
-                style={styles.textfield}
-                value={costDetails}
-                onChangeText={setCostDetails}
-                placeholder="ระบุรายละเอียดค่าใช้จ่าย"
-              />
-            </View>
-          </View>
-          {/* เพิ่มเติม */}
-          <View style={styles.input}>
-            <View style={styles.input1FlexBox}>
-              <Text style={[styles.label1, styles.text1Typo]}>เพิ่มเติม</Text>
-              <Image
-                style={styles.iconStatus}
-                resizeMode="cover"
-                source={require("../assets/icon-status1.png")}
-              />
-            </View>
-            <View style={[styles.input1, styles.input1FlexBox]}>
-              <TextInput
-                style={styles.textfield}
                 value={additional}
                 onChangeText={setAdditional}
-                placeholder="ระบุเพิ่มเติม"
+                placeholder="ระบุค่าใช้จ่าย"
               />
             </View>
           </View>
@@ -142,7 +161,7 @@ const Modal1 = ({ onClose }) => {
           <Pressable
               style={[styles.button, styles.buttonLayout]}
               onPress={() => {
-
+               
                 navigation.navigate("Home");
               }}
             >
@@ -325,4 +344,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Modal1;
+export default ChemicalsModal;

@@ -17,6 +17,9 @@ import Register from "./screens/Register";
 import Plot from "./screens/Plot";
 import PlotSurvey from "./screens/PlotSurvey";
 import Modal1 from "./components/Modal1";
+import FertilizerModal from "./components/FertilizerModal";
+import ChemicalsModal from "./components/ChemicalsModal";
+import ExpensesModal from "./components/ExpensesModal";
 import IconixtolineararrowLeft from "./components/IconixtolineararrowLeft";
 import Modal2 from "./components/Modal2";
 import TypeTextArea from "./components/TypeTextArea";
@@ -202,6 +205,21 @@ const App = () => {
               <Stack.Screen
                 name="Modal1"
                 component={Modal1}
+                options={{ headerShown: false }}
+              />
+            <Stack.Screen
+                name="FertilizerModal"
+                component={FertilizerModal}
+                options={{ headerShown: false }}
+              />  
+              <Stack.Screen
+                name="ChemicalsModal"
+                component={ChemicalsModal}
+                options={{ headerShown: false }}
+              />  
+              <Stack.Screen
+                name="ExpensesModal"
+                component={ExpensesModal}
                 options={{ headerShown: false }}
               />
               <Stack.Screen
