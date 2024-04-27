@@ -17,19 +17,14 @@ const Expense = () => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView
-      style={styles.expense}
-      showsVerticalScrollIndicator={true}
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.expenseScrollViewContent}
-    >
-      <View style={styles.frameParent}>
-        <View
-          style={[
-            styles.basilIconsoutlineoutlinegeParent,
-            styles.frameGroupFlexBox,
-          ]}
-        >
+    <View style={styles.container}>
+      <ScrollView
+        style={styles.expense}
+        contentContainerStyle={styles.expenseScrollViewContent}
+        showsVerticalScrollIndicator={true}
+        showsHorizontalScrollIndicator={false}
+      >
+        <View style={styles.headerContainer}>
           <Pressable
             style={styles.basilIconsoutlineoutlinege}
             onPress={() => navigation.navigate("HomeDetail")}
@@ -42,8 +37,10 @@ const Expense = () => {
           </Pressable>
           <Text style={styles.text}>รายจ่าย-รับ</Text>
         </View>
+        
         <IncomeForm />
-        <View style={[styles.frameGroup, styles.frameGroupFlexBox]}>
+        
+        <View style={styles.frameGroup}>
           <FormContainer
             productImageId={require("../assets/2-foodgrainsofrice.png")}
             plantSeedImageUrl="เมล็ดพันธุ์พืช"
@@ -55,62 +52,57 @@ const Expense = () => {
             plantSeedImageUrl="ปุ๋ยเเละยา"
             productDescription="ปุ๋ยกระต่าย"
             priceReduction="-฿10,000"
-            propMarginTop={8}
-            propWidth="unset"
-            propAlignSelf="stretch"
-            propFlex={1}
           />
           <FormContainer
             productImageId={require("../assets/2-foodfarmer2.png")}
             plantSeedImageUrl="เเรงงาน"
             productDescription="ทั่วไป"
             priceReduction="-฿2,000"
-            propMarginTop={8}
-            propWidth="unset"
-            propAlignSelf="stretch"
-            propFlex={1}
           />
           <FormContainer
             productImageId={require("../assets/3-farmtractor.png")}
             plantSeedImageUrl="ค่ารถจักร"
             productDescription="ปรับแต่งดิน"
             priceReduction="-฿6,500"
-            propMarginTop={8}
-            propWidth="unset"
-            propAlignSelf="stretch"
-            propFlex={1}
           />
         </View>
-        <ProfileForm1
-          onLayoutPress={() => navigation.navigate("Expense")}
-          onLayoutPress1={() => navigation.navigate("Status1")}
-          onLayoutPress2={() => navigation.navigate("Modal1")}
-          onLayoutPress3={() => navigation.navigate("RiceInfo")}
-          onLayoutPress4={() => navigation.navigate("Proofile")}
-        />
-      </View>
-    </ScrollView>
+      </ScrollView>
+      
+      <ProfileForm1
+        onLayoutPress={() => navigation.navigate("Expense")}
+        onLayoutPress1={() => navigation.navigate("Status1")}
+        onLayoutPress2={() => navigation.navigate("Modal1")}
+        onLayoutPress3={() => navigation.navigate("RiceInfo")}
+        onLayoutPress4={() => navigation.navigate("Proofile")}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between", // Ensures the ProfileForm1 stays at the bottom
+  },
+  expense: {
+    flex: 1, // Allowing ScrollView to take all available space
+    backgroundColor: Color.surfaceColourWhiteSurface,
+  },
   expenseScrollViewContent: {
-    flexDirection: "column",
     paddingTop: 28,
-    alignItems: "center",
-    justifyContent: "flex-start",
+    paddingBottom: 60, // To ensure some space at the bottom if necessary
   },
-  frameGroupFlexBox: {
-    justifyContent: "center",
+  headerContainer: {
+    flexDirection: "row",
     alignItems: "center",
-  },
-  icon: {
-    height: "100%",
-    width: "100%",
   },
   basilIconsoutlineoutlinege: {
     width: 24,
     height: 24,
+  },
+  icon: {
+    height: "100%",
+    width: "100%",
   },
   text: {
     fontSize: FontSize.bodyBH3SemiBold_size,
@@ -120,43 +112,12 @@ const styles = StyleSheet.create({
     color: Color.labelColorLightPrimary,
     textAlign: "center",
     marginLeft: 8,
-    flex: 1,
-  },
-  basilIconsoutlineoutlinegeParent: {
-    alignSelf: "stretch",
-    flexDirection: "row",
   },
   frameGroup: {
     paddingHorizontal: Padding.p_base,
     paddingVertical: Padding.p_5xs,
     marginTop: 8,
-    width: 380,
     borderRadius: Border.br_5xs,
-    justifyContent: "center",
-    backgroundColor: Color.surfaceColourWhiteSurface,
-  },
-  frameParent: {
-    shadowColor: "rgba(152, 152, 152, 0.5)",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowRadius: 30,
-    elevation: 30,
-    shadowOpacity: 1,
-    height: 621,
-    paddingHorizontal: Padding.p_5xs,
-    paddingVertical: Padding.p_base,
-    alignItems: "center",
-    width: 380,
-    borderRadius: Border.br_5xs,
-    backgroundColor: Color.surfaceColourWhiteSurface,
-  },
-  expense: {
-    overflow: "hidden",
-    maxWidth: "100%",
-    width: "100%",
-    flex: 1,
     backgroundColor: Color.surfaceColourWhiteSurface,
   },
 });

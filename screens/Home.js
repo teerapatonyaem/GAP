@@ -57,6 +57,7 @@ const Home = () => {
           onFramePressablePress1={() => navigation.navigate("Member")}
           onFramePressablePress2={() => navigation.navigate("RiceInfo")}
           onFramePressablePress3={() => navigation.navigate("GAPCertify")}
+          
         />
 
         <ImageBackground
@@ -74,6 +75,7 @@ const Home = () => {
         onLayoutPress1={() => navigation.navigate("Status1")}
         onLayoutPress2={() => navigation.navigate("Modal1")}
         onLayoutPress3={() => navigation.navigate("RiceInfo")}
+        onLayoutPress4={() => navigation.navigate("Proofile")}
       
       />
     </View>

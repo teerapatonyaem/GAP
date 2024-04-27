@@ -1,90 +1,108 @@
-import * as React from "react";
-import { ScrollView, Text, StyleSheet, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import SectionCard from "../components/SectionCard";
-import ProfileForm1 from "../components/ProfileForm1";
-import { Padding, Color, FontSize, Border, FontFamily } from "../GlobalStyles";
+import React from 'react';
+import { ScrollView, Text, StyleSheet, View, Pressable } from 'react-native';
+import { launchImageLibrary } from 'react-native-image-picker';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import { Padding, Color, FontSize, Border, FontFamily } from '../GlobalStyles';
+import SectionCard from '../components/SectionCard';
+import ProfileForm1 from '../components/ProfileForm1';
 
-const Proofile = () => {
+// ปุ่มอัปโหลดไฟล์
+const UploadButton = ({ onFileSelected }) => {
+  const handlePress = () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 0.5,
+    };
+
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log("User cancelled image picker");
+      } else if (response.errorCode) {
+        console.log("ImagePicker Error:", response.errorMessage);
+      } else {
+        const file = response.assets[0];
+        if (onFileSelected) {
+          onFileSelected(file);
+        }
+      }
+    });
+  };
+
+  return (
+    <Pressable style={styles.uploadWrapper} onPress={handlePress}>
+      <Text style={styles.uploadText}>Upload</Text>
+    </Pressable>
+  );
+};
+
+const Profile = () => {
   const navigation = useNavigation();
+
+  const handleFileSelected = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', {
+        uri: file.uri,
+        type: file.type,
+        name: file.fileName,
+      });
+
+      const response = await axios.post(
+        'https://your-backend-endpoint.com/upload',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      console.log('File uploaded successfully:', response.data);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView
-        style={styles.profile}
-        showsVerticalScrollIndicator={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.profileScrollViewContent}
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.profileInner}>
-          <View style={styles.frameParent}>
-            <SectionCard />
-            <View style={[styles.frameGroup, styles.frameGroupSpaceBlock]}>
-              <View style={styles.parent}>
-                <Text style={[styles.text, styles.textTypo]}>ชื่อ - นามสกุล</Text>
-                <Text style={[styles.text1, styles.textSpaceBlock]}>
-                  นายเกษตรกร มั่งมี
-                </Text>
-                <Text style={[styles.text2, styles.textSpaceBlock]}>
-                  เลขที่บัตรประจำตัวประชาชน
-                </Text>
-                <Text style={[styles.text1, styles.textSpaceBlock]}>
-                  113610905008-3
-                </Text>
-              </View>
-              <View style={styles.frameContainer}>
-                <View style={styles.parent}>
-                  <Text style={[styles.text4, styles.textTypo]}>
-                    สำเนาทะเบียนบ้าน
-                  </Text>
-                  <View
-                    style={[styles.attachFileParent, styles.uploadWrapperFlexBox]}
-                  >
-                    <Text style={styles.text1Typo}>Attach file</Text>
-                    <View
-                      style={[styles.uploadWrapper, styles.uploadWrapperFlexBox]}
-                    >
-                      <Text style={[styles.upload, styles.textTypo]}>Upload</Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.textSpaceBlock}>
-                  <Text style={[styles.text4, styles.textTypo]}>
-                    สำเนาบัตรประชาชน
-                  </Text>
-                  <View
-                    style={[styles.attachFileParent, styles.uploadWrapperFlexBox]}
-                  >
-                    <Text style={styles.text1Typo}>Attach file</Text>
-                    <View
-                      style={[styles.uploadWrapper, styles.uploadWrapperFlexBox]}
-                    >
-                      <Text style={[styles.upload, styles.textTypo]}>Upload</Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.textSpaceBlock}>
-                  <Text style={[styles.text6, styles.textTypo]}>
-                    การจดทะเบียนนิติบุคคล
-                  </Text>
-                  <View
-                    style={[styles.attachFileParent, styles.uploadWrapperFlexBox]}
-                  >
-                    <Text style={styles.text1Typo}>Attach file</Text>
-                    <View
-                      style={[styles.uploadWrapper, styles.uploadWrapperFlexBox]}
-                    >
-                      <Text style={[styles.upload, styles.textTypo]}>Upload</Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
+          <SectionCard />
+          <View style={styles.infoSection}>
+            <Text style={[styles.text, styles.headerText]}>ชื่อ - นามสกุล</Text>
+            <Text style={[styles.text, styles.regularText]}>
+              นายเกษตรกร มั่งมี
+            </Text>
+            <Text style={[styles.text, styles.headerText]}>
+              เลขที่บัตรประจำตัวประชาชน
+            </Text>
+            <Text style={[styles.text, styles.regularText]}>
+              113610905008-3
+            </Text>
+          </View>
+
+          <View style={styles.uploadSection}>
+            <Text style={[styles.text, styles.headerText]}>สำเนาทะเบียนบ้าน</Text>
+            <UploadButton onFileSelected={handleFileSelected} />
+          </View>
+          
+          <View style={styles.uploadSection}>
+            <Text style={[styles.text, styles.headerText]}>สำเนาบัตรประชาชน</Text>
+            <UploadButton onFileSelected={handleFileSelected} />
+          </View>
+          
+          <View style={styles.uploadSection}>
+            <Text style={[styles.text, styles.headerText]}>การจดทะเบียนนิติบุคคล</Text>
+            <UploadButton onFileSelected={handleFileSelected} />
           </View>
         </View>
       </ScrollView>
+
       <ProfileForm1
-        style={{ marginTop: 68 }}
         onLayoutPress={() => navigation.navigate("Expense")}
         onLayoutPress1={() => navigation.navigate("Status1")}
         onLayoutPress2={() => navigation.navigate("Modal1")}
@@ -98,131 +116,59 @@ const Proofile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Color.surfaceColourWhiteSurface,
   },
-  profileScrollViewContent: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+  scrollView: {
+    flex: 1,
   },
-  frameGroupSpaceBlock: {
+  contentContainer: {
+    padding: Padding.p_base,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+  },
+  profileInner: {
+    flex: 1,
+  },
+  infoSection: {
+    marginBottom: 20,
+    backgroundColor: Color.gray50, // เพิ่มสไตล์สำหรับพื้นหลังสีเทา
+    padding: Padding.p_5xs, // เพิ่ม padding
+    borderRadius: Border.br_5xs, // เพิ่มการโค้งมน
+  },
+  uploadSection: {
+    marginTop: 20,
     padding: Padding.p_5xs,
-    alignSelf: "stretch",
-  },
-  textTypo: {
-    textAlign: "left",
-    color: Color.labelColorLightPrimary,
-    fontSize: FontSize.bodyB4Regular_size,
-  },
-  textSpaceBlock: {
-    marginTop: 8,
-    alignSelf: "stretch",
-  },
-  uploadWrapperFlexBox: {
-    flexDirection: "row",
+    backgroundColor: Color.gray50,
     borderRadius: Border.br_5xs,
-    alignItems: "center",
+    alignItems: 'center',
   },
   text: {
     fontFamily: FontFamily.titleT3SemiBold,
-    fontWeight: "600",
-    color: Color.labelColorLightPrimary,
+    fontWeight: '600',
     fontSize: FontSize.bodyB4Regular_size,
-    lineHeight: 28,
-    alignSelf: "stretch",
+    color: Color.labelColorLightPrimary,
   },
-  text1: {
-    fontFamily: FontFamily.bodyB4Regular,
-    textAlign: "left",
-    color: Color.labelColorLightPrimary,
-    lineHeight: 28,
-    fontSize: FontSize.bodyB4Regular_size,
-  },
-  text2: {
-    textAlign: "left",
-    color: Color.labelColorLightPrimary,
-    fontSize: FontSize.bodyB4Regular_size,
-    fontFamily: FontFamily.titleT3SemiBold,
-    fontWeight: "600",
+  headerText: {
+    textAlign: 'left',
     lineHeight: 28,
   },
-  parent: {
-    alignSelf: "stretch",
-  },
-  text4: {
-    fontFamily: FontFamily.titleT3SemiBold,
-    fontWeight: "600",
-    color: Color.labelColorLightPrimary,
-    fontSize: FontSize.bodyB4Regular_size,
+  regularText: {
+    textAlign: 'left',
+    marginTop: 8,
     lineHeight: 28,
-  },
-  text1Typo: {
-    fontFamily: FontFamily.bodyB4Regular,
-    textAlign: "left",
-    color: Color.labelColorLightPrimary,
-    lineHeight: 28,
-    fontSize: FontSize.bodyB4Regular_size,
-  },
-  upload: {
-    fontWeight: "500",
-    fontFamily: FontFamily.iBMPlexSansThaiMedium,
-    lineHeight: 28,
-    color: Color.labelColorLightPrimary,
-    fontSize: FontSize.bodyB4Regular_size,
   },
   uploadWrapper: {
-    paddingHorizontal: Padding.p_5xs,
-    paddingVertical: Padding.p_9xs,
-    justifyContent: "center",
     backgroundColor: Color.surfaceColourWhiteSurface,
-  },
-  attachFileParent: {
-    backgroundColor: Color.gray50,
-    justifyContent: "space-between",
-    padding: Padding.p_5xs,
-    alignSelf: "stretch",
-  },
-  text6: {
-    lineHeight: 24,
-    fontFamily: FontFamily.titleT3SemiBold,
-    fontWeight: "600",
-    color: Color.labelColorLightPrimary,
-    fontSize: FontSize.bodyB4Regular_size,
-  },
-  frameContainer: {
-    marginTop: 24,
-    justifyContent: "center",
-    alignSelf: "stretch",
-    alignItems: "center",
-  },
-  frameGroup: {
-    backgroundColor: "#9feaa7",
-    marginTop: 32,
     borderRadius: Border.br_5xs,
     padding: Padding.p_5xs,
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems: 'center',
   },
-  frameParent: {
-    paddingHorizontal: 0,
-    paddingVertical: Padding.p_5xs,
-    justifyContent: "center",
-    alignSelf: "stretch",
-    alignItems: "center",
-  },
-  profileInner: {
-    width: 412,
-    paddingHorizontal: Padding.p_base,
-    paddingTop: Padding.p_9xl,
-    paddingBottom: Padding.p_5xs,
-    alignItems: "center",
-  },
-  profile: {
-    flex: 1,
-    width: "100%",
-    overflow: "hidden",
-    maxWidth: "100%",
-    backgroundColor: Color.surfaceColourWhiteSurface,
+  uploadText: {
+    fontFamily: FontFamily.iBMPlexSansThaiMedium,
+    fontWeight: '600',
+    color: Color.labelColorLightPrimary,
+    fontSize: FontSize.bodyB4Regular_size,
   },
 });
 
-export default Proofile;
+export default Profile;
