@@ -17,6 +17,7 @@ import Register from "./screens/Register";
 import Plot from "./screens/Plot";
 import PlotSurvey from "./screens/PlotSurvey";
 import Modal1 from "./components/Modal1";
+import { UserProvider } from './components/UserContext';
 import LogoutButton from "./components/LogoutButton";
 import ClearUsersComponent from "./components/ClearUsersComponent";
 import FertilizerModal from "./components/FertilizerModal";
@@ -113,6 +114,7 @@ const App = () => {
 
   return (
     <>
+      <UserProvider>
       <IconRegistry icons={[MaterialIconsPack]} />
       <ApplicationProvider {...eva} theme={eva.light}>
         <NavigationContainer>
@@ -257,6 +259,7 @@ const App = () => {
           ) : null}
         </NavigationContainer>
       </ApplicationProvider>
+      </UserProvider>
     </>
   );
 };

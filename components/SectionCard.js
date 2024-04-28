@@ -1,10 +1,11 @@
-import * as React from "react";
+import React, { useContext } from 'react';
 import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
-
+import UserContext from '../components/UserContext';
 const SectionCard = () => {
   const navigation = useNavigation();
+  const { username } = useContext(UserContext); 
 
   return (
     <View style={[styles.frameParent, styles.parentFlexBox]}>
@@ -14,14 +15,14 @@ const SectionCard = () => {
           resizeMode="cover"
           source={require("../assets/avatar1.png")}
         />
-        <Text style={[styles.text, styles.textTypo]}>นายเกษตรกร</Text>
+         <Text style={[styles.text, styles.textTypo]}>{username}</Text>
       </View>
       <View
         style={[styles.basilIconsoutlineoutlinegeParent, styles.parentFlexBox]}
       >
         <Pressable
           style={styles.basilIconsoutlineoutlinege}
-          onPress={() => navigation.navigate("HomeDetail")}
+          onPress={() => navigation.navigate("Home")}
         >
           <Image
             style={styles.icon}

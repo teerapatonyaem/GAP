@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from 'react';
 import {
   Image,
   StyleSheet,
@@ -8,25 +8,53 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import GreetingSection from "../components/GreetingSection";
+import { useNavigation,useRoute  } from "@react-navigation/native";
 import FormSection from "../components/FormSection";
 import ProfileForm1 from "../components/ProfileForm1";
 import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
+import UserContext from "../components/UserContext";
+
 
 const Home = () => {
   const navigation = useNavigation();
+  const route = useRoute(); 
+  //const username = route.params?.username;
+  const { username, setUsername } = useContext(UserContext); 
 
   return (
     <View style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
-        showsVerticalScrollIndicator={true}
+        showsVertical Scroll Indicator={true}
         showsHorizontalScrollIndicator={false}
       >
-        <GreetingSection />
+        {/* Greeting Section */}
+        <View style={styles.greetingContainer}>
+          <View style={styles.greetingInner}>
+            <View style={styles.avatarSection}>
+              <Image
+                style={styles.avatar}
+                resizeMode="cover"
+                source={require("../assets/avatar.png")}
+              />
+              <View style={styles.greetingText}>
+                <Text style={[styles.greeting, styles.greetingFont]}>
+                  สวัสดี
+                </Text>
+                <Text style={[styles.greeting2, styles.greetingFont]}>
+                  {username} 
+                </Text>
+              </View>
+            </View>
+            <Image
+              style={styles.notificationIcon}
+              resizeMode="cover"
+              source={require("../assets/iconixtolinearnotificationunread.png")}
+            />
+          </View>
+        </View>
 
-        {/* จัด Pressable ให้อยู่ตรงกลางหน้าจอ */}
+        {/* Pressable Section */}
         <View style={styles.centeredContainer}>
           <Pressable
             style={styles.pressable}
@@ -34,7 +62,7 @@ const Home = () => {
           >
             <View style={styles.imageContainer}>
               <Image
-                style={styles.image}
+                style={styles.backgroundImage}
                 resizeMode="cover"
                 source={require("../assets/grass-landscape-field-vector-png-images-nature-landscape-vector-with-green-field-grass-trees-blue-sky-and-clouds-suitable-for-background-or-illustration-nature-clipart-day-landscape-png-image-for-free-download-1.png")}
               />
@@ -45,29 +73,33 @@ const Home = () => {
                   source={require("../assets/iconixtolinearaddsquare.png")}
                 />
                 <View style={styles.textWrapper}>
-                  <Text style={styles.text}>สร้างแปลง</Text>
+                  <Text style={styles.createPlotText}>
+                    สร้างแปลง
+                  </Text>
                 </View>
               </View>
             </View>
           </Pressable>
         </View>
 
+        {/* Form Section */}
         <FormSection
           onFramePressablePress={() => navigation.navigate("PlotSurvey")}
           onFramePressablePress1={() => navigation.navigate("Member")}
           onFramePressablePress2={() => navigation.navigate("RiceInfo")}
           onFramePressablePress3={() => navigation.navigate("GAPCertify")}
-          
         />
 
+        {/* Image Background Section */}
         <ImageBackground
-          style={styles.gap1Icon}
+          style={styles.gapImage}
           resizeMode="cover"
           source={require("../assets/gap1.png")}
         />
 
       </ScrollView>
 
+      {/* Profile Form */}
       <ProfileForm1
         imageAltText={require("../assets/menu-icon.png")}
         menuIcon1={require("../assets/menu-icon2.png")}
@@ -76,7 +108,6 @@ const Home = () => {
         onLayoutPress2={() => navigation.navigate("Modal1")}
         onLayoutPress3={() => navigation.navigate("RiceInfo")}
         onLayoutPress4={() => navigation.navigate("Proofile")}
-      
       />
     </View>
   );
@@ -91,6 +122,49 @@ const styles = StyleSheet.create({
     padding: Padding.p_base,
     justifyContent: "flex-start",
     alignItems: "center",
+    paddingBottom: 70,
+  },
+  greetingContainer: {
+    paddingTop: Padding.p_9xl,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  greetingInner: {
+    width: 412,
+    justifyContent: "space-between",
+    paddingHorizontal: Padding.p_base,
+    paddingVertical: 0,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  avatarSection: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  avatar: {
+    width: 48,
+    height: 48,
+  },
+  greetingText: {
+    marginLeft: 24,
+  },
+  greetingFont: {
+    color: Color.labelColorLightPrimary,
+    fontFamily: FontFamily.iBMPlexSansThaiMedium,
+    fontWeight: "500",
+    lineHeight: 24,
+    fontSize: FontSize.bodyB4Regular_size,
+  },
+  greeting: {
+    alignSelf: "stretch",
+    textAlign: "left",
+  },
+  greeting2: {
+    textAlign: "center",
+  },
+  notificationIcon: {
+    width: 24,
+    height: 24,
   },
   centeredContainer: {
     flex: 1,
@@ -102,7 +176,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Padding.p_base,
   },
   imageContainer: {
-    position: "relative", // ให้สามารถจัดการ position ภายในได้
+    position: "relative",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: Border.br_base,
@@ -113,9 +187,9 @@ const styles = StyleSheet.create({
     borderRadius: Border.br_base,
   },
   iconContainer: {
-    position: "absolute", // ทำให้สามารถซ้อนบนพื้นหลังได้
+    position: "absolute",
     top: 230,
-    zIndex: 1, // กำหนด zIndex ให้ซ้อนบน
+    zIndex: 1,
     width: 275,
     height: 91,
     backgroundColor: Color.surfaceColourWhiteSurface,
@@ -133,13 +207,13 @@ const styles = StyleSheet.create({
   textWrapper: {
     marginTop: 8,
   },
-  text: {
+  createPlotText: {
     fontSize: FontSize.titleT3SemiBold_size,
     fontFamily: FontFamily.athitiSemiBold,
     color: Color.advertisingGreen1000,
     textAlign: "center",
   },
-  gap1Icon: {
+  gapImage: {
     borderRadius: Border.br_5xs,
     width: 316,
     height: 210,

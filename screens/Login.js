@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, View, TextInput, TouchableOpacity, Image, Pressable  } from 'react-native';
+import React, { useState, useContext } from 'react';
+import {
+  Text,
+  StyleSheet,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Pressable,
+} from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 import { useNavigation } from '@react-navigation/native';
-import { FontSize, FontFamily, Color, Padding,Border } from '../GlobalStyles';
+import { FontSize, FontFamily, Color, Padding, Border } from '../GlobalStyles';
+import UserContext from '../components/UserContext'; // นำเข้า UserContext
 
-
-
-
-const db = SQLite.openDatabase(
-  {
-    name: 'MyDatabase.db',
-    location: 'default',
-  },
-  () => {
-    console.log('Database opened');
-  },
-  error => {
-    console.error('Error opening database', error);
-  }
-);
+const db = SQLite.openDatabase({
+  name: 'MyDatabase.db',
+  location: 'default',
+});
 
 const Login = () => {
   const [accountName, setAccountName] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
+  const { setUsername } = useContext(UserContext); // ใช้ useContext เพื่อเข้าถึง setUsername
 
   const handleLogin = () => {
     db.transaction(tx => {
@@ -33,11 +32,9 @@ const Login = () => {
         [accountName, password],
         (tx, results) => {
           if (results.rows.length > 0) {
-           
-            alert('Login successful!');
-            navigation.navigate('Home');
+            setUsername(accountName); // บันทึกชื่อผู้ใช้ใน UserContext
+            navigation.navigate('Home'); // นำทางไปยังหน้า Home
           } else {
-           
             alert('Invalid username or password');
           }
         },
@@ -64,42 +61,41 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-    <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Login</Text>
 
-    <View style={styles.inputWrapper}>
-      <TextInput
-        style={styles.input}
-        placeholder="ชื่อบัญชี"
-        value={accountName}
-        onChangeText={setAccountName}
-      />
-    </View>
-
-    <View style={styles.inputWrapper}>
-      <View style={styles.passwordContainer}>
+      <View style={styles.inputWrapper}>
         <TextInput
-          style={styles.passwordInput}
-          placeholder="รหัสผ่าน"
-          secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={setPassword}
+          style={styles.input}
+          placeholder="ชื่อบัญชี"
+          value={accountName}
+          onChangeText={setAccountName}
         />
-        {renderPasswordIcon()}
       </View>
+
+      <View style={styles.inputWrapper}>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="รหัสผ่าน"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
+          />
+          {renderPasswordIcon()}
+        </View>
+      </View>
+
+      <Pressable style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.registerPressable}
+        onPress={() => navigation.navigate('Register')}
+      >
+        <Text style={styles.registerText}>สมัครสมาชิก</Text>
+      </Pressable>
     </View>
-
-    <Pressable style={styles.button} onPress={handleLogin}>
-      <Text style={styles.buttonText}>Login</Text>
-    </Pressable>
-
-    <Pressable
-      style={styles.registerPressable}
-      onPress={() => navigation.navigate('Register')}
-    >
-      <Text style={styles.registerText}>สมัครสมาชิก</Text>
-    </Pressable>
-      </View>
-    
   );
 };
 
@@ -128,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#ccc', 
+    borderColor: '#ccc',
     paddingRight: 8,
   },
   passwordInput: {
@@ -169,4 +165,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
 export default Login;

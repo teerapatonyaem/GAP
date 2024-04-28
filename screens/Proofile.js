@@ -8,7 +8,6 @@ import SectionCard from '../components/SectionCard';
 import ProfileForm1 from '../components/ProfileForm1';
 import LogoutButton from '../components/LogoutButton'; 
 
-// ปุ่มอัปโหลดไฟล์
 const UploadButton = ({ onFileSelected }) => {
   const handlePress = () => {
     const options = {
