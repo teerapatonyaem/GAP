@@ -1,74 +1,172 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
-import Loginaccountinput from "../components/Loginaccountinput";
-import Loginpasswordinput from "../components/Loginpasswordinput";
-import Loginbutton from "../components/Loginbutton";
-import { useNavigation } from "@react-navigation/native";
-import { FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
+import React, { useState } from 'react';
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, Image, Pressable  } from 'react-native';
+import SQLite from 'react-native-sqlite-storage';
+import { useNavigation } from '@react-navigation/native';
+import { FontSize, FontFamily, Color, Padding,Border } from '../GlobalStyles';
+
+
+
+
+const db = SQLite.openDatabase(
+  {
+    name: 'MyDatabase.db',
+    location: 'default',
+  },
+  () => {
+    console.log('Database opened');
+  },
+  error => {
+    console.error('Error opening database', error);
+  }
+);
 
 const Login = () => {
+  const [accountName, setAccountName] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
 
+  const handleLogin = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM Users WHERE username = ? AND password = ?',
+        [accountName, password],
+        (tx, results) => {
+          if (results.rows.length > 0) {
+           
+            alert('Login successful!');
+            navigation.navigate('Home');
+          } else {
+           
+            alert('Invalid username or password');
+          }
+        },
+        error => {
+          console.error('Error querying database', error);
+        }
+      );
+    });
+  };
+
+  const renderPasswordIcon = () => (
+    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+      <Image
+        style={styles.visibilityIcon}
+        resizeMode="cover"
+        source={
+          showPassword
+            ? require('../assets/1-system-iconsshowhide1.png')
+            : require('../assets/1-system-iconsshowhide2.png')
+        }
+      />
+    </TouchableOpacity>
+  );
+
   return (
-    <View style={styles.login}>
-      <View style={styles.loginParent}>
-        <Text style={styles.login1}>Login</Text>
-        <Loginaccountinput />
-        <Loginpasswordinput />
-        <Text style={styles.text}>ลืมรหัสผ่าน</Text>
-        <Loginbutton />
-        <Pressable
-  style={styles.pressable}
-  onPress={() => navigation.navigate("Register")}
->
-  <Text style={styles.text}>สมัครสมาชิก</Text>
-</Pressable>
+    <View style={styles.container}>
+    <Text style={styles.title}>Login</Text>
+
+    <View style={styles.inputWrapper}>
+      <TextInput
+        style={styles.input}
+        placeholder="ชื่อบัญชี"
+        value={accountName}
+        onChangeText={setAccountName}
+      />
+    </View>
+
+    <View style={styles.inputWrapper}>
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="รหัสผ่าน"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={setPassword}
+        />
+        {renderPasswordIcon()}
       </View>
     </View>
+
+    <Pressable style={styles.button} onPress={handleLogin}>
+      <Text style={styles.buttonText}>Login</Text>
+    </Pressable>
+
+    <Pressable
+      style={styles.registerPressable}
+      onPress={() => navigation.navigate('Register')}
+    >
+      <Text style={styles.registerText}>สมัครสมาชิก</Text>
+    </Pressable>
+      </View>
+    
   );
 };
 
 const styles = StyleSheet.create({
-  login1: {
-    fontSize: FontSize.heading03_size,
-    letterSpacing: -0.6,
-    lineHeight: 48,
-    fontWeight: "600",
-    fontFamily: FontFamily.heading03,
-    color: Color.gray900,
-    textAlign: "center",
-    alignSelf: "stretch",
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
   },
-  text: {
-    fontSize: FontSize.buttonSmall_size,
-    textTransform: "capitalize",
-    fontWeight: "500",
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  inputWrapper: {
+    width: '100%',
+    marginBottom: 16,
+  },
+  input: {
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc', 
+    paddingRight: 8,
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 8,
+  },
+  visibilityIcon: {
+    width: 24,
+    height: 24,
+  },
+  button: {
+    alignSelf: 'stretch',
+    borderRadius: Border.br_13xl,
+    backgroundColor: Color.walledGarden1000,
+    height: 44,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: Padding.p_21xl,
+    paddingVertical: Padding.p_3xs,
+    marginVertical: 16,
+  },
+  buttonText: {
+    fontSize: FontSize.buttonRegular_size,
+    fontWeight: '500',
+    fontFamily: FontFamily.buttonSmall,
+    color: 'white',
+  },
+  registerPressable: {
+    marginTop: 16,
+    alignSelf: 'stretch',
+  },
+  registerText: {
+    fontSize: FontSize.buttonRegular_size,
+    fontWeight: '500',
     fontFamily: FontFamily.buttonSmall,
     color: Color.labelColorLightPrimary,
-    textAlign: "right",
-    marginTop: 16,
-    alignSelf: "stretch",
-  },
-  pressable: {
-    marginTop: 16,
-  },
-  loginParent: {
-    position: "absolute",
-    marginLeft: -206,
-    top: 0,
-    left: "50%",
-    width: 412,
-    alignItems: "center",
-    paddingHorizontal: Padding.p_base,
-    paddingVertical: Padding.p_9xl,
-  },
-  login: {
-    backgroundColor: Color.gray00,
-    flex: 1,
-    width: "100%",
-    height: 712,
-    overflow: "hidden",
+    textAlign: 'center',
   },
 });
-
 export default Login;

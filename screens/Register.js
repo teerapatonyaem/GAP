@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   TextInput,
@@ -8,8 +8,22 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import SQLite from 'react-native-sqlite-storage'; 
 import { useNavigation } from '@react-navigation/native';
 import { FontSize, FontFamily, Color, Border, Padding } from '../GlobalStyles';
+
+const db = SQLite.openDatabase(
+  {
+    name: 'MyDatabase.db',
+    location: 'default', 
+  },
+  () => {
+    console.log('Database opened');
+  },
+  error => {
+    console.error('Error opening database', error);
+  }
+);
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -20,14 +34,45 @@ const RegisterScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  useEffect(() => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, national_id TEXT UNIQUE, username TEXT UNIQUE, password TEXT)',
+        [],
+        () => {
+          console.log('Users table created');
+        },
+        error => {
+          console.error('Error creating table', error);
+        }
+      );
+    });
+  }, []);
+
   const handleRegister = () => {
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
     }
 
-    // ส่งข้อมูลไปยัง backend เพื่อดำเนินการลงทะเบียน
-    navigation.navigate('Login'); // นำทางไปยังหน้า "Login"
+    db.transaction(tx => {
+      tx.executeSql(
+        'INSERT INTO Users (national_id, username, password) VALUES (?, ?, ?)',
+        [nationalId, username, password],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            alert('User registered successfully!');
+            navigation.navigate('Login');
+          } else {
+            alert('Registration failed');
+          }
+        },
+        error => {
+          console.error('Error inserting data', error);
+          alert('Registration failed: ' + error.message);
+        }
+      );
+    });
   };
 
   const renderPasswordIcon = (isVisible, toggleVisibility) => (
@@ -52,7 +97,7 @@ const RegisterScreen = () => {
           placeholder="รหัสประจำตัวประชาชน"
           value={nationalId}
           onChangeText={setNationalId}
-          style={[styles.input]} // ขอบสีเทาอ่อน
+          style={[styles.input]}
         />
       </View>
 
@@ -61,7 +106,7 @@ const RegisterScreen = () => {
           placeholder="ชื่อบัญชี"
           value={username}
           onChangeText={setUsername}
-          style={[styles.input]} // ขอบสีเทาอ่อน
+          style={[styles.input]}
         />
       </View>
 
@@ -122,7 +167,7 @@ const styles = StyleSheet.create({
   input: {
     padding: 8,
     borderWidth: 1,
-    borderColor: '#ddd', // ขอบสีเทาอ่อน
+    borderColor: '#ddd', 
   },
   passwordContainer: {
     flexDirection: 'row',
@@ -187,4 +232,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen
+export default RegisterScreen;
