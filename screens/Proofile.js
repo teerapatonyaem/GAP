@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Padding, Color, FontSize, Border, FontFamily } from '../GlobalStyles';
 import SectionCard from '../components/SectionCard';
 import ProfileForm1 from '../components/ProfileForm1';
+import LogoutButton from '../components/LogoutButton'; 
 
 // ปุ่มอัปโหลดไฟล์
 const UploadButton = ({ onFileSelected }) => {
@@ -72,42 +73,54 @@ const Profile = () => {
       >
         <View style={styles.profileInner}>
           <SectionCard />
+          
+          {/* Information Section */}
           <View style={styles.infoSection}>
-            <Text style={[styles.text, styles.headerText]}>ชื่อ - นามสกุล</Text>
-            <Text style={[styles.text, styles.regularText]}>
-              นายเกษตรกร มั่งมี
-            </Text>
-            <Text style={[styles.text, styles.headerText]}>
-              เลขที่บัตรประจำตัวประชาชน
-            </Text>
-            <Text style={[styles.text, styles.regularText]}>
-              113610905008-3
-            </Text>
+            <Text style={styles.headerText}>ชื่อ - นามสกุล</Text>
+            <Text style={styles.regularText}>นายเกษตรกร มั่งมี</Text>
+            <Text style={styles.headerText}>เลขที่บัตรประจำตัวประชาชน</Text>
+            <Text style={styles.regularText}>113610905008-3</Text>
+          </View>
+          
+          {/* Upload Sections */}
+          <View style={styles.uploadSection}>
+            <Text style={styles.headerText}>สำเนาทะเบียนบ้าน</Text>
+            <UploadButton onFileSelected={handleFileSelected} />
           </View>
 
           <View style={styles.uploadSection}>
-            <Text style={[styles.text, styles.headerText]}>สำเนาทะเบียนบ้าน</Text>
+            <Text style={styles.headerText}>สำเนาบัตรประชาชน</Text>
             <UploadButton onFileSelected={handleFileSelected} />
           </View>
-          
+
           <View style={styles.uploadSection}>
-            <Text style={[styles.text, styles.headerText]}>สำเนาบัตรประชาชน</Text>
+            <Text style={styles.headerText}>การจดทะเบียนนิติบุคคล</Text>
             <UploadButton onFileSelected={handleFileSelected} />
           </View>
-          
-          <View style={styles.uploadSection}>
-            <Text style={[styles.text, styles.headerText]}>การจดทะเบียนนิติบุคคล</Text>
-            <UploadButton onFileSelected={handleFileSelected} />
+
+          {/* Navigation Sections */}
+          <View style={styles.clearUsersSection}>
+            <Pressable
+              style={styles.clearUsersButton}
+              onPress={() => navigation.navigate('ClearUsersComponent')}
+            >
+              <Text style={styles.clearUsersText}>Clear All Users</Text>
+            </Pressable>
           </View>
+
+          <View style={styles.logoutSection}>
+            <LogoutButton />
+          </View>
+
         </View>
       </ScrollView>
 
       <ProfileForm1
-        onLayoutPress={() => navigation.navigate("Expense")}
-        onLayoutPress1={() => navigation.navigate("Status1")}
-        onLayoutPress2={() => navigation.navigate("Modal1")}
-        onLayoutPress3={() => navigation.navigate("RiceInfo")}
-        onLayoutPress4={() => navigation.navigate("Proofile")}
+       onLayoutPress={() => navigation.navigate("Expense")}
+       onLayoutPress1={() => navigation.navigate("Status1")}
+       onLayoutPress2={() => navigation.navigate("Modal1")}
+       onLayoutPress3={() => navigation.navigate("RiceInfo")}
+       onLayoutPress4={() => navigation.navigate("Proofile")}
       />
     </View>
   );
@@ -123,24 +136,22 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: Padding.p_base,
-    justifyContent: 'center',
-    alignItems: 'stretch',
+    paddingBottom: 100,
   },
   profileInner: {
     flex: 1,
   },
   infoSection: {
     marginBottom: 20,
-    backgroundColor: Color.gray50, // เพิ่มสไตล์สำหรับพื้นหลังสีเทา
-    padding: Padding.p_5xs, // เพิ่ม padding
-    borderRadius: Border.br_5xs, // เพิ่มการโค้งมน
+    backgroundColor: Color.gray50,
+    padding: Padding.p_5xs,
+    borderRadius: Border.br_5xs,
   },
   uploadSection: {
     marginTop: 20,
     padding: Padding.p_5xs,
     backgroundColor: Color.gray50,
     borderRadius: Border.br_5xs,
-    alignItems: 'center',
   },
   text: {
     fontFamily: FontFamily.titleT3SemiBold,
@@ -158,17 +169,34 @@ const styles = StyleSheet.create({
     lineHeight: 28,
   },
   uploadWrapper: {
+    padding: Padding.p_3xs,
+    alignItems: 'center',
     backgroundColor: Color.surfaceColourWhiteSurface,
     borderRadius: Border.br_5xs,
-    padding: Padding.p_5xs,
-    alignItems: 'center',
   },
   uploadText: {
     fontFamily: FontFamily.iBMPlexSansThaiMedium,
-    fontWeight: '600',
     color: Color.labelColorLightPrimary,
     fontSize: FontSize.bodyB4Regular_size,
   },
+  clearUsersSection: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  clearUsersButton: {
+    backgroundColor: 'red',
+    padding: Padding.p_5xs,
+    borderRadius: Border.br_5xs,
+  },
+  clearUsersText: {
+    color: 'white',
+    fontSize: FontSize.bodyB4Regular_size,
+  },
+  logoutSection: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  
 });
 
 export default Profile;

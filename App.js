@@ -17,6 +17,8 @@ import Register from "./screens/Register";
 import Plot from "./screens/Plot";
 import PlotSurvey from "./screens/PlotSurvey";
 import Modal1 from "./components/Modal1";
+import LogoutButton from "./components/LogoutButton";
+import ClearUsersComponent from "./components/ClearUsersComponent";
 import FertilizerModal from "./components/FertilizerModal";
 import ChemicalsModal from "./components/ChemicalsModal";
 import ExpensesModal from "./components/ExpensesModal";
@@ -126,7 +128,11 @@ const App = () => {
                 component={Home}
                 options={{ headerShown: false }}
               />
-
+              <Stack.Screen
+                name="LogoutButton"
+                component={LogoutButton}
+                options={{ headerShown: false }}
+              />
               <Stack.Screen
                 name="Modal2"
                 component={Modal2}
@@ -205,6 +211,11 @@ const App = () => {
               <Stack.Screen
                 name="Modal1"
                 component={Modal1}
+                options={{ headerShown: false }}
+              />
+               <Stack.Screen
+                name="ClearUsersComponent"
+                component={ClearUsersComponent}
                 options={{ headerShown: false }}
               />
             <Stack.Screen

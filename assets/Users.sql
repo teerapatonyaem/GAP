@@ -1,0 +1,9 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "Users" (
+	"id"	INTEGER,
+	"national_id"	TEXT UNIQUE,
+	"username"	TEXT UNIQUE,
+	"password"	TEXT,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+COMMIT;
