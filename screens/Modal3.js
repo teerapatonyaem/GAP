@@ -3,9 +3,9 @@ import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import IconixtolinearcheckboxCheck from "../components/IconixtolinearcheckboxCheck";
 import { FontSize, FontFamily, Color } from "../GlobalStyles";
 
-const Modal3 = ({ navigation }) => { // Destructure navigation from props
+const Modal3 = ({ navigation }) => { 
   const goToHomeDetail = () => {
-    navigation.navigate('HomeDetail');
+    navigation.navigate('Home');
   };
 
   return (

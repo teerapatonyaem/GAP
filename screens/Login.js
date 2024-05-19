@@ -23,8 +23,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
-  const { setUsername } = useContext(UserContext); // ใช้ useContext เพื่อเข้าถึง setUsername
-
+  const { setUsername } = useContext(UserContext);
   const handleLogin = () => {
     db.transaction(tx => {
       tx.executeSql(
@@ -32,8 +31,8 @@ const Login = () => {
         [accountName, password],
         (tx, results) => {
           if (results.rows.length > 0) {
-            setUsername(accountName); // บันทึกชื่อผู้ใช้ใน UserContext
-            navigation.navigate('Home'); // นำทางไปยังหน้า Home
+            setUsername(accountName); 
+            navigation.navigate('Home');
           } else {
             alert('Invalid username or password');
           }

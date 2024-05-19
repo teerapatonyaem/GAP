@@ -5,11 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SQLite from 'react-native-sqlite-storage';
 
-// ตรวจสอบการเปิดใช้การดีบัก
+
 SQLite.DEBUG(true);
 SQLite.enablePromise(true);
 
-// การตั้งค่าฐานข้อมูล
+
 const dbName = 'PlotDatabase.db';
 const version = '1.0';
 const displayName = 'SQLite Plot Database';
@@ -17,7 +17,7 @@ const dbSize = 200000;
 
 let db;
 
-// ฟังก์ชันสำหรับเปิดฐานข้อมูลและสร้างตารางหากยังไม่มี
+
 const initDB = async () => {
   if (!db) {
     db = await SQLite.openDatabase({

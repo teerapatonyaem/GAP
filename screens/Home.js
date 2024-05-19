@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -13,13 +13,43 @@ import FormSection from "../components/FormSection";
 import ProfileForm1 from "../components/ProfileForm1";
 import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
 import UserContext from "../components/UserContext";
+import SQLite from 'react-native-sqlite-storage';
 
+
+const db = SQLite.openDatabase({
+  name: 'PlotDatabase.db', 
+  location: 'default',   
+});
 
 const Home = () => {
   const navigation = useNavigation();
+  const [plots, setPlots] = useState([]); 
   const route = useRoute(); 
   //const username = route.params?.username;
   const { username, setUsername } = useContext(UserContext); 
+
+  useEffect(() => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT rice_variety, area, planting_date FROM plot ORDER BY plot_id DESC LIMIT 1', 
+        [],
+        (tx, results) => {
+          const rows = results.rows;
+          const plotData = [];
+  r
+           if (rows.length > 0) {
+          plotData.push(rows.item(0));
+        }
+  
+          setPlots(plotData); 
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+        }
+      );
+    });
+  }, []);
+  
 
   return (
     <View style={styles.container}>
@@ -67,16 +97,30 @@ const Home = () => {
                 source={require("../assets/grass-landscape-field-vector-png-images-nature-landscape-vector-with-green-field-grass-trees-blue-sky-and-clouds-suitable-for-background-or-illustration-nature-clipart-day-landscape-png-image-for-free-download-1.png")}
               />
               <View style={styles.iconContainer}>
-                <Image
-                  style={styles.icon}
-                  resizeMode="cover"
-                  source={require("../assets/iconixtolinearaddsquare.png")}
-                />
-                <View style={styles.textWrapper}>
-                  <Text style={styles.createPlotText}>
-                    สร้างแปลง
-                  </Text>
-                </View>
+
+              {plots.length === 0 ? (
+                
+          <View style={styles.noPlotContainer}>
+            <Image
+              style={styles.icon}
+              resizeMode="cover"
+              source={require('../assets/iconixtolinearaddsquare.png')}
+            />
+            <View style={styles.textWrapper}>
+              <Text style={styles.createPlotText}>สร้างแปลง</Text>
+            </View>
+          </View>
+        ) : (
+          plots.map((plot, index) => (
+            <View key={index} style={styles.plotContainer}>
+              <Text style={styles.plotText}>พันธุ์ข้าว: {plot.rice_variety}</Text>
+              <Text style={styles.plotText}>จำนวนพื้นที่: {plot.area} ไร่</Text>
+              <Text style={styles.plotText}>วันที่ปลูก: {plot.planting_date}</Text>
+            </View>
+          ))
+        )}
+
+
               </View>
             </View>
           </Pressable>
