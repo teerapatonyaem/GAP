@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { saveTask } from "../components/Fertilizerdatabase";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 
 const FertilizerModal = ({ onClose }) => {
   const navigation = useNavigation();
 
-  // State variables for input fields
-  const [job, setJob] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [cost, setCost] = useState('');
-  const [costDetails, setCostDetails] = useState('');
-  const [additional, setAdditional] = useState('');
+  const [ferjob, setFerjob] = useState('');
+  const [ferformula, setFerformula] = useState('');
+  const [ferrate, setFerrate] = useState('');
+  const [ferquantity, setFerquantity] = useState('');
+  const [fercost,setFercost] = useState('');
+  const [feradditional, setFeradditional] = useState('');
+
+
+  const handleSave = () => {
+    saveTask(ferjob, ferformula, ferrate, ferquantity,fercost, feradditional);
+    navigation.navigate("Modal3");
+  };
 
   return (
     <View style={styles.modal}>
@@ -52,13 +59,13 @@ const FertilizerModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={job}
-                onChangeText={setJob}
+                value={ferjob}
+                onChangeText={setFerjob}
                 placeholder="ระบุงานที่ปฏิบัติ"
               />
             </View>
           </View>
-          {/* ปริมาณ */}
+          {/* สูตรที่ใช้ */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>สูตรที่ใช้</Text>
@@ -71,13 +78,13 @@ const FertilizerModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={quantity}
-                onChangeText={setQuantity}
+                value={ferformula}
+                onChangeText={setFerformula}
                 placeholder="ระบุสูตรที่ใช้"
               />
             </View>
           </View>
-          {/* ค่าใช้จ่าย */}
+          {/* อัตราที่ใช้ */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>อัตราที่ใช้</Text>
@@ -90,13 +97,13 @@ const FertilizerModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={cost}
-                onChangeText={setCost}
+                value={ferrate}
+                onChangeText={setFerrate}
                 placeholder="ระบุอัตราที่ใช้"
               />
             </View>
           </View>
-          {/* รายละเอียดค่าใช้จ่าย */}
+          {/* ปริมาณปุ๋บ */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ปริมาณ / ไร่</Text>
@@ -109,12 +116,13 @@ const FertilizerModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={costDetails}
-                onChangeText={setCostDetails}
+                value={ferquantity}
+                onChangeText={setFerquantity}
                 placeholder="ระบุปริมาณ"
               />
             </View>
           </View>
+             {/* ค่าใช้จ่ายปุ๋ย */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ค่าใช้จ่าย</Text>
@@ -127,8 +135,8 @@ const FertilizerModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={costDetails}
-                onChangeText={setCostDetails}
+                value={fercost}
+                onChangeText={setFercost}
                 placeholder="ค่าใช้จ่าย"
               />
             </View>
@@ -146,8 +154,8 @@ const FertilizerModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={additional}
-                onChangeText={setAdditional}
+                value={feradditional}
+                onChangeText={setFeradditional}
                 placeholder="ระบุเพิ่มเติม"
               />
             </View>
@@ -164,10 +172,7 @@ const FertilizerModal = ({ onClose }) => {
             </Pressable>
             <Pressable
               style={[styles.button2, styles.buttonLayout]}
-              onPress={() => {
-                // Save logic here
-                navigation.navigate("Modal3");
-              }}
+              onPress={handleSave}
             >
               <Text style={[styles.button3, styles.buttonTypo, { color: "white" }]}>บันทึก</Text>
             </Pressable>

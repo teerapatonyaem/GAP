@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { saveTask } from "../components/database";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 
 const Modal1 = ({ onClose }) => {
   const navigation = useNavigation();
 
-  // State variables for input fields
   const [job, setJob] = useState('');
   const [quantity, setQuantity] = useState('');
   const [cost, setCost] = useState('');
   const [costDetails, setCostDetails] = useState('');
   const [additional, setAdditional] = useState('');
+
+  const handleSave = () => {
+    saveTask(job, quantity, cost, costDetails, additional);
+    navigation.navigate("Modal3");
+  };
 
   return (
     <View style={styles.modal}>
@@ -20,16 +25,11 @@ const Modal1 = ({ onClose }) => {
           <View style={[styles.tabs, styles.tabsFlexBox]}>
             <Text style={[styles.active, styles.activeTypo]}>ทั่วไป</Text>
           </View>
-          {/* <View style={[styles.tabs1, styles.tabsFlexBox]}>
-            <Text style={[styles.normal, styles.activeTypo]}>ปุ๋ย</Text>
-          </View> */}
-
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
             <Pressable onPress={() => navigation.navigate("FertilizerModal")}>
               <Text style={styles.textTypo}>ปุ๋ย</Text>
             </Pressable>
           </View>
-          
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
             <Pressable onPress={() => navigation.navigate("ChemicalsModal")}>
               <Text style={styles.textTypo}>สารเคมี</Text>
@@ -37,13 +37,12 @@ const Modal1 = ({ onClose }) => {
           </View>
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
             <Pressable onPress={() => navigation.navigate("ExpensesModal")}>
-            <Text style={[styles.activeTypo]}>ค่าใช้จ่าย</Text>
+              <Text style={[styles.activeTypo]}>ค่าใช้จ่าย</Text>
             </Pressable>
           </View>
         </View>
         <View style={[styles.parent, styles.parentSpaceBlock]}>
           <Text style={styles.text}>การจัดการทั่วไปภายในแปลง</Text>
-          {/* งานที่ปฏิบัติ */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>งานที่ปฏิบัติ</Text>
@@ -62,7 +61,6 @@ const Modal1 = ({ onClose }) => {
               />
             </View>
           </View>
-          {/* ปริมาณ */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ปริมาณ</Text>
@@ -81,7 +79,6 @@ const Modal1 = ({ onClose }) => {
               />
             </View>
           </View>
-          {/* ค่าใช้จ่าย */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ค่าใช้จ่าย</Text>
@@ -100,7 +97,6 @@ const Modal1 = ({ onClose }) => {
               />
             </View>
           </View>
-          {/* รายละเอียดค่าใช้จ่าย */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>รายละเอียดค่าใช้จ่าย</Text>
@@ -119,7 +115,6 @@ const Modal1 = ({ onClose }) => {
               />
             </View>
           </View>
-          {/* เพิ่มเติม */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>เพิ่มเติม</Text>
@@ -139,21 +134,15 @@ const Modal1 = ({ onClose }) => {
             </View>
           </View>
           <View style={[styles.buttonParent, styles.textfieldSpaceBlock]}>
-          <Pressable
+            <Pressable
               style={[styles.button, styles.buttonLayout]}
-              onPress={() => {
-
-                navigation.navigate("Home");
-              }}
+              onPress={() => navigation.navigate("Home")}
             >
               <Text style={[styles.button1, styles.buttonTypo]}>ยกเลิก</Text>
             </Pressable>
             <Pressable
               style={[styles.button2, styles.buttonLayout]}
-              onPress={() => {
-                // Save logic here
-                navigation.navigate("Modal3");
-              }}
+              onPress={handleSave}
             >
               <Text style={[styles.button3, styles.buttonTypo, { color: "white" }]}>บันทึก</Text>
             </Pressable>

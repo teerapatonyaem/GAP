@@ -18,6 +18,9 @@ import Plot from "./screens/Plot";
 import PlotSurvey from "./screens/PlotSurvey";
 import Modal1 from "./components/Modal1";
 import { UserProvider } from './components/UserContext';
+import { useEffect } from 'react';
+import { createTables } from './components/database';
+import openDatabase from './components/database';
 import LogoutButton from "./components/LogoutButton";
 import ClearUsersComponent from "./components/ClearUsersComponent";
 import FertilizerModal from "./components/FertilizerModal";
@@ -84,6 +87,15 @@ import {
 } from "react-native";
 
 const App = () => {
+ 
+  useEffect(() => {
+    const initializeDatabase = async () => {
+      await openDatabase();
+    };
+
+    initializeDatabase();
+  }, []);
+  
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
 
   function MaterialIcon({ name, style }) {
@@ -111,6 +123,8 @@ const App = () => {
     name: "material",
     icons: createIconsMap(),
   };
+
+ 
 
   return (
     <>
