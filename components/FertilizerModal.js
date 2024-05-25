@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { saveTask } from "../components/Fertilizerdatabase";
+import { saveFertilizerTask } from "../components/database"; // Adjust the import path as necessary
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 
 const FertilizerModal = ({ onClose }) => {
@@ -11,12 +11,11 @@ const FertilizerModal = ({ onClose }) => {
   const [ferformula, setFerformula] = useState('');
   const [ferrate, setFerrate] = useState('');
   const [ferquantity, setFerquantity] = useState('');
-  const [fercost,setFercost] = useState('');
+  const [fercost, setFercost] = useState('');
   const [feradditional, setFeradditional] = useState('');
 
-
   const handleSave = () => {
-    saveTask(ferjob, ferformula, ferrate, ferquantity,fercost, feradditional);
+    saveFertilizerTask(ferjob, ferformula, ferrate, ferquantity, fercost, feradditional);
     navigation.navigate("Modal3");
   };
 
@@ -24,8 +23,8 @@ const FertilizerModal = ({ onClose }) => {
     <View style={styles.modal}>
       <View style={[styles.component7, styles.parentSpaceBlock]}>
         <View style={styles.input1FlexBox}>
-        <View style={styles.tabsFlexBox}>
-        <Pressable onPress={() => navigation.navigate("Modal1")}>
+          <View style={styles.tabsFlexBox}>
+            <Pressable onPress={() => navigation.navigate("Modal1")}>
               <Text style={styles.textTypo}>ทั่วไป</Text>
             </Pressable>
           </View>
@@ -34,13 +33,12 @@ const FertilizerModal = ({ onClose }) => {
           </View>
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
             <Pressable onPress={() => navigation.navigate("ChemicalsModal")}>
-            <Text style={[styles.activeTypo]}>สารเคมี</Text>
+              <Text style={[styles.activeTypo]}>สารเคมี</Text>
             </Pressable>
           </View>
-          
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
             <Pressable onPress={() => navigation.navigate("ExpensesModal")}>
-            <Text style={[styles.activeTypo]}>ค่าใช้จ่าย</Text>
+              <Text style={[styles.activeTypo]}>ค่าใช้จ่าย</Text>
             </Pressable>
           </View>
         </View>
@@ -103,7 +101,7 @@ const FertilizerModal = ({ onClose }) => {
               />
             </View>
           </View>
-          {/* ปริมาณปุ๋บ */}
+          {/* ปริมาณ */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ปริมาณ / ไร่</Text>
@@ -122,7 +120,7 @@ const FertilizerModal = ({ onClose }) => {
               />
             </View>
           </View>
-             {/* ค่าใช้จ่ายปุ๋ย */}
+          {/* ค่าใช้จ่าย */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ค่าใช้จ่าย</Text>
@@ -161,12 +159,9 @@ const FertilizerModal = ({ onClose }) => {
             </View>
           </View>
           <View style={[styles.buttonParent, styles.textfieldSpaceBlock]}>
-          <Pressable
+            <Pressable
               style={[styles.button, styles.buttonLayout]}
-              onPress={() => {
-              
-                navigation.navigate("Home");
-              }}
+              onPress={() => navigation.navigate("Home")}
             >
               <Text style={[styles.button1, styles.buttonTypo]}>ยกเลิก</Text>
             </Pressable>

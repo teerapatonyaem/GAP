@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { saveTask } from "../components/database";
+import { saveGeneralTask } from "../components/database"; 
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 
 const Modal1 = ({ onClose }) => {
@@ -14,7 +14,7 @@ const Modal1 = ({ onClose }) => {
   const [additional, setAdditional] = useState('');
 
   const handleSave = () => {
-    saveTask(job, quantity, cost, costDetails, additional);
+    saveGeneralTask(job, quantity, cost, costDetails, additional);
     navigation.navigate("Modal3");
   };
 
