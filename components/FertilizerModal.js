@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { saveFertilizerTask } from "../components/database"; // Adjust the import path as necessary
+import { saveFertilizerTask,saveGeneralTask } from "../components/database";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 
-const FertilizerModal = ({ onClose }) => {
+const FertilizerModal = ({ route }) => {
+  const { job, quantity, cost, costDetails, additional } = route.params;
   const navigation = useNavigation();
 
-  const [ferjob, setFerjob] = useState('');
-  const [ferformula, setFerformula] = useState('');
-  const [ferrate, setFerrate] = useState('');
-  const [ferquantity, setFerquantity] = useState('');
-  const [fercost, setFercost] = useState('');
-  const [feradditional, setFeradditional] = useState('');
+  const [ferjob, setFerjob] = useState(""); // Define state variables
+  const [ferformula, setFerformula] = useState("");
+  const [ferrate, setFerrate] = useState("");
+  const [ferquantity, setFerquantity] = useState("");
+  const [fercost, setFercost] = useState("");
+  const [feradditional, setFeradditional] = useState("");
 
   const handleSave = () => {
+    saveGeneralTask(job, quantity, cost, costDetails, additional);
     saveFertilizerTask(ferjob, ferformula, ferrate, ferquantity, fercost, feradditional);
     navigation.navigate("Modal3");
   };
