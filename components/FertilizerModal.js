@@ -8,7 +8,7 @@ const FertilizerModal = ({ route }) => {
   const { job, quantity, cost, costDetails, additional } = route.params;
   const navigation = useNavigation();
 
-  const [ferjob, setFerjob] = useState(""); // Define state variables
+  const [ferjob, setFerjob] = useState(""); 
   const [ferformula, setFerformula] = useState("");
   const [ferrate, setFerrate] = useState("");
   const [ferquantity, setFerquantity] = useState("");
@@ -31,10 +31,13 @@ const FertilizerModal = ({ route }) => {
             </Pressable>
           </View>
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
-            <Text style={[styles.active, styles.normalTypo]}>ปุ๋ย</Text>
+            <Pressable onPress={() => navigation.navigate("FertilizerModal", { ferjob,ferformula, ferrate, ferquantity, fercost,feradditional })}>
+          <Text style={styles.textTypo}>ปุ๋ย</Text>
+            </Pressable>
           </View>
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
-            <Pressable onPress={() => navigation.navigate("ChemicalsModal")}>
+            <Pressable onPress={() => navigation.navigate("ChemicalsModal",
+            { job, quantity, cost, costDetails, additional,ferjob,ferformula, ferrate, ferquantity, fercost,feradditional })}>
               <Text style={[styles.activeTypo]}>สารเคมี</Text>
             </Pressable>
           </View>

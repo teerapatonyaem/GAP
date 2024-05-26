@@ -26,12 +26,12 @@ const Modal1 = ({ onClose }) => {
             <Text style={[styles.active, styles.activeTypo]}>ทั่วไป</Text>
           </View>
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
-          <Pressable onPress={() => navigation.navigate("FertilizerModal", { job, quantity, cost, costDetails, additional })}>
-  <Text style={styles.textTypo}>ปุ๋ย</Text>
-</Pressable>
+            <Pressable onPress={() => navigation.navigate("FertilizerModal", { job, quantity, cost, costDetails, additional })}>
+          <Text style={styles.textTypo}>ปุ๋ย</Text>
+            </Pressable>
           </View>
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
-            <Pressable onPress={() => navigation.navigate("ChemicalsModal")}>
+            <Pressable onPress={() => navigation.navigate("ChemicalsModal",{ job, quantity, cost, costDetails, additional })}>
               <Text style={styles.textTypo}>สารเคมี</Text>
             </Pressable>
           </View>

@@ -2,16 +2,26 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
+import { saveFertilizerTask,saveGeneralTask,saveChemicalTask } from "../components/database";
 
-const ChemicalsModal = ({ onClose }) => {
+const ChemicalsModal = ({ route }) => {
+  const { job, quantity, cost, costDetails, additional } = route.params;
+  const { ferjob, ferformula, ferrate, ferquantity, fercost, feradditional } = route.params;
   const navigation = useNavigation();
 
-  // State variables for input fields
-  const [job, setJob] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [cost, setCost] = useState('');
-  const [costDetails, setCostDetails] = useState('');
-  const [additional, setAdditional] = useState('');
+  const [chejob, setChejob] = useState(""); 
+  const [pasttype, setPasttype] = useState("");
+  const [cheuse, setCheuse] = useState("");
+  const [cherate, setCherate] = useState("");
+  const [cheamount, setCheamount] = useState("");
+  const [checost, setChecost] = useState("");
+
+  const handleSave = () => {
+    saveGeneralTask(job, quantity, cost, costDetails, additional);
+    saveFertilizerTask(ferjob, ferformula, ferrate, ferquantity, fercost, feradditional);
+    saveChemicalTask(chejob, pasttype, cheuse, cherate, cheamount, checost);
+    navigation.navigate("Modal3");
+  };
 
   return (
     <View style={styles.modal}>
@@ -44,7 +54,7 @@ const ChemicalsModal = ({ onClose }) => {
         </View>
         <View style={[styles.parent, styles.parentSpaceBlock]}>
           <Text style={styles.text}>การจัดการทั่วไปภายในแปลง (กำจัดศัตรูพืช)</Text>
-          {/* งานที่ปฏิบัติ */}
+          {/* chejob */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>งานที่ปฏิบัติ</Text>
@@ -57,13 +67,13 @@ const ChemicalsModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={job}
-                onChangeText={setJob}
+                value={chejob}
+                onChangeText={setChejob}
                 placeholder="ระบุงานที่ปฏิบัติ"
               />
             </View>
           </View>
-          {/* ปริมาณ */}
+          {/* Pest type */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ชนิดศัตรูพืช</Text>
@@ -76,13 +86,13 @@ const ChemicalsModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={quantity}
-                onChangeText={setQuantity}
+                value={pasttype}
+                onChangeText={setPasttype}
                 placeholder="ระบุชนิดศัตรูพืช"
               />
             </View>
           </View>
-          {/* ค่าใช้จ่าย */}
+          {/* Chemicals used */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>สารเคมีที่ใช้</Text>
@@ -95,13 +105,13 @@ const ChemicalsModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={cost}
-                onChangeText={setCost}
+                value={cheuse}
+                onChangeText={setCheuse}
                 placeholder="ระบุสารเคมีที่ใช้"
               />
             </View>
           </View>
-          {/* รายละเอียดค่าใช้จ่าย */}
+          {/* CheRate  */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>อัตราที่ใช้</Text>
@@ -114,12 +124,13 @@ const ChemicalsModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={costDetails}
-                onChangeText={setCostDetails}
+                value={cherate}
+                onChangeText={setCherate}
                 placeholder="ระบุอัตราที่ใช้"
               />
             </View>
           </View>
+            {/* che amount  */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ปริมาณ / ไร่</Text>
@@ -132,13 +143,13 @@ const ChemicalsModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={costDetails}
-                onChangeText={setCostDetails}
+                value={cheamount}
+                onChangeText={setCheamount}
                 placeholder="ระบุปริมาณ"
               />
             </View>
           </View>
-          {/* เพิ่มเติม */}
+          {/* checost */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ค่าใช้จ่าย</Text>
@@ -151,8 +162,8 @@ const ChemicalsModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={additional}
-                onChangeText={setAdditional}
+                value={checost}
+                onChangeText={setChecost}
                 placeholder="ระบุค่าใช้จ่าย"
               />
             </View>
@@ -169,10 +180,7 @@ const ChemicalsModal = ({ onClose }) => {
             </Pressable>
             <Pressable
               style={[styles.button2, styles.buttonLayout]}
-              onPress={() => {
-                // Save logic here
-                navigation.navigate("Modal3");
-              }}
+              onPress={handleSave}
             >
               <Text style={[styles.button3, styles.buttonTypo, { color: "white" }]}>บันทึก</Text>
             </Pressable>

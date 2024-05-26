@@ -5,18 +5,23 @@ SQLite.enablePromise(true);
 
 let generalDb;
 let fertilizerDb;
+let chemicalDb;
 
 export const openDatabases = async () => {
   try {
-    // Open the general database
+  
     generalDb = await SQLite.openDatabase({ name: 'general.db', location: 'default' });
     console.log('General database opened');
     await createGeneralTable();
 
-    // Open the fertilizer database
+   
     fertilizerDb = await SQLite.openDatabase({ name: 'fertilizer.db', location: 'default' });
     console.log('Fertilizer database opened');
     await createFertilizerTable();
+
+    chemicalDb = await SQLite.openDatabase({ name: 'chemical.db', location: 'default' });
+    console.log('Chemical database opened');
+    await createChemicalTable();
   } catch (error) {
     console.log('Failed to open databases:', error);
   }
@@ -59,6 +64,27 @@ const createFertilizerTable = async () => {
   }
 };
 
+const createChemicalTable = async () => {
+  try {
+    await chemicalDb.executeSql(
+      `CREATE TABLE IF NOT EXISTS Chemical (
+        cheid INTEGER PRIMARY KEY AUTOINCREMENT,
+        chejob TEXT,
+        pasttype TEXT,
+        cheuse TEXT,
+        cherate TEXT,
+        cheamount TEXT,
+        checost TEXT
+      );`
+    );
+    console.log('Chemical table created successfully');
+  } catch (error) {
+    console.log('Failed to create chemical table:', error);
+  }
+};
+
+
+
 export const saveGeneralTask = async (job, quantity, cost, costDetails, additional) => {
   try {
     const results = await generalDb.executeSql(
@@ -93,5 +119,24 @@ export const saveFertilizerTask = async (ferjob, ferformula, ferrate, ferquantit
     console.log('Failed to save fertilizer task:', error);
   }
 };
+
+export const saveChemicalTask = async (chejob, pasttype, cheuse, cherate, cheamount, checost) => {
+  try {
+    const results = await chemicalDb.executeSql(
+      `INSERT INTO Chemical (chejob, pasttype, cheuse, cherate, cheamount, checost) 
+      VALUES (?, ?, ?, ?, ?, ?);`,
+      [chejob, pasttype, cheuse, cherate, cheamount, checost]
+    );
+
+    if (results[0].rowsAffected > 0) {
+      console.log('Chemical task saved successfully');
+    } else {
+      console.log('Failed to save chemical task');
+    }
+  } catch (error) {
+    console.log('Failed to save chemical task:', error);
+  }
+};
+
 
 export default openDatabases;
