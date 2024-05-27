@@ -6,6 +6,7 @@ SQLite.enablePromise(true);
 let generalDb;
 let fertilizerDb;
 let chemicalDb;
+let expenseDb;
 
 export const openDatabases = async () => {
   try {
@@ -14,7 +15,6 @@ export const openDatabases = async () => {
     console.log('General database opened');
     await createGeneralTable();
 
-   
     fertilizerDb = await SQLite.openDatabase({ name: 'fertilizer.db', location: 'default' });
     console.log('Fertilizer database opened');
     await createFertilizerTable();
@@ -22,6 +22,10 @@ export const openDatabases = async () => {
     chemicalDb = await SQLite.openDatabase({ name: 'chemical.db', location: 'default' });
     console.log('Chemical database opened');
     await createChemicalTable();
+
+    expenseDb = await SQLite.openDatabase({ name: 'expense.db', location: 'default' });
+    console.log('Expense database opened');
+    await createExpenseTable();
   } catch (error) {
     console.log('Failed to open databases:', error);
   }
@@ -83,7 +87,22 @@ const createChemicalTable = async () => {
   }
 };
 
-
+const createExpenseTable = async () => {
+  try {
+    await expenseDb.executeSql(
+      `CREATE TABLE IF NOT EXISTS Expense (
+        expenseid INTEGER PRIMARY KEY AUTOINCREMENT,
+        payoutfactor TEXT,
+        expenseamount TEXT,
+        expenses INTEGER,
+        revenue INTEGER
+      );`
+    );
+    console.log('Expense table created successfully');
+  } catch (error) {
+    console.log('Failed to create Expense table:', error);
+  }
+};
 
 export const saveGeneralTask = async (job, quantity, cost, costDetails, additional) => {
   try {
@@ -138,5 +157,21 @@ export const saveChemicalTask = async (chejob, pasttype, cheuse, cherate, cheamo
   }
 };
 
+export const saveExpenseTask = async (payoutfactor, expenseamount, expenses, revenue) => {
+  try {
+    const results = await expenseDb.executeSql(
+      `INSERT INTO Expense (payoutfactor, expenseamount, expenses, revenue) 
+      VALUES (?, ?, ?, ?);`,
+      [payoutfactor, expenseamount, expenses, revenue]
+    );
 
+    if (results[0].rowsAffected > 0) {
+      console.log('expense task saved successfully');
+    } else {
+      console.log('Failed to save expense task');
+    }
+  } catch (error) {
+    console.log('Failed to save expense task:', error);
+  }
+};
 export default openDatabases;

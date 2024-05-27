@@ -47,7 +47,11 @@ const ChemicalsModal = ({ route }) => {
           </View>
 
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
-            <Pressable onPress={() => navigation.navigate("ExpensesModal")}>
+            <Pressable onPress={() => navigation.navigate("ExpensesModal",
+              { job, quantity, cost, costDetails, additional,
+                ferjob,ferformula, ferrate, ferquantity, fercost,feradditional,
+                chejob, pasttype, cheuse, cherate, cheamount, checost}
+            )}>
             <Text style={[styles.activeTypo]}>ค่าใช้จ่าย</Text>
             </Pressable>
           </View>

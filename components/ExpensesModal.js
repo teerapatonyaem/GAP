@@ -2,16 +2,27 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
+import { saveFertilizerTask,saveGeneralTask,saveChemicalTask,saveExpenseTask } from "../components/database";
 
-const ExpensesModal = ({ onClose }) => {
+const ExpensesModal = ({ route }) => {
+  const { job, quantity, cost, costDetails, additional } = route.params;
+  const { ferjob, ferformula, ferrate, ferquantity, fercost, feradditional } = route.params;
+  const { chejob, pasttype, cheuse, cherate, cheamount, checost } = route.params;
   const navigation = useNavigation();
 
-  // State variables for input fields
-  const [job, setJob] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [cost, setCost] = useState('');
-  const [costDetails, setCostDetails] = useState('');
-  const [additional, setAdditional] = useState('');
+
+  const [payoutfactor, setPayoutfactor] = useState('');
+  const [expenseamount, setExpenseamount] = useState('');
+  const [expenses, setExpenses] = useState('');
+  const [revenue, setRevenue] = useState('');
+
+  const handleSave = () => {
+    saveGeneralTask(job, quantity, cost, costDetails, additional);
+    saveFertilizerTask(ferjob, ferformula, ferrate, ferquantity, fercost, feradditional);
+    saveChemicalTask(chejob, pasttype, cheuse, cherate, cheamount, checost);
+    saveExpenseTask(payoutfactor, expenseamount, expenses, revenue);
+    navigation.navigate("Modal3");
+  };
 
   return (
     <View style={styles.modal}>
@@ -42,7 +53,7 @@ const ExpensesModal = ({ onClose }) => {
         </View>
         <View style={[styles.parent, styles.parentSpaceBlock]}>
           <Text style={styles.text}>ค่าใช้จ่ายภายในแปลง</Text>
-          {/* งานที่ปฏิบัติ */}
+          {/* Payout factor */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ปัจจัยการจ่าย</Text>
@@ -55,13 +66,13 @@ const ExpensesModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={job}
-                onChangeText={setJob}
+                value={payoutfactor}
+                onChangeText={setPayoutfactor}
                 placeholder="ปัจจัยการจ่าย"
               />
             </View>
           </View>
-          {/* ปริมาณ */}
+          {/* expenseamount */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ปริมาณ</Text>
@@ -74,13 +85,13 @@ const ExpensesModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={quantity}
-                onChangeText={setQuantity}
+                value={expenseamount}
+                onChangeText={setExpenseamount}
                 placeholder="ปริมาณ"
               />
             </View>
           </View>
-          {/* ค่าใช้จ่าย */}
+          {/* expenses */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ราย-จ่าย</Text>
@@ -93,13 +104,13 @@ const ExpensesModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={cost}
-                onChangeText={setCost}
+                value={expenses}
+                onChangeText={setExpenses}
                 placeholder="ราย-จ่าย"
               />
             </View>
           </View>
-          {/* รายละเอียดค่าใช้จ่าย */}
+          {/* revenue */}
           <View style={styles.input}>
             <View style={styles.input1FlexBox}>
               <Text style={[styles.label1, styles.text1Typo]}>ราย-รับ</Text>
@@ -112,18 +123,13 @@ const ExpensesModal = ({ onClose }) => {
             <View style={[styles.input1, styles.input1FlexBox]}>
               <TextInput
                 style={styles.textfield}
-                value={costDetails}
-                onChangeText={setCostDetails}
+                value={revenue}
+                onChangeText={setRevenue}
                 placeholder="ราย-รับ"
               />
             </View>
           </View>
-         
-          {/* เพิ่มเติม */}
-          <View style={styles.input}>
-           
-          
-          </View>
+        
           <View style={[styles.buttonParent, styles.textfieldSpaceBlock]}>
           <Pressable
               style={[styles.button, styles.buttonLayout]}
@@ -132,14 +138,11 @@ const ExpensesModal = ({ onClose }) => {
                 navigation.navigate("Home");
               }}
             >
-              <Text style={[styles.button1, styles.buttonTypo]}>ยกเลิก</Text>
+             <Text style={[styles.button1, styles.buttonTypo]}>ยกเลิก</Text>
             </Pressable>
             <Pressable
               style={[styles.button2, styles.buttonLayout]}
-              onPress={() => {
-                // Save logic here
-                navigation.navigate("Modal3");
-              }}
+              onPress={handleSave}
             >
               <Text style={[styles.button3, styles.buttonTypo, { color: "white" }]}>บันทึก</Text>
             </Pressable>
