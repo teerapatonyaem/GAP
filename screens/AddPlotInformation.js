@@ -1,13 +1,35 @@
-import * as React from "react";
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import { ScrollView, StyleSheet, View, Text, Pressable } from "react-native";
 import Otherplant from "../components/Otherplant";
 import Weed from "../components/Weed";
 import Plantdisease from "../components/Plantdisease";
 import Insect from "../components/Insect";
-import Addplotinformationbutton from "../components/Addplotinformationbutton";
-import { FontSize, FontFamily, Padding, Color } from "../GlobalStyles";
+import { useNavigation } from "@react-navigation/native";
+import { openOtherPlantDatabase, saveOtherPlant } from "../components/database";
+import { FontSize, FontFamily, Padding, Color, Border } from "../GlobalStyles";
 
 const AddPlotInformation = () => {
+  const navigation = useNavigation();
+  const [otherPlantData, setOtherPlantData] = useState({ plantType: '', amount: '' });
+
+  useEffect(() => {
+    openOtherPlantDatabase();
+  }, []);
+
+  const handleFinish = () => {
+    saveOtherPlant(otherPlantData.plantType, otherPlantData.amount)
+      .then(() => {
+        navigation.navigate("PlotSurvey");
+      })
+      .catch(error => {
+        console.log("Error inserting data: ", error);
+      });
+  };
+
+  const handlePlantDataChange = (data) => {
+    setOtherPlantData(data);
+  };
+
   return (
     <ScrollView
       style={styles.addplotinformation}
@@ -16,7 +38,7 @@ const AddPlotInformation = () => {
       contentContainerStyle={styles.addPlotInformationScrollViewContent}
     >
       <View style={styles.frameParent}>
-        <Otherplant />
+        <Otherplant onPlantDataChange={handlePlantDataChange} />
         <View style={styles.textSpaceBlock}>
           <Weed />
           <Plantdisease />
@@ -27,41 +49,69 @@ const AddPlotInformation = () => {
 ปริมาณปานกลาง = 2 ใน 4 / ไร่
 ปริมาณมาก = 3 ใน 4 ขึ้นไป / ไร่`}</Text>
       </View>
-      <Addplotinformationbutton />
+      <View style={styles.buttonParent}>
+        <Pressable
+          style={[styles.button, styles.buttonLayout]}
+          onPress={() => navigation.navigate("PlotSurvey")}
+        >
+          <Text style={[styles.button1, styles.buttonTypo]}>ยกเลิก</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.button2, styles.buttonLayout]}
+          onPress={handleFinish}
+        >
+          <Text style={[styles.button3, styles.buttonTypo]}>เสร็จสิ้น</Text>
+        </Pressable>
+      </View>
     </ScrollView>
   );
 };
-
 const styles = StyleSheet.create({
+  addplotinformation: {
+    flex: 1,
+    backgroundColor: Color.white,
+  },
   addPlotInformationScrollViewContent: {
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textSpaceBlock: {
-    marginTop: 8,
-    alignSelf: "stretch",
-  },
-  text: {
-    fontSize: FontSize.bodyB6Regular_size,
-    lineHeight: 14,
-    fontFamily: FontFamily.labelLB4Regular,
-    color: "#ff0606",
-    textAlign: "left",
+    flexGrow: 1,
+    padding: Padding.p_medium,
   },
   frameParent: {
-    width: 412,
-    alignItems: "center",
-    paddingHorizontal: Padding.p_base,
-    paddingTop: Padding.p_9xl,
-    paddingBottom: Padding.p_5xs,
+    paddingHorizontal: Padding.p_large,
   },
-  addplotinformation: {
-    backgroundColor: Color.primaryColourOnPrimary,
-    flex: 1,
-    width: "100%",
-    overflow: "hidden",
-    maxWidth: "100%",
+  textSpaceBlock: {
+    marginTop: Padding.p_small,
+  },
+  text: {
+    fontSize: FontSize.size_medium,
+    fontFamily: FontFamily.regular,
+    color: Color.black,
+  },
+  buttonParent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: Padding.p_large,
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: Color.grey,
+    borderRadius: Border.br_medium,
+    padding: Padding.p_small,
+  },
+  buttonLayout: {
+    width: '48%',
+  },
+  button1: {
+    color: Color.red,
+    textAlign: 'center',
+    fontFamily: FontFamily.bold,
+  },
+  button2: {
+    backgroundColor: Color.primary,
+  },
+  button3: {
+    textAlign: 'center',
+    color: Color.white,
+    fontFamily: FontFamily.bold,
   },
 });
 

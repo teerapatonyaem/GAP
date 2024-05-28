@@ -140,6 +140,7 @@ const Modal1 = ({ onClose }) => {
             >
               <Text style={[styles.button1, styles.buttonTypo]}>ยกเลิก</Text>
             </Pressable>
+            
             <Pressable
               style={[styles.button2, styles.buttonLayout]}
               onPress={handleSave}

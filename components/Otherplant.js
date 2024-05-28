@@ -1,11 +1,17 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, StyleSheet, Image, View, TextInput } from "react-native";
 import { RadioButton } from 'react-native-paper';
 import { Padding, FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
-const Otherplant = () => {
-  const [checked, setChecked] = React.useState('first');
-  const [text, setText] = React.useState('');
+const Otherplant = ({ onPlantDataChange }) => {
+  const [checked, setChecked] = useState('first');
+  const [text, setText] = useState('');
+
+  useEffect(() => {
+    if (onPlantDataChange) {
+      onPlantDataChange({ plantType: text, amount: checked });
+    }
+  }, [text, checked]);
 
   return (
     <View style={styles.frameParent}>
@@ -42,9 +48,9 @@ const Otherplant = () => {
               <Text style={[styles.text2, styles.text2Layout]}>น้อย</Text>
               <View style={styles.selectionControl}>
                 <RadioButton
-                  value="first"
-                  status={ checked === 'first' ? 'checked' : 'unchecked' }
-                  onPress={() => setChecked('first')}
+                  value="น้อย"
+                  status={ checked === 'น้อย' ? 'checked' : 'unchecked' }
+                  onPress={() => setChecked('น้อย')}
                   color={Color.primaryColourPrimary}
                 />
               </View>
@@ -53,9 +59,9 @@ const Otherplant = () => {
               <Text style={[styles.text2, styles.text2Layout]}>กลาง</Text>
               <View style={styles.selectionControl}>
                 <RadioButton
-                  value="second"
-                  status={ checked === 'second' ? 'checked' : 'unchecked' }
-                  onPress={() => setChecked('second')}
+                  value="กลาง"
+                  status={ checked === 'กลาง' ? 'checked' : 'unchecked' }
+                  onPress={() => setChecked('กลาง')}
                   color={Color.primaryColourPrimary}
                 />
               </View>
@@ -64,21 +70,14 @@ const Otherplant = () => {
               <Text style={[styles.text2, styles.text2Layout]}>มาก</Text>
               <View style={styles.selectionControl}>
                 <RadioButton
-                  value="third"
-                  status={ checked === 'third' ? 'checked' : 'unchecked' }
-                  onPress={() => setChecked('third')}
+                  value="มาก"
+                  status={ checked === 'มาก' ? 'checked' : 'unchecked' }
+                  onPress={() => setChecked('มาก')}
                   color={Color.primaryColourPrimary}
                 />
               </View>
             </View>
           </View>
-        </View>
-      </View>
-      <View style={[styles.cardswapComponent, styles.inputParentSpaceBlock]}>
-        <View style={[styles.swapItem, styles.swapItemFlexBox]}>
-          <Text style={[styles.swapComponent, styles.text2Layout]}>
-            เพิ่มข้อมูล
-          </Text>
         </View>
       </View>
     </View>

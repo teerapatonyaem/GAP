@@ -74,13 +74,13 @@ const Plantdisease = () => {
           </View>
         </View>
       </View>
-      <View style={[styles.cardswapComponent, styles.inputParentSpaceBlock]}>
+      {/* <View style={[styles.cardswapComponent, styles.inputParentSpaceBlock]}>
         <View style={[styles.swapItem, styles.swapItemFlexBox]}>
           <Text style={[styles.swapComponent, styles.text2Layout]}>
             เพิ่มข้อมูล
           </Text>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 };

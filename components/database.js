@@ -7,6 +7,7 @@ let generalDb;
 let fertilizerDb;
 let chemicalDb;
 let expenseDb;
+let otherPlantDb;
 
 export const openDatabases = async () => {
   try {
@@ -174,4 +175,48 @@ export const saveExpenseTask = async (payoutfactor, expenseamount, expenses, rev
     console.log('Failed to save expense task:', error);
   }
 };
+
+//////////////////////plot survey/////////////////////////
+
+export const openOtherPlantDatabase = async () => {
+  try {
+    otherPlantDb = await SQLite.openDatabase({ name: 'otherPlant.db', location: 'default' });
+    console.log('OtherPlant database opened');
+    await createOtherPlantTable();
+  } catch (error) {
+    console.log('Failed to open OtherPlant database:', error);
+  }
+};
+
+const createOtherPlantTable = async () => {
+  try {
+    await otherPlantDb.executeSql(
+      `CREATE TABLE IF NOT EXISTS OtherPlant (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        plantType TEXT,
+        amount TEXT
+      );`
+    );
+    console.log('OtherPlant table created successfully');
+  } catch (error) {
+    console.log('Failed to create OtherPlant table:', error);
+  }
+};
+
+export const saveOtherPlant = async (plantType, amount) => {
+  try {
+    const results = await otherPlantDb.executeSql(
+      `INSERT INTO OtherPlant (plantType, amount) VALUES (?, ?);`,
+      [plantType, amount]
+    );
+    if (results[0].rowsAffected > 0) {
+      console.log('OtherPlant saved successfully');
+    } else {
+      console.log('Failed to save OtherPlant');
+    }
+  } catch (error) {
+    console.log('Failed to save OtherPlant:', error);
+  }
+};
+
 export default openDatabases;
