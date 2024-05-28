@@ -8,6 +8,7 @@ let fertilizerDb;
 let chemicalDb;
 let expenseDb;
 let otherPlantDb;
+let weedDb;
 
 export const openDatabases = async () => {
   try {
@@ -176,7 +177,7 @@ export const saveExpenseTask = async (payoutfactor, expenseamount, expenses, rev
   }
 };
 
-//////////////////////plot survey/////////////////////////
+////////////////////// Other Plant /////////////////////////
 
 export const openOtherPlantDatabase = async () => {
   try {
@@ -218,5 +219,49 @@ export const saveOtherPlant = async (plantType, amount) => {
     console.log('Failed to save OtherPlant:', error);
   }
 };
+////////////////////// Weed /////////////////////////
+
+export const openWeedDatabase = async () => {
+  try {
+    weedDb = await SQLite.openDatabase({ name: 'weed.db', location: 'default' });
+    console.log('Weed database opened');
+    await createWeedTable();
+  } catch (error) {
+    console.log('Failed to open Weed database:', error);
+  }
+};
+
+const createWeedTable = async () => {
+  try {
+    await weedDb.executeSql(
+      `CREATE TABLE IF NOT EXISTS Weed (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        weed TEXT,
+        amount TEXT
+      );`
+    );
+    console.log('Weed table created successfully');
+  } catch (error) {
+    console.log('Failed to create Weed table:', error);
+  }
+};
+
+export const saveWeed = async (weed, amount) => {
+  try {
+    const results = await weedDb.executeSql(
+      `INSERT INTO Weed (weed, amount) VALUES (?, ?);`,
+      [weed, amount]
+    );
+    if (results[0].rowsAffected > 0) {
+      console.log('Weed saved successfully');
+    } else {
+      console.log('Failed to save Weed');
+    }
+  } catch (error) {
+    console.log('Failed to save Weed:', error);
+  }
+};
+
+
 
 export default openDatabases;

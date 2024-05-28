@@ -4,7 +4,7 @@ import { RadioButton } from 'react-native-paper';
 import { Padding, FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
 const Otherplant = ({ onPlantDataChange }) => {
-  const [checked, setChecked] = useState('first');
+  const [checked, setChecked] = useState('น้อย');
   const [text, setText] = useState('');
 
   useEffect(() => {

@@ -5,19 +5,23 @@ import Weed from "../components/Weed";
 import Plantdisease from "../components/Plantdisease";
 import Insect from "../components/Insect";
 import { useNavigation } from "@react-navigation/native";
-import { openOtherPlantDatabase, saveOtherPlant } from "../components/database";
+import { openOtherPlantDatabase, saveOtherPlant, openWeedDatabase, saveWeed } from "../components/database";
 import { FontSize, FontFamily, Padding, Color, Border } from "../GlobalStyles";
 
 const AddPlotInformation = () => {
   const navigation = useNavigation();
   const [otherPlantData, setOtherPlantData] = useState({ plantType: '', amount: '' });
+  const [weedData, setWeedData] = useState({ weed: '', amount: '' });
 
   useEffect(() => {
     openOtherPlantDatabase();
+    openWeedDatabase();
   }, []);
 
   const handleFinish = () => {
-    saveOtherPlant(otherPlantData.plantType, otherPlantData.amount)
+    const saveOtherPlantPromise = saveOtherPlant(otherPlantData.plantType, otherPlantData.amount);
+    const saveWeedPromise = saveWeed(weedData.weed, weedData.amount);
+    Promise.all([saveOtherPlantPromise, saveWeedPromise])
       .then(() => {
         navigation.navigate("PlotSurvey");
       })
@@ -30,6 +34,10 @@ const AddPlotInformation = () => {
     setOtherPlantData(data);
   };
 
+  const handleWeedDataChange = (data) => {
+    setWeedData(data);
+  };
+
   return (
     <ScrollView
       style={styles.addplotinformation}
@@ -40,7 +48,7 @@ const AddPlotInformation = () => {
       <View style={styles.frameParent}>
         <Otherplant onPlantDataChange={handlePlantDataChange} />
         <View style={styles.textSpaceBlock}>
-          <Weed />
+          <Weed onWeedDataChange={handleWeedDataChange} />
           <Plantdisease />
           <Insect />
         </View>
