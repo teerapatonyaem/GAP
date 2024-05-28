@@ -9,6 +9,8 @@ let chemicalDb;
 let expenseDb;
 let otherPlantDb;
 let weedDb;
+let plantDiseaseDb;
+let insectDb;
 
 export const openDatabases = async () => {
   try {
@@ -305,6 +307,47 @@ export const savePlantDisease = async (disease, amount) => {
   }
 };
 
+////////////////////// Insect /////////////////////////
 
+export const openInsectDatabase = async () => {
+  try {
+    insectDb = await SQLite.openDatabase({ name: 'insect.db', location: 'default' });
+    console.log('Insect database opened');
+    await createInsectTable();
+  } catch (error) {
+    console.log('Failed to open Insect database:', error);
+  }
+};
+
+const createInsectTable = async () => {
+  try {
+    await insectDb.executeSql(
+      `CREATE TABLE IF NOT EXISTS Insect (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        insect TEXT,
+        amount TEXT
+      );`
+    );
+    console.log('Insect table created successfully');
+  } catch (error) {
+    console.log('Failed to create Insect table:', error);
+  }
+};
+
+export const saveInsect = async (insect, amount) => {
+  try {
+    const results = await insectDb.executeSql(
+      `INSERT INTO Insect (insect, amount) VALUES (?, ?);`,
+      [insect, amount]
+    );
+    if (results[0].rowsAffected > 0) {
+      console.log('Insect saved successfully');
+    } else {
+      console.log('Failed to save Insect');
+    }
+  } catch (error) {
+    console.log('Failed to save Insect:', error);
+  }
+};
 
 export default openDatabases;
