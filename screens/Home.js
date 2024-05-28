@@ -119,8 +119,6 @@ const Home = () => {
             </View>
           ))
         )}
-
-
               </View>
             </View>
           </Pressable>

@@ -1,8 +1,12 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View } from "react-native";
+import { Text, StyleSheet, Image, View, TextInput } from "react-native";
+import { RadioButton } from 'react-native-paper';
 import { Padding, FontFamily, FontSize, Color, Border } from "../GlobalStyles";
 
 const Insect = () => {
+  const [checked, setChecked] = React.useState('first');
+  const [text, setText] = React.useState('');
+
   return (
     <View style={styles.frameParent}>
       <View style={[styles.inputParent, styles.inputParentSpaceBlock]}>
@@ -22,7 +26,12 @@ const Insect = () => {
                 resizeMode="cover"
                 source={require("../assets/1-system-iconshome1.png")}
               />
-              <Text style={[styles.text, styles.textTypo]}>แมลง</Text>
+              <TextInput
+                style={[styles.text, styles.textTypo]}
+                placeholder="แมลง"
+                value={text}
+                onChangeText={setText}
+              />
             </View>
           </View>
         </View>
@@ -32,46 +41,34 @@ const Insect = () => {
             <View style={styles.parent}>
               <Text style={[styles.text2, styles.text2Layout]}>น้อย</Text>
               <View style={styles.selectionControl}>
-                <View style={styles.selectionTypeLayout}>
-                  <View style={styles.radioPosition}>
-                    <View
-                      style={[styles.radioErrorState, styles.radioPosition]}
-                    >
-                      <View style={styles.circle} />
-                    </View>
-                  </View>
-                </View>
-                <Text style={[styles.checkbox, styles.textTypo]}>Checkbox</Text>
+                <RadioButton
+                  value="first"
+                  status={ checked === 'first' ? 'checked' : 'unchecked' }
+                  onPress={() => setChecked('first')}
+                  color={Color.primaryColourPrimary}
+                />
               </View>
             </View>
             <View style={styles.group}>
               <Text style={[styles.text2, styles.text2Layout]}>กลาง</Text>
               <View style={styles.selectionControl}>
-                <View style={styles.selectionTypeLayout}>
-                  <View style={styles.radioPosition}>
-                    <View
-                      style={[styles.radioErrorState, styles.radioPosition]}
-                    >
-                      <View style={styles.circle} />
-                    </View>
-                  </View>
-                </View>
-                <Text style={[styles.checkbox, styles.textTypo]}>Checkbox</Text>
+                <RadioButton
+                  value="second"
+                  status={ checked === 'second' ? 'checked' : 'unchecked' }
+                  onPress={() => setChecked('second')}
+                  color={Color.primaryColourPrimary}
+                />
               </View>
             </View>
             <View style={styles.group}>
               <Text style={[styles.text2, styles.text2Layout]}>มาก</Text>
               <View style={styles.selectionControl}>
-                <View style={styles.selectionTypeLayout}>
-                  <View style={styles.radioPosition}>
-                    <View
-                      style={[styles.radioErrorState, styles.radioPosition]}
-                    >
-                      <View style={styles.circle} />
-                    </View>
-                  </View>
-                </View>
-                <Text style={[styles.checkbox, styles.textTypo]}>Checkbox</Text>
+                <RadioButton
+                  value="third"
+                  status={ checked === 'third' ? 'checked' : 'unchecked' }
+                  onPress={() => setChecked('third')}
+                  color={Color.primaryColourPrimary}
+                />
               </View>
             </View>
           </View>
@@ -251,7 +248,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     paddingHorizontal: Padding.p_5xs,
     paddingVertical: 0,
-    marginTop: 8,
     alignItems: "center",
     backgroundColor: Color.primaryColourOnPrimary,
     borderRadius: Border.br_5xs,
