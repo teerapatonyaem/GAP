@@ -262,6 +262,49 @@ export const saveWeed = async (weed, amount) => {
   }
 };
 
+////////////////////// Plantdisease /////////////////////////
+
+export const openPlantDiseaseDatabase = async () => {
+  try {
+    plantDiseaseDb = await SQLite.openDatabase({ name: 'plantdisease.db', location: 'default' });
+    console.log('Plant Disease database opened');
+    await createPlantDiseaseTable();
+  } catch (error) {
+    console.log('Failed to open Plant Disease database:', error);
+  }
+};
+
+const createPlantDiseaseTable = async () => {
+  try {
+    await plantDiseaseDb.executeSql(
+      `CREATE TABLE IF NOT EXISTS PlantDisease (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        disease TEXT,
+        amount TEXT
+      );`
+    );
+    console.log('Plant Disease table created successfully');
+  } catch (error) {
+    console.log('Failed to create Plant Disease table:', error);
+  }
+};
+
+export const savePlantDisease = async (disease, amount) => {
+  try {
+    const results = await plantDiseaseDb.executeSql(
+      `INSERT INTO PlantDisease (disease, amount) VALUES (?, ?);`,
+      [disease, amount]
+    );
+    if (results[0].rowsAffected > 0) {
+      console.log('Plant Disease saved successfully');
+    } else {
+      console.log('Failed to save Plant Disease');
+    }
+  } catch (error) {
+    console.log('Failed to save Plant Disease:', error);
+  }
+};
+
 
 
 export default openDatabases;

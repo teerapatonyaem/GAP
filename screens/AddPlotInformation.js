@@ -5,23 +5,27 @@ import Weed from "../components/Weed";
 import Plantdisease from "../components/Plantdisease";
 import Insect from "../components/Insect";
 import { useNavigation } from "@react-navigation/native";
-import { openOtherPlantDatabase, saveOtherPlant, openWeedDatabase, saveWeed } from "../components/database";
+import { openOtherPlantDatabase, saveOtherPlant, openWeedDatabase, saveWeed, openPlantDiseaseDatabase, savePlantDisease } from "../components/database";
 import { FontSize, FontFamily, Padding, Color, Border } from "../GlobalStyles";
 
 const AddPlotInformation = () => {
   const navigation = useNavigation();
   const [otherPlantData, setOtherPlantData] = useState({ plantType: '', amount: '' });
   const [weedData, setWeedData] = useState({ weed: '', amount: '' });
+  const [plantDiseaseData, setPlantDiseaseData] = useState({ disease: '', amount: '' });
 
   useEffect(() => {
     openOtherPlantDatabase();
     openWeedDatabase();
+    openPlantDiseaseDatabase();
   }, []);
 
   const handleFinish = () => {
     const saveOtherPlantPromise = saveOtherPlant(otherPlantData.plantType, otherPlantData.amount);
     const saveWeedPromise = saveWeed(weedData.weed, weedData.amount);
-    Promise.all([saveOtherPlantPromise, saveWeedPromise])
+    const savePlantDiseasePromise = savePlantDisease(plantDiseaseData.disease, plantDiseaseData.amount);
+
+    Promise.all([saveOtherPlantPromise, saveWeedPromise, savePlantDiseasePromise])
       .then(() => {
         navigation.navigate("PlotSurvey");
       })
@@ -38,6 +42,10 @@ const AddPlotInformation = () => {
     setWeedData(data);
   };
 
+  const handlePlantDiseaseDataChange = (data) => {
+    setPlantDiseaseData(data);
+  };
+
   return (
     <ScrollView
       style={styles.addplotinformation}
@@ -49,7 +57,7 @@ const AddPlotInformation = () => {
         <Otherplant onPlantDataChange={handlePlantDataChange} />
         <View style={styles.textSpaceBlock}>
           <Weed onWeedDataChange={handleWeedDataChange} />
-          <Plantdisease />
+          <Plantdisease onPlantDiseaseDataChange={handlePlantDiseaseDataChange} />
           <Insect />
         </View>
         <Text style={[styles.text, styles.textSpaceBlock]}>{`หมายเหตุ
@@ -74,6 +82,8 @@ const AddPlotInformation = () => {
     </ScrollView>
   );
 };
+
+
 const styles = StyleSheet.create({
   addplotinformation: {
     flex: 1,
