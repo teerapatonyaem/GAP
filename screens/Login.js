@@ -1,17 +1,9 @@
 import React, { useState, useContext } from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Pressable,
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, Pressable, StyleSheet } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 import { useNavigation } from '@react-navigation/native';
+import UserContext from '../components/UserContext';
 import { FontSize, FontFamily, Color, Padding, Border } from '../GlobalStyles';
-import UserContext from '../components/UserContext'; // นำเข้า UserContext
 
 const db = SQLite.openDatabase({
   name: 'MyDatabase.db',
@@ -23,7 +15,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
-  const { setUsername } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
+
   const handleLogin = () => {
     db.transaction(tx => {
       tx.executeSql(
@@ -31,7 +24,8 @@ const Login = () => {
         [accountName, password],
         (tx, results) => {
           if (results.rows.length > 0) {
-            setUsername(accountName); 
+            const user = results.rows.item(0);
+            setUser({ id: user.id, username: user.username });
             navigation.navigate('Home');
           } else {
             alert('Invalid username or password');
@@ -61,7 +55,6 @@ const Login = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-
       <View style={styles.inputWrapper}>
         <TextInput
           style={styles.input}
@@ -70,7 +63,6 @@ const Login = () => {
           onChangeText={setAccountName}
         />
       </View>
-
       <View style={styles.inputWrapper}>
         <View style={styles.passwordContainer}>
           <TextInput
@@ -83,11 +75,9 @@ const Login = () => {
           {renderPasswordIcon()}
         </View>
       </View>
-
       <Pressable style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </Pressable>
-
       <Pressable
         style={styles.registerPressable}
         onPress={() => navigation.navigate('Register')}

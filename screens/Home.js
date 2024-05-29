@@ -8,13 +8,12 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
-import { useNavigation,useRoute  } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import FormSection from "../components/FormSection";
 import ProfileForm1 from "../components/ProfileForm1";
 import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
 import UserContext from "../components/UserContext";
 import SQLite from 'react-native-sqlite-storage';
-
 
 const db = SQLite.openDatabase({
   name: 'PlotDatabase.db', 
@@ -24,9 +23,7 @@ const db = SQLite.openDatabase({
 const Home = () => {
   const navigation = useNavigation();
   const [plots, setPlots] = useState([]); 
-  const route = useRoute(); 
-  //const username = route.params?.username;
-  const { username, setUsername } = useContext(UserContext); 
+  const { user } = useContext(UserContext); 
 
   useEffect(() => {
     db.transaction((tx) => {
@@ -36,10 +33,10 @@ const Home = () => {
         (tx, results) => {
           const rows = results.rows;
           const plotData = [];
-  r
-           if (rows.length > 0) {
-          plotData.push(rows.item(0));
-        }
+  
+          if (rows.length > 0) {
+            plotData.push(rows.item(0));
+          }
   
           setPlots(plotData); 
         },
@@ -55,7 +52,7 @@ const Home = () => {
     <View style={styles.container}>
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
-        showsVertical Scroll Indicator={true}
+        showsVerticalScrollIndicator={true}
         showsHorizontalScrollIndicator={false}
       >
         {/* Greeting Section */}
@@ -72,7 +69,8 @@ const Home = () => {
                   สวัสดี
                 </Text>
                 <Text style={[styles.greeting2, styles.greetingFont]}>
-                  {username} 
+                  {user?.username} (ID: {user?.id})
+                  
                 </Text>
               </View>
             </View>

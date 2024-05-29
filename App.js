@@ -4,7 +4,6 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import GreetingScreen from "./screens/GreetingScreen";
 import Home from "./screens/Home";
-import Text1 from "./components/Text1";
 import AddPlotInformation from "./screens/AddPlotInformation";
 import GAPCertify from "./screens/GAPCertify";
 import Status1 from "./screens/Status1";
@@ -76,15 +75,8 @@ import Property1Default3 from "./components/Property1Default3";
 import MIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { IconRegistry, ApplicationProvider } from "@ui-kitten/components";
 import * as eva from "@eva-design/eva";
-
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {
-  View,
-  Text,
-  Pressable,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import {View,Text,Pressable,TouchableOpacity,StyleSheet,} from "react-native";
 
 const App = () => {
  
