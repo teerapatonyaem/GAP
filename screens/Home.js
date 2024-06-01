@@ -114,6 +114,12 @@ const Home = () => {
               <Text style={styles.plotText}>พันธุ์ข้าว: {plot.rice_variety}</Text>
               <Text style={styles.plotText}>จำนวนพื้นที่: {plot.area} ไร่</Text>
               <Text style={styles.plotText}>วันที่ปลูก: {plot.planting_date}</Text>
+              <Pressable 
+                style={styles.detailsButton} 
+                onPress={() => navigation.navigate('Plot', { plotId: plot.plot_id })}
+              >
+                <Text style={styles.detailsButtonText}>รายละเอียดแปลง</Text>
+              </Pressable>
             </View>
           ))
         )}
@@ -121,6 +127,10 @@ const Home = () => {
             </View>
           </Pressable>
         </View>
+
+
+        {/* รายละเอียดแปลง */}
+
 
         {/* Form Section */}
         <FormSection
