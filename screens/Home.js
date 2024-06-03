@@ -24,29 +24,35 @@ const Home = () => {
   const navigation = useNavigation();
   const [plots, setPlots] = useState([]); 
   const { user } = useContext(UserContext); 
+  const fetchPlotData = async () => {
+    try {
+      await db.transaction(async (tx) => {
+        await tx.executeSql(
+          'SELECT rice_variety, area, planting_date FROM plot ORDER BY plot_id DESC LIMIT 1', 
+          [],
+          (tx, results) => {
+            const rows = results.rows;
+            const plotData = [];
+    
+            if (rows.length > 0) {
+              plotData.push(rows.item(0));
+            }
+    
+            setPlots(plotData); 
+          },
+          (error) => {
+            console.error('Error fetching data:', error);
+          }
+        );
+      });
+    } catch (error) {
+      console.error('Transaction error:', error);
+    }
+  };
 
   useEffect(() => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT rice_variety, area, planting_date FROM plot ORDER BY plot_id DESC LIMIT 1', 
-        [],
-        (tx, results) => {
-          const rows = results.rows;
-          const plotData = [];
-  
-          if (rows.length > 0) {
-            plotData.push(rows.item(0));
-          }
-  
-          setPlots(plotData); 
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-        }
-      );
-    });
+    fetchPlotData();
   }, []);
-  
 
   return (
     <View style={styles.container}>

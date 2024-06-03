@@ -7,6 +7,8 @@ import SectionCardForm from "../components/SectionCardForm";
 import Property1Default from "../components/Property1Default";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 
+
+
 const Plot = () => {
   const navigation = useNavigation();
 
@@ -16,7 +18,7 @@ const Plot = () => {
         <View style={styles.iconixtolineararrowLeft1Parent}>
           <Pressable
             style={styles.iconixtolineararrowLeft1}
-            onPress={() => navigation.navigate("HomeDetail")}
+            onPress={() => navigation.navigate("Home")}
           >
             <Image
               style={styles.icon}
