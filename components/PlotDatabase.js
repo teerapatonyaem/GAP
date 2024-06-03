@@ -1,23 +1,21 @@
-// database.js
 import SQLite from 'react-native-sqlite-storage';
 
-// เชื่อมต่อฐานข้อมูล SQLite
-const db = SQLite.openDatabase(
-  {
-    name: 'plots.db',
-    location: 'default',
-  },
-  () => {},
-  error => {
-    console.error(error);
-  }
-);
+SQLite.DEBUG(true);
+SQLite.enablePromise(true);
 
-// สร้างตาราง plot
-const createPlotTable = () => {
-  db.transaction(tx => {
-    tx.executeSql(
-      `CREATE TABLE IF NOT EXISTS plot (
+const dbName = 'PlotDatabase.db';
+
+let db;
+
+const initDB = async () => {
+  if (!db) {
+    db = await SQLite.openDatabase({
+      name: dbName,
+      location: 'default',
+    });
+
+    await db.executeSql(`
+      CREATE TABLE IF NOT EXISTS plot (
         plot_id INTEGER PRIMARY KEY AUTOINCREMENT,
         rice_variety TEXT,
         area REAL,
@@ -25,34 +23,38 @@ const createPlotTable = () => {
         planting_method TEXT,
         soil_type TEXT,
         water_source TEXT,
-        location TEXT
-      )`,
-      [],
-      (tx, results) => {
-        console.log('Table created successfully');
-      },
-      (error) => {
-        console.error('Error creating table', error);
-      }
-    );
-  });
+        location TEXT,
+        user_id INTEGER
+      );
+    `);
+  }
+
+  return db;
 };
 
-// เพิ่มข้อมูลลงในตาราง plot
-const addPlot = (rice_variety, area, planting_date, planting_method, soil_type, water_source, location, callback) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      `INSERT INTO plot (rice_variety, area, planting_date, planting_method, soil_type, water_source, location) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [rice_variety, area, planting_date, planting_method, soil_type, water_source, location],
-      (tx, results) => {
-        callback(true);
-      },
-      (error) => {
-        callback(false);
-        console.error('Error inserting data', error);
-      }
-    );
-  });
+const savePlotData = async (plotData) => {
+  const db = await initDB();
+
+  const {
+    rice_variety,
+    area,
+    planting_date,
+    planting_method,
+    soil_type,
+    water_source,
+    location,
+    user_id,
+  } = plotData;
+
+  try {
+    await db.executeSql(`
+      INSERT INTO plot (
+        rice_variety, area, planting_date, planting_method, soil_type, water_source, location, user_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `, [rice_variety, area, planting_date, planting_method, soil_type, water_source, location, user_id]);
+  } catch (error) {
+    console.error('Error inserting data:', error);
+  }
 };
 
-export { db, createPlotTable, addPlot };
+export { initDB, savePlotData };

@@ -1,70 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Pressable, StyleSheet, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import SQLite from 'react-native-sqlite-storage';
-
-
-SQLite.DEBUG(true);
-SQLite.enablePromise(true);
-
-
-const dbName = 'PlotDatabase.db';
-const version = '1.0';
-const displayName = 'SQLite Plot Database';
-const dbSize = 200000;
-
-let db;
-
-
-const initDB = async () => {
-  if (!db) {
-    db = await SQLite.openDatabase({
-      name: dbName,
-      location: 'default',
-    });
-
-    await db.executeSql(`
-      CREATE TABLE IF NOT EXISTS plot (
-        plot_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        rice_variety TEXT,
-        area REAL,
-        planting_date DATE,
-        planting_method TEXT,
-        soil_type TEXT,
-        water_source TEXT,
-        location TEXT
-      );
-    `);
-  }
-
-  return db;
-};
-
-// ฟังก์ชันสำหรับบันทึกข้อมูลแปลงไปยังฐานข้อมูล
-const savePlotData = async (plotData) => {
-  const db = await initDB();
-
-  const {
-    rice_variety,
-    area,
-    planting_date,
-    planting_method,
-    soil_type,
-    water_source,
-    location,
-  } = plotData;
-
-  await db.executeSql(`
-    INSERT INTO plot (
-      rice_variety, area, planting_date, planting_method, soil_type, water_source, location
-    ) VALUES (?, ?, ?, ?, ?, ?, ?)
-  `, [rice_variety, area, planting_date, planting_method, soil_type, water_source, location]);
-};
+import { savePlotData } from "../components/database";
+import UserContext from '../components/UserContext';
 
 const Modal2 = () => {
   const navigation = useNavigation();
+  const { user } = useContext(UserContext);
   const [selectedValue1, setSelectedValue1] = useState('');
   const [selectedValue2, setSelectedValue2] = useState('');
   const [selectedValue3, setSelectedValue3] = useState('');
@@ -90,12 +34,16 @@ const Modal2 = () => {
       soil_type: selectedValue2,
       water_source: selectedValue3,
       location: landLocation,
+      user_id: user.id
     };
 
-    await savePlotData(plotData);
-
-    // กลับไปหน้าหลักหลังจากบันทึก
-    navigation.navigate('Home');
+    try {
+      await savePlotData(plotData);
+      // กลับไปหน้าหลักหลังจากบันทึก
+      navigation.navigate('Modal3');
+    } catch (error) {
+      console.error('Error creating plot:', error);
+    }
   };
 
   return (

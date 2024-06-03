@@ -24,35 +24,39 @@ const Home = () => {
   const navigation = useNavigation();
   const [plots, setPlots] = useState([]); 
   const { user } = useContext(UserContext); 
+
   const fetchPlotData = async () => {
     try {
-      await db.transaction(async (tx) => {
-        await tx.executeSql(
-          'SELECT rice_variety, area, planting_date FROM plot ORDER BY plot_id DESC LIMIT 1', 
-          [],
-          (tx, results) => {
-            const rows = results.rows;
-            const plotData = [];
-    
-            if (rows.length > 0) {
-              plotData.push(rows.item(0));
+      const plotData = await new Promise((resolve, reject) => {
+        db.transaction((tx) => {
+          tx.executeSql(
+            'SELECT plot_id, rice_variety, area, planting_date FROM plot WHERE user_id = ? ORDER BY plot_id DESC', 
+            [user.id],
+            (tx, results) => {
+              const rows = results.rows;
+              const plotData = [];
+              for (let i = 0; i < rows.length; i++) {
+                plotData.push(rows.item(i));
+              }
+              resolve(plotData); 
+            },
+            (error) => {
+              reject(error);
             }
-    
-            setPlots(plotData); 
-          },
-          (error) => {
-            console.error('Error fetching data:', error);
-          }
-        );
+          );
+        });
       });
+      setPlots(plotData); 
     } catch (error) {
-      console.error('Transaction error:', error);
+      console.error('Error fetching data:', error);
     }
   };
 
   useEffect(() => {
-    fetchPlotData();
-  }, []);
+    if (user.id) {
+      fetchPlotData();
+    }
+  }, [user.id]);
 
   return (
     <View style={styles.container}>
@@ -76,7 +80,6 @@ const Home = () => {
                 </Text>
                 <Text style={[styles.greeting2, styles.greetingFont]}>
                   {user?.username} (ID: {user?.id})
-                  
                 </Text>
               </View>
             </View>
@@ -101,42 +104,36 @@ const Home = () => {
                 source={require("../assets/grass-landscape-field-vector-png-images-nature-landscape-vector-with-green-field-grass-trees-blue-sky-and-clouds-suitable-for-background-or-illustration-nature-clipart-day-landscape-png-image-for-free-download-1.png")}
               />
               <View style={styles.iconContainer}>
-
-              {plots.length === 0 ? (
-                
-          <View style={styles.noPlotContainer}>
-            <Image
-              style={styles.icon}
-              resizeMode="cover"
-              source={require('../assets/iconixtolinearaddsquare.png')}
-            />
-            <View style={styles.textWrapper}>
-              <Text style={styles.createPlotText}>สร้างแปลง</Text>
-            </View>
-          </View>
-        ) : (
-          plots.map((plot, index) => (
-            <View key={index} style={styles.plotContainer}>
-              <Text style={styles.plotText}>พันธุ์ข้าว: {plot.rice_variety}</Text>
-              <Text style={styles.plotText}>จำนวนพื้นที่: {plot.area} ไร่</Text>
-              <Text style={styles.plotText}>วันที่ปลูก: {plot.planting_date}</Text>
-              <Pressable 
-                style={styles.detailsButton} 
-                onPress={() => navigation.navigate('Plot', { plotId: plot.plot_id })}
-              >
-                <Text style={styles.detailsButtonText}>รายละเอียดแปลง</Text>
-              </Pressable>
-            </View>
-          ))
-        )}
+                {plots.length === 0 ? (
+                  <View style={styles.noPlotContainer}>
+                    <Image
+                      style={styles.icon}
+                      resizeMode="cover"
+                      source={require('../assets/iconixtolinearaddsquare.png')}
+                    />
+                    <View style={styles.textWrapper}>
+                      <Text style={styles.createPlotText}>สร้างแปลง</Text>
+                    </View>
+                  </View>
+                ) : (
+                  plots.map((plot, index) => (
+                    <View key={index} style={styles.plotContainer}>
+                      <Text style={styles.plotText}>พันธุ์ข้าว: {plot.rice_variety}</Text>
+                      <Text style={styles.plotText}>จำนวนพื้นที่: {plot.area} ไร่</Text>
+                      <Text style={styles.plotText}>วันที่ปลูก: {plot.planting_date}</Text>
+                      <Pressable 
+                        style={styles.detailsButton} 
+                        onPress={() => navigation.navigate('Plot', { plotId: plot.plot_id })}
+                      >
+                        <Text style={styles.detailsButtonText}>รายละเอียดแปลง</Text>
+                      </Pressable>
+                    </View>
+                  ))
+                )}
               </View>
             </View>
           </Pressable>
         </View>
-
-
-        {/* รายละเอียดแปลง */}
-
 
         {/* Form Section */}
         <FormSection
@@ -152,7 +149,6 @@ const Home = () => {
           resizeMode="cover"
           source={require("../assets/gap1.png")}
         />
-
       </ScrollView>
 
       {/* Profile Form */}

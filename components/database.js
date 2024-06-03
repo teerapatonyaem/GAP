@@ -3,6 +3,7 @@ import SQLite from 'react-native-sqlite-storage';
 SQLite.DEBUG(true);
 SQLite.enablePromise(true);
 
+let db;
 let generalDb;
 let fertilizerDb;
 let chemicalDb;
@@ -14,7 +15,10 @@ let insectDb;
 
 export const openDatabases = async () => {
   try {
-  
+    db = await SQLite.openDatabase({ name: 'PlotDatabase.db', location: 'default' });
+    console.log('Plot database opened');
+    await createPlotTable();
+
     generalDb = await SQLite.openDatabase({ name: 'general.db', location: 'default' });
     console.log('General database opened');
     await createGeneralTable();
@@ -32,6 +36,27 @@ export const openDatabases = async () => {
     await createExpenseTable();
   } catch (error) {
     console.log('Failed to open databases:', error);
+  }
+};
+
+const createPlotTable = async () => {
+  try {
+    await db.executeSql(`
+      CREATE TABLE IF NOT EXISTS plot (
+        plot_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        rice_variety TEXT,
+        area REAL,
+        planting_date DATE,
+        planting_method TEXT,
+        soil_type TEXT,
+        water_source TEXT,
+        location TEXT,
+        user_id INTEGER
+      );
+    `);
+    console.log('Plot table created successfully');
+  } catch (error) {
+    console.log('Failed to create plot table:', error);
   }
 };
 
@@ -108,6 +133,36 @@ const createExpenseTable = async () => {
   }
 };
 
+//////////plot
+export const savePlotData = async (plotData) => {
+  const {
+    rice_variety,
+    area,
+    planting_date,
+    planting_method,
+    soil_type,
+    water_source,
+    location,
+    user_id,
+  } = plotData;
+
+  try {
+    const results = await db.executeSql(`
+      INSERT INTO plot (
+        rice_variety, area, planting_date, planting_method, soil_type, water_source, location, user_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `, [rice_variety, area, planting_date, planting_method, soil_type, water_source, location, user_id]);
+
+    if (results[0].rowsAffected > 0) {
+      console.log('Plot data saved successfully');
+    } else {
+      console.log('Failed to save plot data');
+    }
+  } catch (error) {
+    console.error('Error inserting plot data:', error);
+  }
+};
+
 export const saveGeneralTask = async (job, quantity, cost, costDetails, additional) => {
   try {
     const results = await generalDb.executeSql(
@@ -170,7 +225,7 @@ export const saveExpenseTask = async (payoutfactor, expenseamount, expenses, rev
     );
 
     if (results[0].rowsAffected > 0) {
-      console.log('expense task saved successfully');
+      console.log('Expense task saved successfully');
     } else {
       console.log('Failed to save expense task');
     }
@@ -264,7 +319,7 @@ export const saveWeed = async (weed, amount) => {
   }
 };
 
-////////////////////// Plantdisease /////////////////////////
+////////////////////// Plant Disease /////////////////////////
 
 export const openPlantDiseaseDatabase = async () => {
   try {
