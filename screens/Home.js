@@ -8,7 +8,7 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,useFocusEffect } from "@react-navigation/native";
 import FormSection from "../components/FormSection";
 import ProfileForm1 from "../components/ProfileForm1";
 import { Border, FontSize, FontFamily, Color, Padding } from "../GlobalStyles";
@@ -27,36 +27,33 @@ const Home = () => {
 
   const fetchPlotData = async () => {
     try {
-      const plotData = await new Promise((resolve, reject) => {
-        db.transaction((tx) => {
-          tx.executeSql(
-            'SELECT plot_id, rice_variety, area, planting_date FROM plot WHERE user_id = ? ORDER BY plot_id DESC', 
-            [user.id],
-            (tx, results) => {
-              const rows = results.rows;
-              const plotData = [];
-              for (let i = 0; i < rows.length; i++) {
-                plotData.push(rows.item(i));
-              }
-              resolve(plotData); 
-            },
-            (error) => {
-              reject(error);
+      db.transaction((tx) => {
+        tx.executeSql(
+          'SELECT plot_id, rice_variety, area, planting_date FROM plot WHERE user_id = ? ORDER BY plot_id DESC', 
+          [user.id],
+          (tx, results) => {
+            const rows = results.rows;
+            const plotData = [];
+            for (let i = 0; i < rows.length; i++) {
+              plotData.push(rows.item(i));
             }
-          );
-        });
+            setPlots(plotData); 
+          },
+          (error) => {
+            console.error('Error fetching data:', error);
+          }
+        );
       });
-      setPlots(plotData); 
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Transaction error:', error);
     }
   };
 
-  useEffect(() => {
-    if (user.id) {
+  useFocusEffect(
+    React.useCallback(() => {
       fetchPlotData();
-    }
-  }, [user.id]);
+    }, [user.id])
+  );
 
   return (
     <View style={styles.container}>

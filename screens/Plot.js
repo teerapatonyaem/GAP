@@ -44,18 +44,18 @@ const Plot = () => {
             >{`10/04/2024 - 15/09/2024 `}</Text>
           </View>
         </View>
-        <Property1Frame1
+        {/* <Property1Frame1
           component5={require("../assets/component-5.png")}
           property1Frame1000001566Position="unset"
           property1Frame1000001566AlignSelf="stretch"
           property1Frame1000001566MarginTop={8}
-        />
+        /> */}
         <SectionForm2 />
         <SectionCardForm />
-        <Property1Default
+        {/* <Property1Default
           property1DefaultPosition="unset"
           property1DefaultMarginTop={8}
-        />
+        /> */}
       </View>
     </View>
   );
