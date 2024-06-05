@@ -256,8 +256,7 @@ const createOtherPlantTable = async () => {
       `CREATE TABLE IF NOT EXISTS OtherPlant (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         plantType TEXT,
-        amount TEXT,
-        user_id INTEGER
+        amount TEXT
       );`
     );
     console.log('OtherPlant table created successfully');
@@ -266,11 +265,11 @@ const createOtherPlantTable = async () => {
   }
 };
 
-export const saveOtherPlant = async (plantType, amount,user_id) => {
+export const saveOtherPlant = async (plantType, amount) => {
   try {
     const results = await otherPlantDb.executeSql(
-      `INSERT INTO OtherPlant (plantType, amount,user_id INTEGER) VALUES (?, ?,?);`,
-      [plantType, amount,user_id]
+      `INSERT INTO OtherPlant (plantType, amount) VALUES (?, ?);`,
+      [plantType, amount]
     );
     if (results[0].rowsAffected > 0) {
       console.log('OtherPlant saved successfully');
@@ -299,8 +298,7 @@ const createWeedTable = async () => {
       `CREATE TABLE IF NOT EXISTS Weed (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         weed TEXT,
-        amount TEXT,
-        user_id INTEGER
+        amount TEXT
       );`
     );
     console.log('Weed table created successfully');
@@ -309,11 +307,11 @@ const createWeedTable = async () => {
   }
 };
 
-export const saveWeed = async (weed, amount,user_id) => {
+export const saveWeed = async (weed, amount) => {
   try {
     const results = await weedDb.executeSql(
-      `INSERT INTO Weed (weed, amount) VALUES (?, ?,?);`,
-      [weed, amount,user_id]
+      `INSERT INTO Weed (weed, amount) VALUES (?, ?);`,
+      [weed, amount]
     );
     if (results[0].rowsAffected > 0) {
       console.log('Weed saved successfully');
@@ -343,8 +341,7 @@ const createPlantDiseaseTable = async () => {
       `CREATE TABLE IF NOT EXISTS PlantDisease (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         disease TEXT,
-        amount TEXT,
-        user_id INTEGER
+        amount TEXT
       );`
     );
     console.log('Plant Disease table created successfully');
@@ -353,11 +350,11 @@ const createPlantDiseaseTable = async () => {
   }
 };
 
-export const savePlantDisease = async (disease, amount, user_id) => {
+export const savePlantDisease = async (disease, amount) => {
   try {
     const results = await plantDiseaseDb.executeSql(
-      `INSERT INTO PlantDisease (disease, amount) VALUES (?, ?,?);`,
-      [disease, amount, user_id]
+      `INSERT INTO PlantDisease (disease, amount) VALUES (?, ?);`,
+      [disease, amount]
     );
     if (results[0].rowsAffected > 0) {
       console.log('Plant Disease saved successfully');
@@ -387,8 +384,7 @@ const createInsectTable = async () => {
       `CREATE TABLE IF NOT EXISTS Insect (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         insect TEXT,
-        amount TEXT,
-        user_id INTEGER
+        amount TEXT
       );`
     );
     console.log('Insect table created successfully');
@@ -397,10 +393,10 @@ const createInsectTable = async () => {
   }
 };
 
-export const saveInsect = async (insect, amount, user_id) => {
+export const saveInsect = async (insect, amount) => {
   try {
     const results = await insectDb.executeSql(
-      `INSERT INTO Insect (insect, amount) VALUES (?, ?,?);`,
+      `INSERT INTO Insect (insect, amount) VALUES (?, ?);`,
       [insect, amount]
     );
     if (results[0].rowsAffected > 0) {

@@ -24,8 +24,7 @@ const PlotSurvey = () => {
           </Pressable>
           <Text style={styles.text}>สำรวจแปลง</Text>
         </View>
-        <SectionCard1 stepNumber="ครั้งที่  1" />
-        <SectionCard1 stepNumber="ครั้งที่  2" />
+        <SectionCard1/>
       </View>
       <View style={styles.bottomSection}>
         <Button
