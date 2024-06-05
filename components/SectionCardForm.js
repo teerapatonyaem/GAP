@@ -1,87 +1,110 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, View } from "react-native";
-import { FontFamily, Color, FontSize, Padding, Border } from "../GlobalStyles";
+import SQLite from "react-native-sqlite-storage";
+import UserContext from "../components/UserContext";
+import { Color, FontFamily, FontSize, Border, Padding } from "../GlobalStyles";
+
+const db = SQLite.openDatabase({
+  name: 'general.db',
+  location: 'default',
+});
 
 const SectionCardForm = () => {
+  const { user } = useContext(UserContext);
+  const [general, setGeneral] = useState(null);
+
+  useEffect(() => {
+    const fetchGeneralData = async () => {
+      if (user) {
+        db.transaction((tx) => {
+          tx.executeSql(
+            'SELECT * FROM general WHERE user_id = ? ORDER BY id DESC LIMIT 1',
+            [user.id],
+            (tx, results) => {
+              if (results.rows.length > 0) {
+                setGeneral(results.rows.item(0));
+              }
+            },
+            (error) => {
+              console.error('Error fetching data:', error);
+            }
+          );
+        });
+      }
+    };
+
+    fetchGeneralData();
+  }, [user]);
+
   return (
-    <View style={[styles.parent, styles.parentFlexBox]}>
-      <Text style={styles.text}>การปฏิบัติงานล่าสุด</Text>
-      <View style={[styles.frameParent, styles.parentFlexBox]}>
-        <View style={styles.group}>
-          <Text style={[styles.text1, styles.textTypo]}>เรื่อง</Text>
-          <Text style={[styles.text2, styles.textTypo]}>ตัดหญ้า</Text>
-          <Text style={[styles.text2, styles.textTypo]}>ใส่ปุ๋ย</Text>
-          <Text style={[styles.text2, styles.textTypo]}>พ่นยา</Text>
+    <View style={[styles.parent, styles.parentSpaceBlock]}>
+      <Text style={styles.text}>การปฏิบัติงานล่าสุด{`(งานทั่วไป) `}</Text>
+      {general ? (
+        <View style={[styles.frameParent, styles.parentSpaceBlock]}>
+          <View style={styles.group}>
+            <Text style={styles.textTypo1}>เรื่อง</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>{`จำนวน `}</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>ค่าใช้จ่าย</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>รายละเอียด</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>เพิ่มเติม</Text>
+          </View>
+          <View style={styles.group}>
+            <Text style={styles.textTypo}>{general.job}</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{general.quantity} ไร่</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{general.cost}</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{general.costDetails}</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{general.additional}</Text>
+          </View>
         </View>
-        <View style={styles.group}>
-          <Text style={[styles.text1, styles.textTypo]}>จำนวน</Text>
-          <Text style={[styles.text2, styles.textTypo]}>2 ไร่</Text>
-          <Text style={[styles.text2, styles.textTypo]}>4 ไร่</Text>
-          <Text style={[styles.text2, styles.textTypo]}>4 ไร่</Text>
-        </View>
-        <View style={styles.group}>
-          <Text style={[styles.text1, styles.textTypo]}>ค่าใช้จ่าย</Text>
-          <Text style={[styles.text2, styles.textTypo]}>100</Text>
-          <Text style={[styles.text2, styles.textTypo]}>1500</Text>
-          <Text style={[styles.text2, styles.textTypo]}>4500</Text>
-        </View>
-        <View style={styles.group}>
-          <Text style={[styles.text1, styles.textTypo]}>รายละเอียด</Text>
-          <Text style={[styles.text2, styles.textTypo]}>นำมันเครื่อง</Text>
-          <Text style={[styles.text2, styles.textTypo]}>15-15-15</Text>
-          <Text style={[styles.text2, styles.textTypo]}>อีเขียนนาโน</Text>
-        </View>
-        <View style={styles.group}>
-          <Text style={[styles.text1, styles.textTypo]}>เพิ่มเติม</Text>
-          <Text style={[styles.text2, styles.textTypo]}>หญ้าเยอะ</Text>
-          <Text style={[styles.text2, styles.textTypo]}>เร่งราก</Text>
-          <Text style={[styles.text2, styles.textTypo]}>เร่งผล</Text>
-        </View>
-      </View>
+      ) : (
+        <Text style={styles.textTypo}>ไม่มีข้อมูลแปลง</Text>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  parentFlexBox: {
-    alignSelf: "stretch",
+  parentSpaceBlock: {
     marginTop: 8,
-    alignItems: "center",
+    alignSelf: "stretch",
+  },
+  textTypo1: {
+    textAlign: "left",
+    color: Color.labelColorLightPrimary,
+    fontFamily: FontFamily.bodyB4Regular,
+    lineHeight: 22,
+    fontSize: FontSize.bodySmalls300_size,
+    alignSelf: "stretch",
   },
   textTypo: {
-    fontFamily: FontFamily.bodyB4Regular,
+    color: Color.descriptiveTextColourTextNormal700,
     textAlign: "left",
+    fontFamily: FontFamily.bodyB4Regular,
+    lineHeight: 22,
+    fontSize: FontSize.bodySmalls300_size,
+    alignSelf: "stretch",
   },
   text: {
+    fontSize: FontSize.bodyB4Regular_size,
+    lineHeight: 24,
     fontWeight: "600",
     fontFamily: FontFamily.titleT3SemiBold,
-    textAlign: "left",
-    color: Color.labelColorLightPrimary,
-    lineHeight: 24,
-    fontSize: FontSize.bodyB4Regular_size,
-  },
-  text1: {
-    color: Color.labelColorLightPrimary,
-    lineHeight: 24,
-    fontSize: FontSize.bodyB4Regular_size,
-    fontFamily: FontFamily.bodyB4Regular,
+    color: Color.colorGray_300,
+    textAlign: "center",
+    alignSelf: "stretch",
   },
   text2: {
-    fontSize: FontSize.bodySmalls300_size,
-    lineHeight: 22,
-    color: Color.baseColourBase500,
-    marginTop: 8,
+    marginTop: 6,
   },
   group: {
-    justifyContent: "center",
-    paddingHorizontal: Padding.p_9xs,
-    paddingVertical: 0,
-    alignItems: "center",
+    flex: 1,
+  },
+  text9: {
+    marginTop: 6,
   },
   frameParent: {
     flexDirection: "row",
-    marginTop: 8,
-    alignItems: "center",
+    justifyContent: "space-between",
   },
   parent: {
     borderRadius: Border.br_5xs,
@@ -94,9 +117,11 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 6,
     shadowOpacity: 1,
-    padding: Padding.p_5xs,
-    marginTop: 8,
+    height: 282,
     alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: Padding.p_base,
+    paddingVertical: Padding.p_5xs,
   },
 });
 

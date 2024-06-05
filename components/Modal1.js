@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { saveGeneralTask } from "../components/database"; 
+import UserContext from "../components/UserContext";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 
 const Modal1 = ({ onClose }) => {
   const navigation = useNavigation();
+  const { user } = useContext(UserContext); // ใช้ useContext เพื่อดึงข้อมูลผู้ใช้
 
   const [job, setJob] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -14,8 +16,12 @@ const Modal1 = ({ onClose }) => {
   const [additional, setAdditional] = useState('');
 
   const handleSave = () => {
-    saveGeneralTask(job, quantity, cost, costDetails, additional);
-    navigation.navigate("Modal3");
+    if (user) {
+      saveGeneralTask(job, quantity, cost, costDetails, additional, user.id); 
+      navigation.navigate("Modal3");
+    } else {
+      console.error("User not found");
+    }
   };
 
   return (
@@ -27,7 +33,7 @@ const Modal1 = ({ onClose }) => {
           </View>
           <View style={[styles.tabs1, styles.tabsFlexBox]}>
             <Pressable onPress={() => navigation.navigate("FertilizerModal", { job, quantity, cost, costDetails, additional })}>
-          <Text style={styles.textTypo}>ปุ๋ย</Text>
+              <Text style={styles.textTypo}>ปุ๋ย</Text>
             </Pressable>
           </View>
           <View style={[styles.tabs1, styles.tabsFlexBox]}>

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { saveFertilizerTask,saveGeneralTask } from "../components/database";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
+import UserContext from "../components/UserContext";
 
 const FertilizerModal = ({ route }) => {
   const { job, quantity, cost, costDetails, additional } = route.params;
   const navigation = useNavigation();
+  const { user } = useContext(UserContext); 
 
   const [ferjob, setFerjob] = useState(""); 
   const [ferformula, setFerformula] = useState("");
@@ -16,10 +18,15 @@ const FertilizerModal = ({ route }) => {
   const [feradditional, setFeradditional] = useState("");
 
   const handleSave = () => {
-    saveGeneralTask(job, quantity, cost, costDetails, additional);
-    saveFertilizerTask(ferjob, ferformula, ferrate, ferquantity, fercost, feradditional);
-    navigation.navigate("Modal3");
+    if (user) {
+      saveGeneralTask(job, quantity, cost, costDetails, additional, user.id);
+      saveFertilizerTask(ferjob, ferformula, ferrate, ferquantity, fercost, feradditional, user.id);
+      navigation.navigate("Modal3");
+    } else {
+      console.error("User not found");
+    }
   };
+
 
   return (
     <View style={styles.modal}>

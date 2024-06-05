@@ -1,16 +1,18 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Pressable, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Property1Frame1 from "../components/Property1Frame1";
 import SectionForm2 from "../components/SectionForm2";
 import SectionCardForm from "../components/SectionCardForm";
 import Property1Default from "../components/Property1Default";
+import SQLite from "react-native-sqlite-storage";
+import UserContext from "../components/UserContext";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
-
 
 
 const Plot = () => {
   const navigation = useNavigation();
+
 
   return (
     <View style={styles.plot}>
@@ -38,10 +40,8 @@ const Plot = () => {
             <Text style={[styles.text1, styles.textFlexBox]}>
               นาแปลงใหญ่ ใบเขียว
             </Text>
-            <Text style={styles.textTypo}>กข 16 จำนวน 12 ไร่</Text>
-            <Text
-              style={[styles.text3, styles.textTypo]}
-            >{`10/04/2024 - 15/09/2024 `}</Text>
+            
+    
           </View>
         </View>
         {/* <Property1Frame1

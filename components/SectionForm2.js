@@ -1,35 +1,68 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, StyleSheet, View } from "react-native";
+import SQLite from "react-native-sqlite-storage";
+import UserContext from "../components/UserContext";
 import { Color, FontFamily, FontSize, Border, Padding } from "../GlobalStyles";
 
+const db = SQLite.openDatabase({
+  name: 'PlotDatabase.db',
+  location: 'default',
+});
+
 const SectionForm2 = () => {
+  const { user } = useContext(UserContext);
+  const [plot, setPlot] = useState(null);
+
+  useEffect(() => {
+    const fetchPlotData = async () => {
+      if (user) {
+        db.transaction((tx) => {
+          tx.executeSql(
+            'SELECT * FROM plot WHERE user_id = ? ORDER BY plot_id DESC LIMIT 1',
+            [user.id],
+            (tx, results) => {
+              if (results.rows.length > 0) {
+                setPlot(results.rows.item(0));
+              }
+            },
+            (error) => {
+              console.error('Error fetching data:', error);
+            }
+          );
+        });
+      }
+    };
+
+    fetchPlotData();
+  }, [user]);
+
   return (
     <View style={[styles.parent, styles.parentSpaceBlock]}>
       <Text style={styles.text}>ข้อมูลแปลง</Text>
-      <View style={[styles.frameParent, styles.parentSpaceBlock]}>
-        <View style={styles.group}>
-          <Text style={styles.textTypo1}>พันธุ์ข้าว</Text>
-          <Text
-            style={[styles.text2, styles.textTypo1]}
-          >{`จำนวนพื้นที่ `}</Text>
-          <Text style={[styles.text2, styles.textTypo1]}>วันที่ปลูก</Text>
-          <Text style={[styles.text2, styles.textTypo1]}>วิธีการปลูก</Text>
-          <Text style={[styles.text2, styles.textTypo1]}>ชนิดของดิน</Text>
-          <Text style={[styles.text2, styles.textTypo1]}>แหล่งน้ำ</Text>
-          <Text style={[styles.text2, styles.textTypo1]}>สถานที่แปลง</Text>
+      {plot ? (
+        <View style={[styles.frameParent, styles.parentSpaceBlock]}>
+          <View style={styles.group}>
+            <Text style={styles.textTypo1}>พันธุ์ข้าว</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>{`จำนวนพื้นที่ `}</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>วันที่ปลูก</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>วิธีการปลูก</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>ชนิดของดิน</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>แหล่งน้ำ</Text>
+            <Text style={[styles.text2, styles.textTypo1]}>สถานที่แปลง</Text>
+          </View>
+          <View style={styles.group}>
+            <Text style={styles.textTypo}>{plot.rice_variety}</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{plot.area} ไร่</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{plot.planting_date}</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{plot.planting_method}</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{plot.soil_type}</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{plot.water_source}</Text>
+            <Text style={[styles.text9, styles.textTypo]}>{plot.location}</Text>
+          </View>
         </View>
-        <View style={styles.group}>
-          <Text style={styles.textTypo}>กข 16</Text>
-          <Text style={[styles.text9, styles.textTypo]}>12 ไร่</Text>
-          <Text style={[styles.text9, styles.textTypo]}>12/05/2554</Text>
-          <Text style={[styles.text9, styles.textTypo]}>หว่านน้ำตม</Text>
-          <Text style={[styles.text9, styles.textTypo]}>ดินร่วนปนทราย</Text>
-          <Text style={[styles.text9, styles.textTypo]}>ชลประทาน</Text>
-          <Text style={[styles.text9, styles.textTypo]}>{`บ้านบุฝ้าย
-อำเภอประจันตคาม
-จังหวัดปราจีนบุุรี`}</Text>
-        </View>
-      </View>
+      ) : (
+        <Text style={styles.textTypo}>ไม่มีข้อมูลแปลง</Text>
+      )}
     </View>
   );
 };

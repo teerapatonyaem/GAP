@@ -14,7 +14,7 @@ const PlotSurvey = () => {
         <View style={styles.topSection}>
           <Pressable
             style={styles.basilIconsoutlineoutlinege}
-            onPress={() => navigation.navigate("HomeDetail")}
+            onPress={() => navigation.navigate("Home")}
           >
             <Image
               style={styles.icon}

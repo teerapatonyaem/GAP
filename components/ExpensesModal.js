@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { View, Text, StyleSheet, Image, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import { saveFertilizerTask,saveGeneralTask,saveChemicalTask,saveExpenseTask } from "../components/database";
+import UserContext from "../components/UserContext";
 
 const ExpensesModal = ({ route }) => {
   const { job, quantity, cost, costDetails, additional } = route.params;
   const { ferjob, ferformula, ferrate, ferquantity, fercost, feradditional } = route.params;
   const { chejob, pasttype, cheuse, cherate, cheamount, checost } = route.params;
   const navigation = useNavigation();
+  const { user } = useContext(UserContext); 
 
 
   const [payoutfactor, setPayoutfactor] = useState('');
@@ -17,11 +19,15 @@ const ExpensesModal = ({ route }) => {
   const [revenue, setRevenue] = useState('');
 
   const handleSave = () => {
-    saveGeneralTask(job, quantity, cost, costDetails, additional);
-    saveFertilizerTask(ferjob, ferformula, ferrate, ferquantity, fercost, feradditional);
-    saveChemicalTask(chejob, pasttype, cheuse, cherate, cheamount, checost);
-    saveExpenseTask(payoutfactor, expenseamount, expenses, revenue);
-    navigation.navigate("Modal3");
+    if (user) {
+      saveGeneralTask(job, quantity, cost, costDetails, additional, user.id);
+      saveFertilizerTask(ferjob, ferformula, ferrate, ferquantity, fercost, feradditional, user.id);
+      saveChemicalTask(chejob, pasttype, cheuse, cherate, cheamount, checost,user.id);
+      saveExpenseTask(payoutfactor, expenseamount, expenses, revenue,user.id);
+      navigation.navigate("Modal3");
+    } else {
+      console.error("User not found");
+    }
   };
 
   return (

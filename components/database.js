@@ -69,7 +69,8 @@ const createGeneralTable = async () => {
         quantity TEXT, 
         cost TEXT, 
         costDetails TEXT, 
-        additional TEXT
+        additional TEXT,
+        user_id INTEGER
       );`
     );
     console.log('General table created successfully');
@@ -88,7 +89,8 @@ const createFertilizerTable = async () => {
         ferrate TEXT,
         ferquantity TEXT,
         fercost TEXT,
-        feradditional TEXT
+        feradditional TEXT,
+        user_id INTEGER
       );`
     );
     console.log('Fertilizer table created successfully');
@@ -107,7 +109,8 @@ const createChemicalTable = async () => {
         cheuse TEXT,
         cherate TEXT,
         cheamount TEXT,
-        checost TEXT
+        checost TEXT,
+        user_id INTEGER
       );`
     );
     console.log('Chemical table created successfully');
@@ -124,7 +127,8 @@ const createExpenseTable = async () => {
         payoutfactor TEXT,
         expenseamount TEXT,
         expenses INTEGER,
-        revenue INTEGER
+        revenue INTEGER,
+        user_id INTEGER
       );`
     );
     console.log('Expense table created successfully');
@@ -163,12 +167,12 @@ export const savePlotData = async (plotData) => {
   }
 };
 
-export const saveGeneralTask = async (job, quantity, cost, costDetails, additional) => {
+export const saveGeneralTask = async (job, quantity, cost, costDetails, additional,user_id) => {
   try {
     const results = await generalDb.executeSql(
-      `INSERT INTO general (job, quantity, cost, costDetails, additional) 
-      VALUES (?, ?, ?, ?, ?);`,
-      [job, quantity, cost, costDetails, additional]
+      `INSERT INTO general (job, quantity, cost, costDetails, additional,user_id) 
+      VALUES (?, ?, ?, ?, ?,?);`,
+      [job, quantity, cost, costDetails, additional,user_id]
     );
     if (results[0].rowsAffected > 0) {
       console.log('General task saved successfully');
@@ -180,12 +184,12 @@ export const saveGeneralTask = async (job, quantity, cost, costDetails, addition
   }
 };
 
-export const saveFertilizerTask = async (ferjob, ferformula, ferrate, ferquantity, fercost, feradditional) => {
+export const saveFertilizerTask = async (ferjob, ferformula, ferrate, ferquantity, fercost, feradditional,user_id) => {
   try {
     const results = await fertilizerDb.executeSql(
-      `INSERT INTO Fertilizer (ferjob, ferformula, ferrate, ferquantity, fercost, feradditional) 
-      VALUES (?, ?, ?, ?, ?, ?);`,
-      [ferjob, ferformula, ferrate, ferquantity, fercost, feradditional]
+      `INSERT INTO Fertilizer (ferjob, ferformula, ferrate, ferquantity, fercost, feradditional,user_id) 
+      VALUES (?, ?, ?, ?, ?, ?,?);`,
+      [ferjob, ferformula, ferrate, ferquantity, fercost, feradditional,user_id]
     );
 
     if (results[0].rowsAffected > 0) {
@@ -198,12 +202,12 @@ export const saveFertilizerTask = async (ferjob, ferformula, ferrate, ferquantit
   }
 };
 
-export const saveChemicalTask = async (chejob, pasttype, cheuse, cherate, cheamount, checost) => {
+export const saveChemicalTask = async (chejob, pasttype, cheuse, cherate, cheamount, checost,user_id) => {
   try {
     const results = await chemicalDb.executeSql(
-      `INSERT INTO Chemical (chejob, pasttype, cheuse, cherate, cheamount, checost) 
-      VALUES (?, ?, ?, ?, ?, ?);`,
-      [chejob, pasttype, cheuse, cherate, cheamount, checost]
+      `INSERT INTO Chemical (chejob, pasttype, cheuse, cherate, cheamount, checost,user_id) 
+      VALUES (?, ?, ?, ?, ?, ?,?);`,
+      [chejob, pasttype, cheuse, cherate, cheamount, checost,user_id]
     );
 
     if (results[0].rowsAffected > 0) {
@@ -216,12 +220,12 @@ export const saveChemicalTask = async (chejob, pasttype, cheuse, cherate, cheamo
   }
 };
 
-export const saveExpenseTask = async (payoutfactor, expenseamount, expenses, revenue) => {
+export const saveExpenseTask = async (payoutfactor, expenseamount, expenses, revenue,user_id) => {
   try {
     const results = await expenseDb.executeSql(
-      `INSERT INTO Expense (payoutfactor, expenseamount, expenses, revenue) 
-      VALUES (?, ?, ?, ?);`,
-      [payoutfactor, expenseamount, expenses, revenue]
+      `INSERT INTO Expense (payoutfactor, expenseamount, expenses, revenue,user_id) 
+      VALUES (?, ?, ?, ?,?);`,
+      [payoutfactor, expenseamount, expenses, revenue,user_id]
     );
 
     if (results[0].rowsAffected > 0) {
@@ -252,7 +256,8 @@ const createOtherPlantTable = async () => {
       `CREATE TABLE IF NOT EXISTS OtherPlant (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         plantType TEXT,
-        amount TEXT
+        amount TEXT,
+        user_id INTEGER
       );`
     );
     console.log('OtherPlant table created successfully');
@@ -261,11 +266,11 @@ const createOtherPlantTable = async () => {
   }
 };
 
-export const saveOtherPlant = async (plantType, amount) => {
+export const saveOtherPlant = async (plantType, amount,user_id) => {
   try {
     const results = await otherPlantDb.executeSql(
-      `INSERT INTO OtherPlant (plantType, amount) VALUES (?, ?);`,
-      [plantType, amount]
+      `INSERT INTO OtherPlant (plantType, amount,user_id INTEGER) VALUES (?, ?,?);`,
+      [plantType, amount,user_id]
     );
     if (results[0].rowsAffected > 0) {
       console.log('OtherPlant saved successfully');
@@ -294,7 +299,8 @@ const createWeedTable = async () => {
       `CREATE TABLE IF NOT EXISTS Weed (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         weed TEXT,
-        amount TEXT
+        amount TEXT,
+        user_id INTEGER
       );`
     );
     console.log('Weed table created successfully');
@@ -303,11 +309,11 @@ const createWeedTable = async () => {
   }
 };
 
-export const saveWeed = async (weed, amount) => {
+export const saveWeed = async (weed, amount,user_id) => {
   try {
     const results = await weedDb.executeSql(
-      `INSERT INTO Weed (weed, amount) VALUES (?, ?);`,
-      [weed, amount]
+      `INSERT INTO Weed (weed, amount) VALUES (?, ?,?);`,
+      [weed, amount,user_id]
     );
     if (results[0].rowsAffected > 0) {
       console.log('Weed saved successfully');
@@ -337,7 +343,8 @@ const createPlantDiseaseTable = async () => {
       `CREATE TABLE IF NOT EXISTS PlantDisease (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         disease TEXT,
-        amount TEXT
+        amount TEXT,
+        user_id INTEGER
       );`
     );
     console.log('Plant Disease table created successfully');
@@ -346,11 +353,11 @@ const createPlantDiseaseTable = async () => {
   }
 };
 
-export const savePlantDisease = async (disease, amount) => {
+export const savePlantDisease = async (disease, amount, user_id) => {
   try {
     const results = await plantDiseaseDb.executeSql(
-      `INSERT INTO PlantDisease (disease, amount) VALUES (?, ?);`,
-      [disease, amount]
+      `INSERT INTO PlantDisease (disease, amount) VALUES (?, ?,?);`,
+      [disease, amount, user_id]
     );
     if (results[0].rowsAffected > 0) {
       console.log('Plant Disease saved successfully');
@@ -380,7 +387,8 @@ const createInsectTable = async () => {
       `CREATE TABLE IF NOT EXISTS Insect (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         insect TEXT,
-        amount TEXT
+        amount TEXT,
+        user_id INTEGER
       );`
     );
     console.log('Insect table created successfully');
@@ -389,10 +397,10 @@ const createInsectTable = async () => {
   }
 };
 
-export const saveInsect = async (insect, amount) => {
+export const saveInsect = async (insect, amount, user_id) => {
   try {
     const results = await insectDb.executeSql(
-      `INSERT INTO Insect (insect, amount) VALUES (?, ?);`,
+      `INSERT INTO Insect (insect, amount) VALUES (?, ?,?);`,
       [insect, amount]
     );
     if (results[0].rowsAffected > 0) {
@@ -405,4 +413,53 @@ export const saveInsect = async (insect, amount) => {
   }
 };
 
-export default openDatabases;
+
+
+// export const getGeneralTasks = (userId, callback) => {
+//   generalDb.transaction(tx => {
+//     tx.executeSql(
+//       'SELECT * FROM general WHERE user_id = ?',
+//       [userId],
+//       (_, { rows: { _array } }) => {
+//         callback(_array);
+//       },
+//       (txObj, error) => {
+//         console.error('Error fetching general tasks: ', error);
+//         return false;
+//       }
+//     );
+//   });
+// };
+
+// export const getFertilizerTasks = (userId, callback) => {
+//   fertilizerDb.transaction(tx => {
+//     tx.executeSql(
+//       'SELECT * FROM Fertilizer WHERE user_id = ?',
+//       [userId],
+//       (_, { rows: { _array } }) => {
+//         callback(_array);
+//       },
+//       (txObj, error) => {
+//         console.error('Error fetching fertilizer tasks: ', error);
+//         return false;
+//       }
+//     );
+//   });
+// };
+
+// export const getChemicalTasks = (userId, callback) => {
+//   chemicalDb.transaction(tx => {
+//     tx.executeSql(
+//       'SELECT * FROM Chemical WHERE user_id = ?',
+//       [userId],
+//       (_, { rows: { _array } }) => {
+//         callback(_array);
+//       },
+//       (txObj, error) => {
+//         console.error('Error fetching chemical tasks: ', error);
+//         return false;
+//       }
+//     );
+//   });
+// };
+// export default openDatabases;

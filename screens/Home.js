@@ -1,13 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  ImageBackground,
-} from "react-native";
+import {Image,StyleSheet,Text,View,ScrollView,Pressable,ImageBackground} from "react-native";
 import { useNavigation,useFocusEffect } from "@react-navigation/native";
 import FormSection from "../components/FormSection";
 import ProfileForm1 from "../components/ProfileForm1";
