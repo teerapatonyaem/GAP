@@ -1,8 +1,12 @@
 import * as React from "react";
+import { useContext } from "react";
 import { Text, StyleSheet, Image, View } from "react-native";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
+import UserContext from "../components/UserContext";
 
 const GAPCertifyNInumber = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <View style={styles.input}>
       <View style={styles.label}>
@@ -20,7 +24,7 @@ const GAPCertifyNInumber = () => {
             resizeMode="cover"
             source={require("../assets/1-system-iconshome1.png")}
           />
-          <Text style={[styles.text, styles.textTypo]}>1930500255741</Text>
+          <Text style={[styles.text, styles.textTypo]}>{user.national_id}</Text>
         </View>
       </View>
     </View>

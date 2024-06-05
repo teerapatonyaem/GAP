@@ -40,7 +40,7 @@ const GAPCertify = () => {
           <GAPCertifypresidentname />
           <GAPCertifyNInumber />
           <GAPCertifyPresidentaddress />
-          <Text style={[styles.text, styles.gapClr]}>รายละเอียดของกลุ่ม</Text>
+          {/* <Text style={[styles.text, styles.gapClr]}>รายละเอียดของกลุ่ม</Text> */}
           <GAPCertifyPlanytype />
           {/* <GAPCertifyMemberdetail /> */}
           <GAPcertifynote />

@@ -1,8 +1,37 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, Image, View } from "react-native";
+import SQLite from 'react-native-sqlite-storage';
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 
+const db = SQLite.openDatabase({
+  name: 'member.db', 
+  location: 'default',   
+});
+
 const GAPCertifypresidentname = () => {
+  const [member, setMember] = useState(null); 
+
+  useEffect(() => {
+    const fetchMemberData = async () => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          'SELECT name FROM Members WHERE position = ?',
+          ['ประธาน'],
+          (tx, results) => {
+            if (results.rows.length > 0) {
+              setMember(results.rows.item(0));
+            }
+          },
+          (error) => {
+            console.error('Error fetching data:', error);
+          }
+        );
+      });
+    };
+
+    fetchMemberData();
+  }, []);
+
   return (
     <View style={styles.input}>
       <View style={styles.label}>
@@ -21,7 +50,7 @@ const GAPCertifypresidentname = () => {
             source={require("../assets/1-system-iconshome1.png")}
           />
           <Text style={[styles.text, styles.textTypo]}>
-            นายสุรศักดิ์ หนูด้วง
+            {member ? member.name : 'Loading...'}
           </Text>
         </View>
       </View>
