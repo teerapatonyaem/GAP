@@ -29,7 +29,7 @@ const GAPCertify = () => {
               source={require("../assets/basil-iconsoutlineoutlinegeneralhome1.png")}
             />
             <Text style={[styles.gap, styles.gapClr]}>
-              กรอกข้อมูลยื่นขอรับรอง GAP
+              ข้อมูลยื่นขอรับรอง GAP
             </Text>
           </View>
           <Text style={[styles.text, styles.gapClr]}>
@@ -42,7 +42,7 @@ const GAPCertify = () => {
           <GAPCertifyPresidentaddress />
           <Text style={[styles.text, styles.gapClr]}>รายละเอียดของกลุ่ม</Text>
           <GAPCertifyPlanytype />
-          <GAPCertifyMemberdetail />
+          {/* <GAPCertifyMemberdetail /> */}
           <GAPcertifynote />
           <GAPCertifycontactperson />
         </View>

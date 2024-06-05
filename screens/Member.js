@@ -1,10 +1,74 @@
 import * as React from "react";
-import { Image, StyleSheet, Pressable, Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useState, useEffect } from "react";
+import { Image, StyleSheet, Pressable, Text, View, FlatList, Dimensions } from "react-native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
+import SQLite from 'react-native-sqlite-storage';
 import { Color, FontFamily, FontSize, Padding } from "../GlobalStyles";
+
+// Function to open the database
+const openMemberDatabase = async () => {
+  try {
+    const memberDb = await SQLite.openDatabase({ name: 'member.db', location: 'default' });
+    return memberDb;
+  } catch (error) {
+    console.log('Failed to open Member database:', error);
+  }
+};
+
+// Function to fetch all members from the database
+const fetchMembers = async (memberDb) => {
+  try {
+    const results = await memberDb.executeSql(`SELECT * FROM Members;`);
+    const members = [];
+    for (let i = 0; i < results[0].rows.length; i++) {
+      members.push(results[0].rows.item(i));
+    }
+    return members;
+  } catch (error) {
+    console.log('Failed to fetch Members:', error);
+    return [];
+  }
+};
 
 const Member = () => {
   const navigation = useNavigation();
+  const [members, setMembers] = useState([]);
+  const isFocused = useIsFocused();
+
+  // Open the database
+  const [memberDb, setMemberDb] = useState(null);
+  useEffect(() => {
+    (async () => {
+      const db = await openMemberDatabase();
+      setMemberDb(db);
+      if (db) {
+        const members = await fetchMembers(db);
+        setMembers(members);
+      }
+    })();
+  }, []);
+
+  // Refresh the members list when the screen is focused
+  useEffect(() => {
+    if (isFocused && memberDb) {
+      (async () => {
+        const members = await fetchMembers(memberDb);
+        setMembers(members);
+      })();
+    }
+  }, [isFocused, memberDb]);
+
+  const renderMember = ({ item }) => (
+    <View style={styles.memberItem}>
+      <Image
+        style={styles.memberIcon}
+        resizeMode="cover"
+        source={require("../assets/2-foodfarmer3.png")}
+      />
+      <Text style={styles.text3}>{item.name}</Text>
+      <Text style={styles.text3}>{item.position}</Text>
+    </View>
+  );
 
   return (
     <View style={styles.member}>
@@ -12,7 +76,7 @@ const Member = () => {
         <View style={styles.basilIconsoutlineoutlinegeParent}>
           <Pressable
             style={styles.systemIconseditLayout}
-            onPress={() => navigation.navigate("HomeDetail")}
+            onPress={() => navigation.navigate("Home")}
           >
             <Image
               style={styles.icon}
@@ -23,17 +87,17 @@ const Member = () => {
           <Text style={[styles.text, styles.textTypo]}>ผังสมาชิก</Text>
         </View>
         <View style={[styles.frameGroup, styles.frameFlexBox]}>
-          <View style={styles.systemIconseditParent}>
+          {/* <View style={styles.systemIconseditParent}>
             <Image
               style={[styles.systemIconsedit, styles.systemIconseditLayout]}
               resizeMode="cover"
               source={require("../assets/1-system-iconsedit.png")}
             />
             <Text style={styles.textTypo}>แก้ไข</Text>
-          </View>
+          </View> */}
           <Pressable
             style={styles.systemIconsaddUserParent}
-            onPress={() => navigation.navigate("Modal5")}
+            onPress={() => navigation.navigate("Modal5", { onMemberAdded: fetchMembers })}
           >
             <Image
               style={[styles.systemIconsedit, styles.systemIconseditLayout]}
@@ -43,158 +107,13 @@ const Member = () => {
             <Text style={styles.textTypo}>เพิ่ม</Text>
           </Pressable>
         </View>
-        <View style={[styles.frameContainer, styles.frameFlexBox]}>
-          <View style={styles.foodfarmerParent}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>สมโชค</Text>
-            <Text style={styles.text3}>หัวหน้า</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>นายดง</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>นายดง</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer4.png")}
-            />
-            <Text style={styles.text3}>นางสวรีต</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-        </View>
-        <View style={[styles.frameContainer, styles.frameFlexBox]}>
-          <View style={styles.foodfarmerParent}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>สมโชค</Text>
-            <Text style={styles.text3}>หัวหน้า</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>นายดง</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>นายดง</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer4.png")}
-            />
-            <Text style={styles.text3}>นางสวรีต</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-        </View>
-        <View style={[styles.frameContainer, styles.frameFlexBox]}>
-          <View style={styles.foodfarmerParent}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>สมโชค</Text>
-            <Text style={styles.text3}>หัวหน้า</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>นายดง</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>นายดง</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer4.png")}
-            />
-            <Text style={styles.text3}>นางสวรีต</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-        </View>
-        <View style={[styles.frameContainer, styles.frameFlexBox]}>
-          <View style={styles.foodfarmerParent}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>สมโชค</Text>
-            <Text style={styles.text3}>หัวหน้า</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>นายดง</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer3.png")}
-            />
-            <Text style={styles.text3}>นายดง</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-          <View style={styles.foodfarmerGroup}>
-            <Image
-              style={styles.foodfarmerIcon}
-              resizeMode="cover"
-              source={require("../assets/2-foodfarmer4.png")}
-            />
-            <Text style={styles.text3}>นางสวรีต</Text>
-            <Text style={styles.text3}>ตำแหน่ง</Text>
-          </View>
-        </View>
+        <FlatList
+          data={members}
+          renderItem={renderMember}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={4} // Display 4 items per row
+          contentContainerStyle={styles.frameContainer}
+        />
       </View>
     </View>
   );
@@ -285,6 +204,17 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: "100%",
     flex: 1,
+  },
+  memberItem: {
+    flexBasis: '23%', // Adjust the width to fit 4 items in a row with spacing
+    alignItems: 'center',
+    marginBottom: Padding.p_base,
+  },
+  memberIcon: {
+    width: '70%',
+    height: undefined,
+    aspectRatio: 1,
+    marginBottom: Padding.p_sm,
   },
 });
 

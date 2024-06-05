@@ -12,6 +12,7 @@ let otherPlantDb;
 let weedDb;
 let plantDiseaseDb;
 let insectDb;
+let memberDb;
 
 export const openDatabases = async () => {
   try {
@@ -408,54 +409,45 @@ export const saveInsect = async (insect, amount) => {
     console.log('Failed to save Insect:', error);
   }
 };
+/////////////////////////Member/////////
 
+export const openMemberDatabase = async () => {
+  try {
+    insectDb = await SQLite.openDatabase({ name: 'member.db', location: 'default' });
+    console.log('Member database opened');
+    await createMemberTable();
+  } catch (error) {
+    console.log('Failed to open Member database:', error);
+  }
+};
 
+const createMemberTable = async () => {
+  try {
+    await insectDb.executeSql(
+      `CREATE TABLE IF NOT EXISTS Members (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        position TEXT
+      );`
+    );
+    console.log('Member table created successfully');
+  } catch (error) {
+    console.log('Failed to create Member table:', error);
+  }
+};
 
-// export const getGeneralTasks = (userId, callback) => {
-//   generalDb.transaction(tx => {
-//     tx.executeSql(
-//       'SELECT * FROM general WHERE user_id = ?',
-//       [userId],
-//       (_, { rows: { _array } }) => {
-//         callback(_array);
-//       },
-//       (txObj, error) => {
-//         console.error('Error fetching general tasks: ', error);
-//         return false;
-//       }
-//     );
-//   });
-// };
-
-// export const getFertilizerTasks = (userId, callback) => {
-//   fertilizerDb.transaction(tx => {
-//     tx.executeSql(
-//       'SELECT * FROM Fertilizer WHERE user_id = ?',
-//       [userId],
-//       (_, { rows: { _array } }) => {
-//         callback(_array);
-//       },
-//       (txObj, error) => {
-//         console.error('Error fetching fertilizer tasks: ', error);
-//         return false;
-//       }
-//     );
-//   });
-// };
-
-// export const getChemicalTasks = (userId, callback) => {
-//   chemicalDb.transaction(tx => {
-//     tx.executeSql(
-//       'SELECT * FROM Chemical WHERE user_id = ?',
-//       [userId],
-//       (_, { rows: { _array } }) => {
-//         callback(_array);
-//       },
-//       (txObj, error) => {
-//         console.error('Error fetching chemical tasks: ', error);
-//         return false;
-//       }
-//     );
-//   });
-// };
-// export default openDatabases;
+export const saveMember = async (name, position) => {
+  try {
+    const results = await memberDb.executeSql(
+      `INSERT INTO Insect (name, position) VALUES (?, ?);`,
+      [name, position]
+    );
+    if (results[0].rowsAffected > 0) {
+      console.log('Member saved successfully');
+    } else {
+      console.log('Failed to save Member');
+    }
+  } catch (error) {
+    console.log('Failed to save Member:', error);
+  }
+};

@@ -1,10 +1,77 @@
 import * as React from "react";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { useState } from "react";
+import { View, Text, StyleSheet, Image, Pressable, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, FontSize, Padding, Border, Color } from "../GlobalStyles";
+import SQLite from 'react-native-sqlite-storage';
+
+// Function to open the database
+const openMemberDatabase = async () => {
+  try {
+    const memberDb = await SQLite.openDatabase({ name: 'member.db', location: 'default' });
+    console.log('Member database opened');
+    await createMemberTable(memberDb);
+    return memberDb;
+  } catch (error) {
+    console.log('Failed to open Member database:', error);
+  }
+};
+
+// Function to create the Members table if it doesn't exist
+const createMemberTable = async (memberDb) => {
+  try {
+    await memberDb.executeSql(
+      `CREATE TABLE IF NOT EXISTS Members (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        position TEXT
+      );`
+    );
+    console.log('Member table created successfully');
+  } catch (error) {
+    console.log('Failed to create Member table:', error);
+  }
+};
+
+// Function to save a member to the database
+const saveMember = async (memberDb, name, position) => {
+  try {
+    const results = await memberDb.executeSql(
+      `INSERT INTO Members (name, position) VALUES (?, ?);`,
+      [name, position]
+    );
+    if (results[0].rowsAffected > 0) {
+      console.log('Member saved successfully');
+    } else {
+      console.log('Failed to save Member');
+    }
+  } catch (error) {
+    console.log('Failed to save Member:', error);
+  }
+};
 
 const Modal5 = ({ onClose }) => {
   const navigation = useNavigation();
+  const [name, setName] = useState('');
+  const [position, setPosition] = useState('');
+
+  // Open the database
+  const [memberDb, setMemberDb] = useState(null);
+  React.useEffect(() => {
+    (async () => {
+      const db = await openMemberDatabase();
+      setMemberDb(db);
+    })();
+  }, []);
+
+  const handleSaveMember = async () => {
+    if (memberDb) {
+      await saveMember(memberDb, name, position);
+      navigation.navigate("Member");
+    } else {
+      console.log('Database is not opened yet');
+    }
+  };
 
   return (
     <View style={[styles.modal, styles.modalLayout]}>
@@ -33,16 +100,12 @@ const Modal5 = ({ onClose }) => {
                 />
               </View>
               <View style={styles.input1}>
-                <View style={styles.textfield}>
-                  <Image
-                    style={styles.systemIconshome}
-                    resizeMode="cover"
-                    source={require("../assets/1-system-iconshome2.png")}
-                  />
-                  <Text style={[styles.text1, styles.text1Typo]}>
-                    ชื่อสมาชิก
-                  </Text>
-                </View>
+                <TextInput
+                  style={styles.textfield}
+                  value={name}
+                  onChangeText={setName}
+                  placeholder="ชื่อสมาชิก"
+                />
               </View>
             </View>
             <View style={styles.parentSpaceBlock}>
@@ -55,14 +118,12 @@ const Modal5 = ({ onClose }) => {
                 />
               </View>
               <View style={styles.input1}>
-                <View style={styles.textfield}>
-                  <Image
-                    style={styles.systemIconshome}
-                    resizeMode="cover"
-                    source={require("../assets/1-system-iconshome2.png")}
-                  />
-                  <Text style={[styles.text1, styles.text1Typo]}>ตำแหน่ง</Text>
-                </View>
+                <TextInput
+                  style={styles.textfield}
+                  value={position}
+                  onChangeText={setPosition}
+                  placeholder="ตำแหน่ง"
+                />
               </View>
             </View>
           </View>
@@ -76,9 +137,11 @@ const Modal5 = ({ onClose }) => {
           </Pressable>
           <Pressable
             style={[styles.button2, styles.buttonFlexBox]}
-            onPress={() => navigation.navigate("Member")}
+            onPress={handleSaveMember}
           >
-            <Text style={[styles.button3, styles.buttonTypo,{ color: "white" }]}>เพิ่มสมาชิก</Text>
+            <Text style={[styles.button3, styles.buttonTypo, { color: "white" }]}>
+              เพิ่มสมาชิก
+            </Text>
           </Pressable>
         </View>
       </View>
