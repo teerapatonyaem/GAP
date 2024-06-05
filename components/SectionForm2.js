@@ -5,7 +5,7 @@ import UserContext from "../components/UserContext";
 import { Color, FontFamily, FontSize, Border, Padding } from "../GlobalStyles";
 
 const db = SQLite.openDatabase({
-  name: 'PlotDatabase.db',
+  name: 'plot.db',
   location: 'default',
 });
 

@@ -8,7 +8,7 @@ import UserContext from "../components/UserContext";
 import SQLite from 'react-native-sqlite-storage';
 
 const db = SQLite.openDatabase({
-  name: 'PlotDatabase.db', 
+  name: 'plot.db', 
   location: 'default',   
 });
 

@@ -41,23 +41,25 @@ export const openDatabases = async () => {
 };
 
 const createPlotTable = async () => {
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS PlotDatabase (
+      plot_id INTEGER PRIMARY KEY AUTOINCREMENT,
+      rice_variety TEXT,
+      area REAL,
+      planting_date DATE,
+      planting_method TEXT,
+      soil_type TEXT,
+      water_source TEXT,
+      location TEXT,
+      user_id INTEGER
+    );
+  `;
+
   try {
-    await db.executeSql(`
-      CREATE TABLE IF NOT EXISTS plot (
-        plot_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        rice_variety TEXT,
-        area REAL,
-        planting_date DATE,
-        planting_method TEXT,
-        soil_type TEXT,
-        water_source TEXT,
-        location TEXT,
-        user_id INTEGER
-      );
-    `);
+    await db.executeSql(createTableQuery);
     console.log('Plot table created successfully');
   } catch (error) {
-    console.log('Failed to create plot table:', error);
+    console.error('Failed to create plot table:', error);
   }
 };
 
@@ -151,12 +153,25 @@ export const savePlotData = async (plotData) => {
     user_id,
   } = plotData;
 
+  const query = `
+    INSERT INTO PlotDatabase (
+      rice_variety, area, planting_date, planting_method, soil_type, water_source, location, user_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  const params = [
+    rice_variety,
+    area,
+    planting_date,
+    planting_method,
+    soil_type,
+    water_source,
+    location,
+    user_id,
+  ];
+
   try {
-    const results = await db.executeSql(`
-      INSERT INTO plot (
-        rice_variety, area, planting_date, planting_method, soil_type, water_source, location, user_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `, [rice_variety, area, planting_date, planting_method, soil_type, water_source, location, user_id]);
+    const results = await db.executeSql(query, params);
 
     if (results[0].rowsAffected > 0) {
       console.log('Plot data saved successfully');
@@ -165,23 +180,6 @@ export const savePlotData = async (plotData) => {
     }
   } catch (error) {
     console.error('Error inserting plot data:', error);
-  }
-};
-
-export const saveGeneralTask = async (job, quantity, cost, costDetails, additional,user_id) => {
-  try {
-    const results = await generalDb.executeSql(
-      `INSERT INTO general (job, quantity, cost, costDetails, additional,user_id) 
-      VALUES (?, ?, ?, ?, ?,?);`,
-      [job, quantity, cost, costDetails, additional,user_id]
-    );
-    if (results[0].rowsAffected > 0) {
-      console.log('General task saved successfully');
-    } else {
-      console.log('Failed to save general task');
-    }
-  } catch (error) {
-    console.log('Failed to save general task:', error);
   }
 };
 

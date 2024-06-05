@@ -1,9 +1,17 @@
-import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Pressable, StyleSheet, Image } from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Pressable,
+  StyleSheet,
+  Image
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { savePlotData } from "../components/database";
+import SQLite from 'react-native-sqlite-storage';
 import UserContext from '../components/UserContext';
 
 const Modal2 = () => {
@@ -17,6 +25,91 @@ const Modal2 = () => {
   const [landLocation, setLandLocation] = useState('');
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [db, setDb] = useState(null);
+
+  useEffect(() => {
+    const openDatabase = async () => {
+      try {
+        const database = await SQLite.openDatabase({ name: 'plot.db', location: 'default' });
+        setDb(database);
+        console.log('Plot database opened');
+        await createPlotTable(database);
+      } catch (error) {
+        console.log('Failed to open database:', error);
+      }
+    };
+
+    const createPlotTable = async (database) => {
+      const createTableQuery = `
+        CREATE TABLE IF NOT EXISTS plot (
+          plot_id INTEGER PRIMARY KEY AUTOINCREMENT,
+          rice_variety TEXT,
+          area REAL,
+          planting_date DATE,
+          planting_method TEXT,
+          soil_type TEXT,
+          water_source TEXT,
+          location TEXT,
+          user_id INTEGER
+        );
+      `;
+
+      try {
+        await database.executeSql(createTableQuery);
+        console.log('Plot table created successfully');
+      } catch (error) {
+        console.error('Failed to create plot table:', error);
+      }
+    };
+
+    openDatabase();
+  }, []);
+
+  const savePlotData = async (plotData) => {
+    if (!db) {
+      console.error('Database is not initialized');
+      return;
+    }
+
+    const {
+      rice_variety,
+      area,
+      planting_date,
+      planting_method,
+      soil_type,
+      water_source,
+      location,
+      user_id,
+    } = plotData;
+
+    const query = `
+      INSERT INTO plot (
+        rice_variety, area, planting_date, planting_method, soil_type, water_source, location, user_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const params = [
+      rice_variety,
+      area,
+      planting_date,
+      planting_method,
+      soil_type,
+      water_source,
+      location,
+      user_id,
+    ];
+
+    try {
+      const results = await db.executeSql(query, params);
+      if (results[0].rowsAffected > 0) {
+        console.log('Plot data saved successfully');
+      } else {
+        console.log('Failed to save plot data');
+      }
+    } catch (error) {
+      console.error('Error inserting plot data:', error);
+    }
+  };
 
   const onDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
@@ -39,7 +132,6 @@ const Modal2 = () => {
 
     try {
       await savePlotData(plotData);
-      // กลับไปหน้าหลักหลังจากบันทึก
       navigation.navigate('Modal3');
     } catch (error) {
       console.error('Error creating plot:', error);
