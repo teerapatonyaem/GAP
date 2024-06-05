@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, Pressable, StyleSheet } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 import { useNavigation } from '@react-navigation/native';
-import UserContext from '../components/UserContext';
+import UserContext from '../components/UserContext'; // Correct import path
 import { FontSize, FontFamily, Color, Padding, Border } from '../GlobalStyles';
 
 const db = SQLite.openDatabase({
@@ -15,7 +15,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext); // Correctly using useContext
 
   const handleLogin = () => {
     db.transaction(tx => {
@@ -25,7 +25,7 @@ const Login = () => {
         (tx, results) => {
           if (results.rows.length > 0) {
             const user = results.rows.item(0);
-            setUser({ id: user.id, username: user.username });
+            setUser({ id: user.id, username: user.username, national_id: user.national_id });
             navigation.navigate('Home');
           } else {
             alert('Invalid username or password');

@@ -3,7 +3,6 @@ import { Image, StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
 import UserContext from '../components/UserContext';
-
 const SectionCard = () => {
   const navigation = useNavigation();
   const { username } = useContext(UserContext); 
@@ -23,7 +22,7 @@ const SectionCard = () => {
       >
         <Pressable
           style={styles.basilIconsoutlineoutlinege}
-          onPress={() => navigation.navigate("ProfileEdit")} 
+          onPress={() => navigation.navigate("Home")}
         >
           <Image
             style={styles.icon}
@@ -32,12 +31,18 @@ const SectionCard = () => {
           />
         </Pressable>
         <View style={[styles.wrapper, styles.parentFlexBox]}>
+
+
           <Text style={[styles.text1, styles.textTypo]}>แก้ไขโปรไฟล์</Text>
+
+
+          
         </View>
       </View>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   parentFlexBox: {
     alignItems: "center",

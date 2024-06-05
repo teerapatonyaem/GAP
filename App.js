@@ -11,6 +11,7 @@ import Expense from "./screens/Expense";
 import RiceInfo from "./screens/RiceInfo";
 import RiceInfoDetail from "./screens/RiceInfoDetail";
 import Proofile from "./screens/Proofile";
+import ProfileEdit from "./screens/ProfileEdit";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
 import Plot from "./screens/Plot";
@@ -184,6 +185,11 @@ const App = () => {
               <Stack.Screen
                 name="Proofile"
                 component={Proofile}
+                options={{ headerShown: false }}
+              />
+               <Stack.Screen
+                name="ProfileEdit"
+                component={ProfileEdit}
                 options={{ headerShown: false }}
               />
               <Stack.Screen

@@ -11,7 +11,7 @@ const FormSection1 = () => {
       <View style={styles.parentFlexBox}>
         <Pressable
           style={styles.basilIconsoutlineoutlinege}
-          onPress={() => navigation.navigate("HomeDetail")}
+          onPress={() => navigation.navigate("Home")}
         >
           <Image
             style={styles.icon}
