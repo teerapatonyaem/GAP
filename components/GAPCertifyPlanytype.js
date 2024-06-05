@@ -16,10 +16,10 @@ const GAPCertifyPlanytype = () => {
       db.transaction((tx) => {
         tx.executeSql(
           'SELECT rice_variety FROM plot WHERE plot_id = ?',
-          [1], // You might want to replace this with the actual plot_id you're interested in
+          [1], // คุณอาจต้องการเปลี่ยนเป็น plot_id ที่คุณสนใจ
           (tx, results) => {
             if (results.rows.length > 0) {
-              setPlot(results.rows.item(0).rice_variety);
+              setPlot(results.rows.item(0)); // เปลี่ยนเป็น item(0) เพื่อให้ได้ข้อมูลทั้งหมด
             }
           },
           (error) => {

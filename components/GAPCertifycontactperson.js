@@ -1,8 +1,11 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import { Color, FontFamily, FontSize } from "../GlobalStyles";
+import UserContext from '../components/UserContext';
 
 const GAPCertifycontactperson = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <View style={styles.parent}>
       <Text style={[styles.text, styles.textTypo]}>
@@ -10,11 +13,11 @@ const GAPCertifycontactperson = () => {
       </Text>
       <View style={styles.parent}>
         <View style={[styles.group, styles.groupFlexBox]}>
-          <Text style={styles.textTypo}>ชื่อ สุรศักดิ์ หนูด้วง</Text>
+          <Text style={styles.textTypo}>ชื่อ {user?.name}</Text>
           <Text style={styles.text2}>ตำแหน่ง ประธาน</Text>
         </View>
         <View style={[styles.container, styles.containerSpaceBlock]}>
-          <Text style={styles.textTypo}>โทรศัพท 095-1574463</Text>
+          <Text style={styles.textTypo}>โทรศัพท {user?.phone}</Text>
           <Text style={styles.text2}>โทรสาร</Text>
         </View>
         <Text
@@ -23,7 +26,7 @@ const GAPCertifycontactperson = () => {
             styles.containerSpaceBlock,
           ]}
         >
-          E-mail surasakjak0604@gmail.com
+          E-mail {user?.email}
         </Text>
       </View>
     </View>

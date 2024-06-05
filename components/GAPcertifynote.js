@@ -23,7 +23,7 @@ const GAPcertifynote = () => {
           <Text style={[styles.checkbox, styles.textTypo]}>Checkbox</Text>
         </View>
       </View>
-      <View style={styles.groupFlexBox}>
+      {/* <View style={styles.groupFlexBox}>
         <Text style={[styles.text2, styles.textTypo]}>
           การตรวจติดตามคุณภาพภายใน และการปฏิบัติแก้ไข
         </Text>
@@ -37,7 +37,7 @@ const GAPcertifynote = () => {
           </View>
           <Text style={[styles.checkbox, styles.textTypo]}>Checkbox</Text>
         </View>
-      </View>
+      </View> */}
       <View style={styles.groupFlexBox}>
         <Text style={[styles.text1, styles.textTypo]}>
           การจัดการขอร้องเรียน
@@ -95,7 +95,7 @@ const GAPcertifynote = () => {
           <Text style={[styles.checkbox, styles.textTypo]}>Checkbox</Text>
         </View>
       </View>
-      <Text style={[styles.text6, styles.textTypo]}>อื่นๆ โปรดระบุ</Text>
+      {/* <Text style={[styles.text6, styles.textTypo]}>อื่นๆ โปรดระบุ</Text> */}
     </View>
   );
 };
