@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ScrollView,
   Image,
@@ -12,9 +12,109 @@ import IncomeForm from "../components/IncomeForm";
 import FormContainer from "../components/FormContainer";
 import ProfileForm1 from "../components/ProfileForm1";
 import { FontSize, FontFamily, Color, Padding, Border } from "../GlobalStyles";
+import SQLite from 'react-native-sqlite-storage';
+import UserContext from "../components/UserContext";
+
+const generalDb = SQLite.openDatabase(
+  {
+    name: 'general.db',
+    location: 'default'
+  },
+  () => { console.log('General Database opened'); },
+  error => { console.log('Error opening general database: ', error); }
+);
+
+const fertilizerDb = SQLite.openDatabase(
+  {
+    name: 'fertilizer.db',
+    location: 'default'
+  },
+  () => { console.log('Fertilizer Database opened'); },
+  error => { console.log('Error opening fertilizer database: ', error); }
+);
+
+const chemicalDb = SQLite.openDatabase(
+  {
+    name: 'chemical.db',
+    location: 'default'
+  },
+  () => { console.log('Chemical Database opened'); },
+  error => { console.log('Error opening chemical database: ', error); }
+);
 
 const Expense = () => {
   const navigation = useNavigation();
+  const [generalData, setGeneralData] = useState([]);
+  const [fertilizerData, setFertilizerData] = useState([]);
+  const [chemicalData, setChemicalData] = useState([]);
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    const fetchGeneralData = async () => {
+      if (user) {
+        generalDb.transaction((tx) => {
+          tx.executeSql(
+            'SELECT * FROM general WHERE user_id = ?',
+            [user.id],
+            (tx, results) => {
+              if (results.rows.length > 0) {
+                setGeneralData(results.rows.item(0));
+              }
+            },
+            (error) => {
+              console.error('Error fetching general data:', error);
+            }
+          );
+        });
+      }
+    };
+
+    const fetchFertilizerData = async () => {
+      if (user) {
+        fertilizerDb.transaction((tx) => {
+          tx.executeSql(
+            'SELECT * FROM Fertilizer WHERE user_id = ?',
+            [user.id],
+            (tx, results) => {
+              let fertilizers = [];
+              for (let i = 0; i < results.rows.length; i++) {
+                fertilizers.push(results.rows.item(i));
+              }
+              setFertilizerData(fertilizers);
+            },
+            (error) => {
+              console.error('Error fetching fertilizer data:', error);
+            }
+          );
+        });
+      }
+    };
+
+    const fetchChemicalData = async () => {
+      if (user) {
+        chemicalDb.transaction((tx) => {
+          tx.executeSql(
+            'SELECT * FROM Chemical WHERE user_id = ?',
+            [user.id],
+            (tx, results) => {
+              let chemicals = [];
+              for (let i = 0; i < results.rows.length; i++) {
+                chemicals.push(results.rows.item(i));
+              }
+              setChemicalData(chemicals);
+            },
+            (error) => {
+              console.error('Error fetching chemical data:', error);
+            }
+          );
+        });
+      }
+    };
+
+    fetchGeneralData();
+    fetchFertilizerData();
+    fetchChemicalData();
+  }, [user]);
 
   return (
     <View style={styles.container}>
@@ -38,33 +138,27 @@ const Expense = () => {
           <Text style={styles.text}>รายรับ-รายจ่าย</Text>
         </View>
         
-        <IncomeForm /> 
+        <IncomeForm />
         
         <View style={styles.frameGroup}>
           <FormContainer
-            productImageId={require("../assets/2-foodgrainsofrice.png")}
-            plantSeedImageUrl="เมล็ดพันธุ์พืช"
-            productDescription="แครอท"
-            priceReduction="-฿100"
+            plantSeedImageUrl="ค่าใช้จ่ายทั่วไป"
+            priceReduction={`-฿${generalData.cost}`}
           />
-          <FormContainer
-            productImageId={require("../assets/3-farmfertilizer.png")}
-            plantSeedImageUrl="ปุ๋ยเเละยา"
-            productDescription="ปุ๋ยกระต่าย"
-            priceReduction="-฿10,000"
-          />
-          <FormContainer
-            productImageId={require("../assets/2-foodfarmer2.png")}
-            plantSeedImageUrl="เเรงงาน"
-            productDescription="ทั่วไป"
-            priceReduction="-฿2,000"
-          />
-          <FormContainer
-            productImageId={require("../assets/3-farmtractor.png")}
-            plantSeedImageUrl="ค่ารถจักร"
-            productDescription="ปรับแต่งดิน"
-            priceReduction="-฿6,500"
-          />
+          {fertilizerData.map((fertilizer, index) => (
+            <FormContainer
+              key={index}
+              plantSeedImageUrl={`ปุ๋ย: ${fertilizer.ferjob}`}
+              priceReduction={`-฿${fertilizer.fercost}`}
+            />
+          ))}
+          {chemicalData.map((chemical, index) => (
+            <FormContainer
+              key={index}
+              plantSeedImageUrl={`ยา: ${chemical.chejob}`}
+              priceReduction={`-฿${chemical.checost}`}
+            />
+          ))}
         </View>
       </ScrollView>
       
