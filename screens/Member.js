@@ -1,14 +1,18 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
 import { Image, StyleSheet, Pressable, Text, View, FlatList, Dimensions } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import SQLite from 'react-native-sqlite-storage';
 import { Color, FontFamily, FontSize, Padding } from "../GlobalStyles";
+import React, { useEffect, useState } from "react";
 
 // Function to open the database
 const openMemberDatabase = async () => {
   try {
     const memberDb = await SQLite.openDatabase({ name: 'member.db', location: 'default' });
+    await memberDb.executeSql(`CREATE TABLE IF NOT EXISTS Members (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      position TEXT
+    );`);
     return memberDb;
   } catch (error) {
     console.log('Failed to open Member database:', error);
@@ -27,6 +31,16 @@ const fetchMembers = async (memberDb) => {
   } catch (error) {
     console.log('Failed to fetch Members:', error);
     return [];
+  }
+};
+
+// Function to delete a member from the database
+const deleteMember = async (memberDb, memberId) => {
+  try {
+    await memberDb.executeSql(`DELETE FROM Members WHERE id = ?;`, [memberId]);
+    console.log('Member deleted:', memberId);
+  } catch (error) {
+    console.log('Failed to delete Member:', error);
   }
 };
 
@@ -58,6 +72,12 @@ const Member = () => {
     }
   }, [isFocused, memberDb]);
 
+  const handleDeleteMember = async (memberId) => {
+    await deleteMember(memberDb, memberId);
+    const updatedMembers = await fetchMembers(memberDb);
+    setMembers(updatedMembers);
+  };
+
   const renderMember = ({ item }) => (
     <View style={styles.memberItem}>
       <Image
@@ -67,6 +87,13 @@ const Member = () => {
       />
       <Text style={styles.text3}>{item.name}</Text>
       <Text style={styles.text3}>{item.position}</Text>
+      <Pressable onPress={() => handleDeleteMember(item.id)}>
+        <Image
+          style={styles.deleteIcon}
+          resizeMode="cover"
+          source={require("../assets/1-system-iconsdelete.png")}
+        />
+      </Pressable>
     </View>
   );
 
@@ -87,14 +114,6 @@ const Member = () => {
           <Text style={[styles.text, styles.textTypo]}>ผังสมาชิก</Text>
         </View>
         <View style={[styles.frameGroup, styles.frameFlexBox]}>
-          {/* <View style={styles.systemIconseditParent}>
-            <Image
-              style={[styles.systemIconsedit, styles.systemIconseditLayout]}
-              resizeMode="cover"
-              source={require("../assets/1-system-iconsedit.png")}
-            />
-            <Text style={styles.textTypo}>แก้ไข</Text>
-          </View> */}
           <Pressable
             style={styles.systemIconsaddUserParent}
             onPress={() => navigation.navigate("Modal5", { onMemberAdded: fetchMembers })}
@@ -215,6 +234,11 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 1,
     marginBottom: Padding.p_sm,
+  },
+  deleteIcon: {
+    width: 20,
+    height: 20,
+    marginTop: 10,
   },
 });
 
