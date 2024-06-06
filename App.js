@@ -20,7 +20,7 @@ import Modal1 from "./components/Modal1";
 import { UserProvider } from './components/UserContext';
 import { useEffect } from 'react';
 import { createTables } from './components/database';
-import openDatabase from './components/database';
+import { openDatabases } from './components/database';
 import LogoutButton from "./components/LogoutButton";
 import ClearUsersComponent from "./components/ClearUsersComponent";
 import FertilizerModal from "./components/FertilizerModal";
@@ -81,14 +81,17 @@ import {View,Text,Pressable,TouchableOpacity,StyleSheet,} from "react-native";
 
 const App = () => {
  
-  useEffect(() => {
-    const initializeDatabase = async () => {
-      await openDatabase();
-    };
+  // useEffect(() => {
+  //   const initializeDatabase = async () => {
+  //     await openDatabase();
+  //   };
 
-    initializeDatabase();
+  //   initializeDatabase();
+  // }, []);
+  useEffect(() => {
+    openDatabases();
   }, []);
-  
+
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
 
   function MaterialIcon({ name, style }) {

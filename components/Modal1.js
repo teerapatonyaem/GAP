@@ -4,6 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { saveGeneralTask } from "../components/database"; 
 import UserContext from "../components/UserContext";
 import { Padding, Border, Color, FontFamily, FontSize } from "../GlobalStyles";
+import SQLite from 'react-native-sqlite-storage';
+
+const db = SQLite.openDatabase({
+  name: 'general.db', 
+  location: 'default',   
+});
 
 const Modal1 = ({ onClose }) => {
   const navigation = useNavigation();

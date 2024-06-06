@@ -183,6 +183,35 @@ export const savePlotData = async (plotData) => {
   }
 };
 
+
+
+
+export const saveGeneralTask = async (job, quantity, cost, costDetails, additional, user_id) => {
+  if (!generalDb) {
+    console.error('General database is not opened');
+    return;
+  }
+
+  try {
+    const query = `
+      INSERT INTO general (job, quantity, cost, costDetails, additional, user_id) 
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    const params = [job, quantity, cost, costDetails, additional, user_id];
+
+    const results = await generalDb.executeSql(query, params);
+
+    if (results[0].rowsAffected > 0) {
+      console.log('General task saved successfully');
+    } else {
+      console.log('Failed to save general task');
+    }
+  } catch (error) {
+    console.log('Failed to save general task:', error);
+  }
+};
+
 export const saveFertilizerTask = async (ferjob, ferformula, ferrate, ferquantity, fercost, feradditional,user_id) => {
   try {
     const results = await fertilizerDb.executeSql(

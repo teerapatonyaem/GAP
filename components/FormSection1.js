@@ -1,10 +1,12 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { Image, StyleSheet, Pressable, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, FontSize, Color, Border, Padding } from "../GlobalStyles";
+import UserContext from '../components/UserContext';
 
 const FormSection1 = () => {
   const navigation = useNavigation();
+  const { user } = useContext(UserContext);
 
   return (
     <View style={styles.frameParent}>
@@ -35,10 +37,9 @@ const FormSection1 = () => {
             source={require("../assets/1-system-iconstask-document.png")}
           />
           <Text style={[styles.gap45Container, styles.gapSpaceBlock]}>
-            <Text style={styles.gap45}>{`การยื่นขอรับรอง GAP ข้าว กข45
+            <Text style={styles.gap45}>{`การยื่นขอรับรอง GAP
 `}</Text>
-            <Text style={styles.text1}>{`โดย นายสุรศักดิ์ หนูด้วง
-กลุ่ม นาแปลงใหญ่สีเขียว`}</Text>
+             <Text style={styles.textTypo}>โดย {user?.name}</Text>
           </Text>
         </Pressable>
       </View>

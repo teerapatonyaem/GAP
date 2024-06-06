@@ -27,7 +27,7 @@ const Expense = () => {
         <View style={styles.headerContainer}>
           <Pressable
             style={styles.basilIconsoutlineoutlinege}
-            onPress={() => navigation.navigate("HomeDetail")}
+            onPress={() => navigation.navigate("Home")}
           >
             <Image
               style={styles.icon}
@@ -35,10 +35,10 @@ const Expense = () => {
               source={require("../assets/basil-iconsoutlineoutlinegeneralhome1.png")}
             />
           </Pressable>
-          <Text style={styles.text}>รายจ่าย-รับ</Text>
+          <Text style={styles.text}>รายรับ-รายจ่าย</Text>
         </View>
         
-        <IncomeForm />
+        <IncomeForm /> 
         
         <View style={styles.frameGroup}>
           <FormContainer
