@@ -5,10 +5,19 @@ import Weed from "../components/Weed";
 import Plantdisease from "../components/Plantdisease";
 import Insect from "../components/Insect";
 import { useNavigation } from "@react-navigation/native";
-import { openOtherPlantDatabase, saveOtherPlant, openWeedDatabase, saveWeed, openPlantDiseaseDatabase, savePlantDisease,openInsectDatabase,saveInsect } from "../components/database";
+import {
+  openOtherPlantDatabase,
+  saveOtherPlant,
+  openWeedDatabase,
+  saveWeed,
+  openPlantDiseaseDatabase,
+  savePlantDisease,
+  openInsectDatabase,
+  saveInsect
+} from "../components/database";
 import { FontSize, FontFamily, Padding, Color, Border } from "../GlobalStyles";
 
-const AddPlotInformation = () => {
+const AddPlotInformation = ({ route }) => {
   const navigation = useNavigation();
   const [otherPlantData, setOtherPlantData] = useState({ plantType: '', amount: '' });
   const [weedData, setWeedData] = useState({ weed: '', amount: '' });
@@ -27,9 +36,9 @@ const AddPlotInformation = () => {
     const saveWeedPromise = saveWeed(weedData.weed, weedData.amount);
     const savePlantDiseasePromise = savePlantDisease(plantDiseaseData.disease, plantDiseaseData.amount);
     const saveInsectPromise = saveInsect(insectData.insect, insectData.amount);
-    Promise.all([saveOtherPlantPromise, saveWeedPromise, savePlantDiseasePromise,saveInsectPromise])
+    Promise.all([saveOtherPlantPromise, saveWeedPromise, savePlantDiseasePromise, saveInsectPromise])
       .then(() => {
-        navigation.navigate("PlotSurvey");
+        navigation.navigate("PlotSurvey", { updated: true });
       })
       .catch(error => {
         console.log("Error inserting data: ", error);
@@ -64,7 +73,7 @@ const AddPlotInformation = () => {
         <View style={styles.textSpaceBlock}>
           <Weed onWeedDataChange={handleWeedDataChange} />
           <Plantdisease onPlantDiseaseDataChange={handlePlantDiseaseDataChange} />
-          <Insect onInsectDataChange={handleInsectDataChange} />
+          {/* <Insect onInsectDataChange={handleInsectDataChange} /> */}
         </View>
         <Text style={[styles.text, styles.textSpaceBlock]}>{`หมายเหตุ
 ปริมาณน้อย = 1 ใน 4 / ไร่

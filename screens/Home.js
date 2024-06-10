@@ -68,7 +68,8 @@ const Home = () => {
                   สวัสดี
                 </Text>
                 <Text style={[styles.greeting2, styles.greetingFont]}>
-                  {user?.username} (ID: {user?.id}) (national_id: {user?.national_id})
+                  {user?.username} 
+                
                 </Text>
               </View>
             </View>

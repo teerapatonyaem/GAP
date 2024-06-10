@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, Image, View } from "react-native";
-import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 import SQLite from "react-native-sqlite-storage";
+import { useIsFocused } from '@react-navigation/native';
+import { FontSize, FontFamily, Color, Border, Padding } from "../GlobalStyles";
 
 const db = SQLite.openDatabase('otherPlant.db');
+const weedDb = SQLite.openDatabase('weed.db');
+const plantDiseaseDb = SQLite.openDatabase('plantdisease.db');
 
 const SectionCard1 = ({ stepNumber }) => {
   const [otherPlant, setOtherPlant] = useState(null);
+  const [weed, setWeed] = useState(null);
+  const [plantDisease, setPlantDisease] = useState(null);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchOtherPlantData = async () => {
@@ -26,8 +32,45 @@ const SectionCard1 = ({ stepNumber }) => {
       });
     };
 
+    const fetchWeedData = async () => {
+      weedDb.transaction((tx) => {
+        tx.executeSql(
+          'SELECT * FROM Weed ORDER BY id DESC LIMIT 1',
+          [],
+          (tx, results) => {
+            if (results.rows.length > 0) {
+              setWeed(results.rows.item(0));
+            }
+          },
+          (tx, error) => {
+            console.error('Error fetching data:', error);
+          }
+        );
+      });
+    };
+
+    const fetchPlantDiseaseData = async () => {
+      plantDiseaseDb.transaction((tx) => {
+        tx.executeSql(
+          'SELECT * FROM PlantDisease ORDER BY id DESC LIMIT 1',
+          [],
+          (tx, results) => {
+            if (results.rows.length > 0) {
+              setPlantDisease(results.rows.item(0));
+            }
+          },
+          (tx, error) => {
+            console.error('Error fetching data:', error);
+          }
+        );
+      });
+    };
+
     fetchOtherPlantData();
-  }, []);
+    fetchWeedData();
+    fetchPlantDiseaseData();
+    
+  }, [isFocused]);
 
   return (
     <View style={[styles.frameParent, styles.frameSpaceBlock]}>
@@ -43,19 +86,23 @@ const SectionCard1 = ({ stepNumber }) => {
           </View>
         </View>
       </View>
-      {otherPlant && (
+      {otherPlant && weed && plantDisease && (
         <View style={styles.frameSpaceBlock}>
           <View style={styles.frameContainer}>
             <View style={styles.group}>
               <Text style={styles.text2}>เรื่อง</Text>
               <View style={styles.container}>
                 <Text style={styles.textTypo1}>{otherPlant.plantType}</Text>
+                <Text style={styles.textTypo1}>{weed.weed}</Text>
+                <Text style={styles.textTypo1}>{plantDisease.disease}</Text>
               </View>
             </View>
             <View style={styles.parent1}>
               <Text style={styles.text2}>ปริมาณ</Text>
               <View style={styles.container}>
                 <Text style={styles.textTypo}>{otherPlant.amount}</Text>
+                <Text style={styles.textTypo}>{weed.amount}</Text>
+                <Text style={styles.textTypo}>{plantDisease.amount}</Text>
               </View>
             </View>
           </View>
