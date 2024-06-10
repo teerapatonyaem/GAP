@@ -1,13 +1,68 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { ScrollView, Text, StyleSheet, View, Pressable, TextInput } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import SQLite from 'react-native-sqlite-storage';
 import { Padding, Color, FontSize, Border, FontFamily } from '../GlobalStyles';
 import SectionCard from '../components/SectionCard';
 import ProfileForm1 from '../components/ProfileForm1';
 import LogoutButton from '../components/LogoutButton'; 
 import UserContext from '../components/UserContext';
+
+// Initialize SQLite and create the table
+const db = SQLite.openDatabase(
+  {
+    name: 'farmer.db',
+    location: 'default',
+  },
+  () => {},
+  error => {
+    console.log('Error opening database:', error);
+  }
+);
+
+const createTable = () => {
+  db.transaction(tx => {
+    tx.executeSql(
+      `CREATE TABLE IF NOT EXISTS farmer (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        national_id TEXT,
+        phone TEXT,
+        email TEXT
+      );`,
+      [],
+      () => {
+        console.log('Table created successfully');
+      },
+      error => {
+        console.log('Error creating table:', error);
+      }
+    );
+  });
+};
+
+const updateUser = (name, national_id, phone, email) => {
+  return new Promise((resolve, reject) => {
+    db.transaction(tx => {
+      tx.executeSql(
+        `INSERT INTO farmer (name, national_id, phone, email) VALUES (?, ?, ?, ?);`,
+        [name, national_id, phone, email],
+        (tx, results) => {
+          if (results.rowsAffected > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        error => {
+          reject(error);
+        }
+      );
+    });
+  });
+};
 
 const UploadButton = ({ onFileSelected }) => {
   const handlePress = () => {
@@ -48,6 +103,10 @@ const Profile = () => {
     email: user?.email || '',
   });
 
+  useEffect(() => {
+    createTable();
+  }, []);
+
   const handleFileSelected = async (file) => {
     try {
       const formData = new FormData();
@@ -73,12 +132,19 @@ const Profile = () => {
     }
   };
 
-  const handleSave = (field) => {
+  const handleSave = async (field) => {
     console.log(`Saving field ${field} with value ${newUserData[field]}`);
     const updatedUser = { ...user, [field]: newUserData[field] };
     setUser(updatedUser);
     setIsEditing({ ...isEditing, [field]: false });
     console.log('User data updated:', updatedUser);
+
+    try {
+      await updateUser(newUserData.name, newUserData.national_id, newUserData.phone, newUserData.email);
+      console.log('User data saved to database');
+    } catch (error) {
+      console.error('Error saving user data:', error);
+    }
   };
 
   return (
@@ -124,7 +190,7 @@ const Profile = () => {
                     style={styles.input}
                     value={newUserData.national_id}
                     onChangeText={(text) => setNewUserData({ ...newUserData,national_id: text })}
-                    placeholder="Enter new phone number"
+                    placeholder="Enter new national ID"
                   />
                   <Pressable style={styles.saveButton} onPress={() => handleSave('national_id')}>
                     <Text style={styles.saveButtonText}>Save</Text>
@@ -132,8 +198,8 @@ const Profile = () => {
                 </View>
               ) : (
                 <View style={styles.displaySection}>
-                  <Text style={styles.regularText}>{user?. national_id}</Text>
-                  <Pressable style={styles.editButton} onPress={() => setIsEditing({ ...isEditing,national_id: true })}>
+                  <Text style={styles.regularText}>{user?.national_id}</Text>
+                  <Pressable style={styles.editButton} onPress={() => setIsEditing({ ...isEditing, national_id: true })}>
                     <Text style={styles.editButtonText}>แก้ไข</Text>
                   </Pressable>
                 </View>

@@ -9,21 +9,23 @@ const weedDb = SQLite.openDatabase('weed.db');
 const plantDiseaseDb = SQLite.openDatabase('plantdisease.db');
 
 const SectionCard1 = ({ stepNumber }) => {
-  const [otherPlant, setOtherPlant] = useState(null);
-  const [weed, setWeed] = useState(null);
-  const [plantDisease, setPlantDisease] = useState(null);
+  const [otherPlant, setOtherPlant] = useState([]);
+  const [weed, setWeed] = useState([]);
+  const [plantDisease, setPlantDisease] = useState([]);
   const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchOtherPlantData = async () => {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM OtherPlant ORDER BY id DESC LIMIT 1',
+          'SELECT * FROM OtherPlant ORDER BY id DESC',
           [],
           (tx, results) => {
-            if (results.rows.length > 0) {
-              setOtherPlant(results.rows.item(0));
+            let data = [];
+            for (let i = 0; i < results.rows.length; i++) {
+              data.push(results.rows.item(i));
             }
+            setOtherPlant(data);
           },
           (tx, error) => {
             console.error('Error fetching data:', error);
@@ -35,12 +37,14 @@ const SectionCard1 = ({ stepNumber }) => {
     const fetchWeedData = async () => {
       weedDb.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM Weed ORDER BY id DESC LIMIT 1',
+          'SELECT * FROM Weed ORDER BY id DESC',
           [],
           (tx, results) => {
-            if (results.rows.length > 0) {
-              setWeed(results.rows.item(0));
+            let data = [];
+            for (let i = 0; i < results.rows.length; i++) {
+              data.push(results.rows.item(i));
             }
+            setWeed(data);
           },
           (tx, error) => {
             console.error('Error fetching data:', error);
@@ -52,12 +56,14 @@ const SectionCard1 = ({ stepNumber }) => {
     const fetchPlantDiseaseData = async () => {
       plantDiseaseDb.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM PlantDisease ORDER BY id DESC LIMIT 1',
+          'SELECT * FROM PlantDisease ORDER BY id DESC',
           [],
           (tx, results) => {
-            if (results.rows.length > 0) {
-              setPlantDisease(results.rows.item(0));
+            let data = [];
+            for (let i = 0; i < results.rows.length; i++) {
+              data.push(results.rows.item(i));
             }
+            setPlantDisease(data);
           },
           (tx, error) => {
             console.error('Error fetching data:', error);
@@ -69,7 +75,6 @@ const SectionCard1 = ({ stepNumber }) => {
     fetchOtherPlantData();
     fetchWeedData();
     fetchPlantDiseaseData();
-    
   }, [isFocused]);
 
   return (
@@ -77,32 +82,38 @@ const SectionCard1 = ({ stepNumber }) => {
       <View style={styles.frameGroup}>
         <View style={[styles.parent, styles.parentFlexBox]}>
           <Text style={styles.text}>{stepNumber}</Text>
-          <View style={[styles.systemIconsdeleteParent, styles.parentFlexBox]}>
-            <Image
-              style={[styles.systemIconsedit, styles.systemLayout]}
-              resizeMode="cover"
-              source={require("../assets/1-system-iconsedit.png")}
-            />
-          </View>
+          
         </View>
       </View>
-      {otherPlant && weed && plantDisease && (
+      {otherPlant.length > 0 && weed.length > 0 && plantDisease.length > 0 && (
         <View style={styles.frameSpaceBlock}>
           <View style={styles.frameContainer}>
             <View style={styles.group}>
               <Text style={styles.text2}>เรื่อง</Text>
               <View style={styles.container}>
-                <Text style={styles.textTypo1}>{otherPlant.plantType}</Text>
-                <Text style={styles.textTypo1}>{weed.weed}</Text>
-                <Text style={styles.textTypo1}>{plantDisease.disease}</Text>
+                {otherPlant.map((item, index) => (
+                  <Text key={`otherPlant-${index}`} style={styles.textTypo1}>{item.plantType}</Text>
+                ))}
+                {weed.map((item, index) => (
+                  <Text key={`weed-${index}`} style={styles.textTypo1}>{item.weed}</Text>
+                ))}
+                {plantDisease.map((item, index) => (
+                  <Text key={`plantDisease-${index}`} style={styles.textTypo1}>{item.disease}</Text>
+                ))}
               </View>
             </View>
             <View style={styles.parent1}>
               <Text style={styles.text2}>ปริมาณ</Text>
               <View style={styles.container}>
-                <Text style={styles.textTypo}>{otherPlant.amount}</Text>
-                <Text style={styles.textTypo}>{weed.amount}</Text>
-                <Text style={styles.textTypo}>{plantDisease.amount}</Text>
+                {otherPlant.map((item, index) => (
+                  <Text key={`otherPlantAmount-${index}`} style={styles.textTypo}>{item.amount}</Text>
+                ))}
+                {weed.map((item, index) => (
+                  <Text key={`weedAmount-${index}`} style={styles.textTypo}>{item.amount}</Text>
+                ))}
+                {plantDisease.map((item, index) => (
+                  <Text key={`plantDiseaseAmount-${index}`} style={styles.textTypo}>{item.amount}</Text>
+                ))}
               </View>
             </View>
           </View>

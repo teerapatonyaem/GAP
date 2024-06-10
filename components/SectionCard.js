@@ -23,7 +23,7 @@ const SectionCard = () => {
       >
         <Pressable
           style={styles.basilIconsoutlineoutlinege}
-          onPress={() => navigation.navigate("ProfileEdit")} 
+          onPress={() => navigation.navigate("Home")} 
         >
           <Image
             style={styles.icon}
@@ -31,9 +31,9 @@ const SectionCard = () => {
             source={require("../assets/basil-iconsoutlineoutlinegeneralhome.png")}
           />
         </Pressable>
-        <View style={[styles.wrapper, styles.parentFlexBox]}>
+        {/* <View style={[styles.wrapper, styles.parentFlexBox]}>
           <Text style={[styles.text1, styles.textTypo]}>แก้ไขโปรไฟล์</Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );
